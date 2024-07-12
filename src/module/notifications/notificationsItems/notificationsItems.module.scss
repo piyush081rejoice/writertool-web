@@ -1,0 +1,146 @@
+@import '../../../assets/scss/main.scss';
+
+.notificationsItems {
+    border: 1px solid getColorHex('border-color-2');
+    padding: rem(14);
+    border-radius: rem(12);
+
+    @include sm {
+        padding: rem(14);
+    }
+    @include lg {
+        padding: rem(30);
+    }
+
+    .boxFooteralignment {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: rem(20 0 0 0);
+        button {
+            border: none;
+            color: getColorHex('white');
+            padding:  rem(10 20);
+            font-size: rem(14);
+            @include body-bold;
+            line-height: rem(22);
+            border-radius: 99px;
+            cursor: pointer;
+            background-color: getColorHex('black');
+            letter-spacing: 0.48px;
+            @include sm {
+            padding:  rem(10 20);
+            font-size: rem(14);
+            line-height: rem(22);
+            }
+            @include lg {
+            padding:  rem(11 40);
+            font-size: rem(16);
+            line-height: rem(28);
+            }
+        }
+
+        span {
+            display: block;
+            font-size: rem(14);
+            cursor: pointer;
+            @include body-bold;
+            line-height: normal;
+            color: getColorHex('black');
+            text-decoration-line: underline;
+            @include sm {
+            font-size: rem(14);
+            }
+            @include lg {
+            font-size: rem(18);
+            }
+        }
+    }
+
+    .tab {
+        display: flex;
+        align-items: center;
+        gap: rem(30);
+        padding: rem(0 0 9 0);
+
+        span {
+            font-size: rem(14);
+            @include body-medium;
+            color: getColorHex('gray-800');
+            line-height: normal;
+            @include bottom-border-animation;
+            cursor: pointer;
+            @include sm {
+                font-size: rem(14);
+            }
+            @include lg {
+            font-size: rem(18);
+            }
+
+            &:hover {
+                color: getColorHex("black");
+            }
+        }
+    }
+
+    .allNotificationBoxAlignment {
+        .notificationGrid:last-child {
+            border: none;
+        }
+        .notificationGrid {
+            display: grid;
+            padding: rem(24 0);
+            align-items: center;
+            border-bottom: 1px solid getColorHex('border-color-3');
+            grid-template-columns: 47px 1fr;
+            gap: rem(10);
+
+            .date {
+                display: block;
+                font-size: rem(12);
+                @include body-medium;
+                color: getColorHex('gray');
+                @include sm {
+                font-size: rem(14);
+                }
+                @include lg {
+                font-size: rem(14);
+                }
+            }
+
+            p {
+                font-size: rem(14);
+                line-height: normal;
+                color: getColorHex('black');
+                @include body-medium;
+                margin: rem(0 0 5 0);
+                @include sm {
+                font-size: rem(14);
+                }
+                @include lg {
+                font-size: rem(16);
+                }
+
+                span {
+                    color: getColorHex('gray');
+                    @include body-regular;
+                }
+            }
+
+            .img {
+                width: 100%;
+                height: 100%;
+
+                .notificationsImage {
+                    border-radius: 50%;
+                    width: 100%;
+                    height: rem(47);
+
+                    img {
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+    }
+}

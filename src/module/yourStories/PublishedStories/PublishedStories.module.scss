@@ -1,0 +1,173 @@
+@import '../../../assets/scss/main.scss';
+
+.PublishedStoriesContnetAlignment {
+    margin-top: 35px;
+
+    .allCardDesign {
+        .card:first-child {
+            padding-top: rem(0);
+        }
+
+        .card:last-child {
+            border: none;
+        }
+
+        .card {
+            padding: rem(14 0);
+            border-bottom: 1px solid getColorHex('border-color-2');
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: rem(20);
+
+            @include md {
+                grid-template-columns: 301px 1fr;
+                gap: rem(25);
+                padding: rem(35 0);
+            }
+
+            .iconAlignment {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .imageAlignment {
+                    display: flex;
+                    align-items: center;
+                    gap: rem(12);
+
+                    img {
+                        max-width: rem(30);
+                        display: block;
+                        cursor: pointer;
+                    }
+
+                }
+
+                .Approved {
+                    border: 1px solid #00B460;
+                    border-radius: 4px;
+                    padding: 7px 12px;
+                    color: #00B460;
+                }
+
+                .Denied {
+                    border: 1px solid #EE3839;
+                    color: #EE3839;
+                    border-radius: 4px;
+                    padding: 7px 12px;
+                }
+            }
+
+            p {
+                font-size: rem(14);
+                @include body-medium;
+                color: getColorHex('gray');
+                opacity: 0.9;
+                margin: rem(0 0 12 0);
+                line-height: rem(24);
+
+                @include md {
+                    font-size: rem(16);
+                    line-height: rem(28);
+
+                }
+            }
+
+            h3 {
+                font-size: rem(16);
+                line-height: rem(24);
+                @include heading-font;
+                margin: rem(0 0 12 0);
+                color: getColorHex('black');
+
+                @include md {
+                    font-size: rem(20);
+                    line-height: rem(26);
+                }
+            }
+
+            .firstColumn {
+                display: flex;
+                align-items: center;
+                gap: rem(10);
+                padding: rem(0 0 20 0);
+                flex-wrap: wrap;
+
+                @include md {
+                    flex-wrap: wrap;
+                }
+
+                ul {
+                    margin: 0;
+                    padding: 0 0 0 20px;
+                    list-style: disc;
+
+                    li {
+                        font-size: rem(14);
+                        @include body-medium;
+                        color: getColorHex('gray');
+                    }
+                }
+
+                .leftContent {
+                    display: flex;
+                    align-items: center;
+                    gap: rem(8);
+
+                    span {
+                        display: block;
+                        font-size: rem(14);
+                        @include body-medium;
+                        color: getColorHex('gray');
+                    }
+
+                    .profileImage {
+                        border-radius: 50%;
+
+                        .profileImageStyle {
+                            width: rem(34);
+                            height: rem(34);
+                            min-height: rem(34);
+                            border-radius: 50%;
+
+                            img {
+                                display: block;
+                                border-radius: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .cardImage {
+                width: 100%;
+                height: 100%;
+
+                .cardImageStyle {
+                    width: 100%;
+                    height: rem(216);
+                    min-height: rem(216);
+                    border-radius: rem(10);
+
+                    img {
+                        border-radius: rem(10);
+                        display: block;
+                    }
+                }
+            }
+
+        }
+    }
+
+    .SkeletonCard {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+
+        .alignImage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

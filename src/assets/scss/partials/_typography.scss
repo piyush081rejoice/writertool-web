@@ -1,0 +1,19 @@
+@mixin heading-font {
+  font-family: "Montserrat-Bold";
+}
+
+@mixin body-regular {
+  font-family: "Montserrat-Regular";
+}
+
+@mixin body-medium {
+  font-family: "Montserrat-Medium";
+}
+
+@mixin body-extrabold {
+  font-family: "Montserrat-Black";
+}
+
+@mixin body-bold {
+  font-family: "Montserrat-SemiBold";
+}

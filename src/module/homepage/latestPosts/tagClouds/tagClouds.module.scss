@@ -1,0 +1,58 @@
+@import '../../../../assets/scss/main.scss';
+
+.tagCloudsBox {
+    border: 1px solid getColorHex('border-color-2');
+    padding: rem(14);
+    border-radius: rem(12);
+    @include md {
+    padding: rem(35);
+
+    }
+    .boxTitle {
+        padding: rem(0 0 14 0);
+        @include md {
+        padding: rem(0 0 35 0);
+        }
+        h2 {
+            font-size: rem(20);
+            line-height: rem(26);
+            text-transform: capitalize;
+            color: getColorHex('black');
+            text-align: center;
+            @include heading-font;
+            margin: rem(0 0 10 0);
+        }
+        .iconCenter {
+            display: flex;
+            justify-content: center;
+        }
+    }
+    .buttonFlex {
+        display: flex;
+        gap: rem(10);
+        flex-wrap: wrap;
+        @include md {
+        flex-wrap: wrap;
+
+        }
+
+        button {
+            border: 1px solid getColorHex('border-color-2');
+            font-size: rem(14);
+            @include body-medium;
+            color: getColorHex('gray-800');
+            padding: rem(8 20);
+            background-color: transparent;
+            border-radius: 999px;
+            @include transition-3s;
+            cursor: pointer;
+            @include md {
+            padding: rem(11 20);
+            }
+            &:hover {
+                background-color: getColorHex('black');
+                color: getColorHex("white");
+            }
+        }
+    }
+}

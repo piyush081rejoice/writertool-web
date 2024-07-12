@@ -1,0 +1,19 @@
+@import '../../../assets/scss/main.scss';
+
+.breadcrumbAllContentAlignment {
+    padding: rem(18 0);
+    border-bottom: 1px solid getColorHex('border-color-2');
+    border-top: 1px solid getColorHex('border-color-2');
+
+    .contentAlignment {
+        display: flex;
+        align-items: center;
+        gap: rem(6);
+
+        span {
+            display: block;
+            font-size: rem(16);
+            color: getColorHex('gray-800');
+        }
+    }
+}

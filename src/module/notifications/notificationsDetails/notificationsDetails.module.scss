@@ -1,0 +1,71 @@
+@import '../../../assets/scss/main.scss';
+
+.notificationsDetails {
+    padding: rem(0 0 100 0);
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: rem(14);
+
+        @include sm {
+            grid-template-columns: 1fr rem(340);
+            gap: rem(20);
+        }
+
+        @include lg {
+            grid-template-columns: 1fr rem(440);
+            gap: rem(25);
+        }
+
+
+        .gridItems {
+            .pageTitle {
+                padding: rem(0 0 10 0);
+
+                @include sm {
+                    padding: rem(0 0 10 0);
+                }
+
+                @include lg {
+                    padding: rem(0 0 30 0);
+                }
+
+                h1 {
+                    font-size: rem(24);
+                    @include heading-font;
+                    color: getColorHex('black');
+                    line-height: normal;
+                }
+            }
+
+            .TrendingBlogBox {
+                padding: rem(14);
+                border-radius: rem(12);
+                border: 1px solid getColorHex('border-color-2');
+
+                @include sm {
+                    padding: rem(14);
+                }
+
+                @include lg {
+                    padding: rem(30);
+                }
+            }
+
+            .newsletterAlignment {
+                padding: rem(14 0 0 0);
+
+                @include sm {
+                    padding: rem(20 0 0 0);
+                }
+
+                @include lg {
+                    padding: rem(50 0 0 0);
+                }
+            }
+        }
+
+
+    }
+}

@@ -1,0 +1,42 @@
+// colors
+
+// Brand Colours
+$colors: (
+  "blue": #0033A0,
+  "primary": #ED3B35,
+  "green": #00B460,
+  "white": #fff,
+  "black": #292D36,
+  "black-400": #49475A,
+  "gray": #6C6F75,
+  "gray-800": #858585,
+  "gray-900": #9794AA,
+  "gray-870": #686677,
+  "light-gray": #79869A,
+  "border-color": rgba(121, 134, 154, 0.30),
+  "border-color-light": rgba(223, 227, 231, 0.70),
+  "border-color-2": #DFE3E7,
+  "border-color-3": #E9ECEF,
+  "border-color-5": #CBCAD7,
+  "border-color-6": #EDE9E3,
+  "border-color-4": rgba(121, 134, 154, 0.25),
+  
+) !default;
+
+
+
+// animations
+$transition-time: 0.3s;
+$transition-name: ease-in-out;
+
+
+
+
+@function getColorHex($colorname, $opacity: 1) {
+  $color: map-get($colors, $colorname);
+  @if $opacity == 1 {
+    @return $color;
+  } @else {
+    @return rgba(red($color), green($color), blue($color), $opacity);
+  }
+}

@@ -1,0 +1,111 @@
+@import '../../../assets/scss/main.scss';
+
+.shareProfileAllContnet {
+    padding: rem(30 0 60 0);
+
+    .profileBox {
+        background-color: getColorHex('black');
+        padding: rem(30 35);
+        display: grid;
+        grid-template-columns: rem(90) 1fr;
+        gap: rem(25);
+        border-radius: rem(10);
+        h3 {
+            color: getColorHex('white');
+            font-size: rem(20);
+            @include heading-font;
+            line-height: normal;
+            margin: rem(0 0 6 0);
+        }
+        .icons{
+            display: flex;
+            align-items: center;
+            gap: rem(18);
+            svg {
+                cursor: pointer;
+                path {
+                    fill: getColorHex('white');
+                }
+            }
+        }
+        p {
+            font-size: rem(14);
+            margin: rem( 0 0 15 0);
+            line-height: rem(25);
+            color: getColorHex('white');
+            opacity: 0.9;
+        }
+        .profile {
+            width: 100%;
+            height: 100%;
+            .profileImage {
+                width: 100%;
+                height: rem(90);
+                border-radius: 50%;
+                img {
+                border-radius: 50%;
+                }
+            }
+        }
+        
+    }
+
+    .firstColumnAlignment {
+        display: block;
+        align-items: center;
+        justify-content: space-between;
+        padding: rem(0 0 35 0);
+        @include md {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .leftContent {
+            span {
+                display: block;
+                padding: rem( 0 0 15 0);
+                font-size: rem(16);
+                line-height: normal;
+                color: getColorHex('gray');
+                opacity: 0.9;
+            }
+            .socialIconAlignment {
+                display: flex;
+                align-items: center;
+                gap: rem(18);
+
+                svg {
+                    cursor: pointer;
+                }
+            }
+        }
+
+
+            .buttonFlex {
+                display: flex;
+                gap: rem(13 6);
+                flex-wrap: wrap;
+                padding: rem(14 0 0 0);
+                @include md {
+                    padding: 0;
+                }
+                button {
+                    border: 1px solid getColorHex('border-color-2');
+                    font-size: rem(14);
+                    @include body-medium;
+                    color: getColorHex('gray-800');
+                    padding: rem(11 20);
+                    background-color: transparent;
+                    border-radius: 999px;
+                    @include transition-3s;
+                    cursor: pointer;
+        
+                    &:hover {
+                        background-color: getColorHex('black');
+                        color: getColorHex("white");
+                }
+            }
+        }
+    }
+}

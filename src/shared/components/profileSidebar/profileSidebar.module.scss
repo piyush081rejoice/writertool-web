@@ -1,0 +1,77 @@
+@import '.../../../../../assets/scss/main.scss';
+
+.profileblur {
+    background: rgba(255, 255, 255, 0.70);
+    backdrop-filter: blur(7.5px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+}
+
+.profileSidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 99;
+    height: 100%;
+    background: #FFF;
+    box-shadow: -10px 0px 16px 0px rgba(41, 45, 54, 0.18);
+    width: rem(354);
+    padding: 35px;
+
+    &.hide {
+        transform: translateX(100%);
+        transition: .3s ease-in-out;
+    }
+
+    &.show {
+        transform: translateX(0%);
+        transition: .3s ease-in-out;
+    }
+
+    .allIconsAlignment {
+        .iconText:nth-child(4) {
+            border: none;
+        }
+
+        .iconText {
+            padding: rem(25 0);
+            border-bottom: 1px solid getColorHex('border-color-3');
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 16px;
+
+            span {
+                display: block;
+                color: getColorHex('gray');
+                font-size: rem(18);
+                line-height: normal;
+                @include body-medium;
+            }
+        }
+    }
+
+    .logo {
+        padding: rem(0 0 15 0);
+
+        img {
+            cursor: pointer;
+            max-width: rem(164);
+        }
+    }
+
+    .closeIconRightAlignment {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: rem(0 0 15 0);
+
+        svg {
+            cursor: pointer;
+        }
+    }
+}

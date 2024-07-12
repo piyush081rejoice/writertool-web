@@ -1,0 +1,16 @@
+@import './../../assets/scss/main.scss';
+
+.notificationsbreadcumbalignment {
+    display: flex;
+    align-items: center;
+    gap: rem(6);
+    padding: rem( 35 0);
+
+    span {
+        display: block;
+        font-size: rem(16);
+        @include body-medium;
+        color: getColorHex('gray-800');
+    }
+    
+}

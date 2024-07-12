@@ -1,0 +1,52 @@
+@import '../../../assets/scss/main.scss';
+
+.blogInsideDetails {
+    padding: rem(40 0);
+
+    @include sm {
+        padding: rem(40 0);
+    }
+
+    @include lg {
+        padding: rem(40 0 100 0);
+    }
+
+    .breadcumbalignment {
+        display: flex;
+        align-items: center;
+        gap: rem(6);
+        padding: rem(0 0 35 0);
+
+        span {
+            display: block;
+            font-size: rem(12);
+            @include body-medium;
+            color: getColorHex('gray-800');
+
+            @include md {
+                font-size: rem(16);
+            }
+        }
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: rem(25);
+
+        @include lg {
+            grid-template-columns: 1fr rem(440);
+        }
+
+        .stickyTop {
+            position: sticky;
+            top: -100px;
+        }
+        .trendingBlogDesign {
+            padding: rem(30);
+            border-radius: rem(12);
+            margin: rem(0 0 50 0);
+            border: 1px solid getColorHex("border-color-2");
+        }
+    }
+}

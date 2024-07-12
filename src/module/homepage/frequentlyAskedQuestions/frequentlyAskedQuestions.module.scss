@@ -1,0 +1,129 @@
+@import '../../../assets/scss/main.scss';
+
+.frequentlyAskedQuestions {
+    padding: rem(40 0);
+    @include md {
+    padding: rem(50 0 80 0);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: rem(0);
+
+        @include md {
+            grid-template-columns: 1fr;
+        }
+
+        @include lg {
+        gap: rem(25);
+            grid-template-columns: 1fr 440px;
+        }
+
+        .gridItems {
+            .title {
+                padding: rem(0 0 10 0);
+                @include md {
+                padding: rem(0 0 30 0);
+                }
+
+                h2 {
+                    font-size: rem(20);
+                    line-height: normal;
+                    color: getColorHex('black');
+                    @include heading-font;
+                    @include md {
+                    font-size: rem(24);
+                    }
+                }
+            }
+
+
+            .box {
+                border: 1px solid getColorHex('border-color-2');
+                border-radius: rem(12);
+                padding: rem(14);
+                @include md {
+                padding: rem(30);
+                }
+
+                .faqBox:first-child {
+                    padding-top: rem(0);
+                }
+
+                .faqBox:last-child {
+                    border: none;
+                    padding-bottom: rem(0);
+                }
+
+                .faqBox {
+                    padding: 20px 0;
+                    border-bottom: 1px solid getColorHex('border-color-2');
+                    @include md {
+                    padding: 30px 0;
+                    }
+
+                    .faqBoxBody {
+                        &.hide {
+                            max-height: 0px;
+                            overflow: hidden;
+                            @include transition-3s;
+                        }
+
+                        &.show {
+                            max-height: 100vh;
+                            overflow: hidden;
+                            @include transition-3s;
+                        }
+
+                        .spacer {
+                            padding: rem(30 0 0 0);
+
+                            p {
+                                font-size: rem(16);
+                                line-height: rem(28);
+                                letter-spacing: 0.48px;
+                                color: getColorHex('gray');
+                                opacity: 0.9;
+                            }
+                        }
+                    }
+
+                    .faqBoxHeader {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        .animationTime {
+                            @include transition-3s;
+                        }
+
+                        .rotate {
+                            transform: rotate(45deg);
+                        }
+
+                        h3 {
+                            font-size: rem(14);
+                            @include body-bold;
+                            color: getColorHex('black');
+                            @include md {
+                            font-size: rem(20);
+                            }
+                        }
+
+                        svg {
+                            cursor: pointer;
+                            width: rem(14);
+
+                            @include md {
+                                width: auto;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+}

@@ -1,0 +1,23 @@
+@import '../../../assets/scss/main.scss';
+
+.categoryInformationAlignment {
+    padding: rem(50 0 100 0);
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr rem(440);
+        gap: rem(25);
+
+        .trendingBlogDesign {
+            margin: 80px 0 50px 0;
+            border: 1px solid getColorHex('border-color-2');
+            padding: rem(30);
+            border-radius: rem(12);
+         
+        }
+        .stickyTop {
+            position: sticky;
+            top: -100px;
+        }
+    }
+}

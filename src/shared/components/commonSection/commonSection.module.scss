@@ -1,0 +1,86 @@
+@import '../../../assets/scss/main.scss';
+
+.commonSection {
+    .title {
+        padding: rem(0 0 30 0);
+        h2 {
+            font-size: rem(24);
+            @include heading-font;
+            color: getColorHex('black');
+            text-transform: capitalize;
+            line-height: normal;
+            margin: rem(0 0 0 0);
+        }
+    }
+    .subGrid {
+        display: grid;
+        grid-template-columns:1fr;
+        gap: rem(50);
+        padding: rem(14);
+        border-radius: rem(12);
+        border: 1px solid getColorHex("border-color-2");
+        @include md {
+        grid-template-columns: 320px 1fr;
+        gap: rem(30);
+        @include md{
+        padding: rem(30);
+        }
+        }
+
+        .subGridItems {
+            .editorsCard:last-child {
+                padding-bottom: rem(0);
+                border: none;
+            }
+            .editorsCard:first-child {
+                padding-top: rem(0);
+            }
+            .editorsCard {
+                padding: rem(25 0);
+                border-bottom: rem(1) solid getColorHex("border-color-light");
+                display: grid;
+                grid-template-columns: 125px 1fr;
+                gap: rem(15);
+                @include transition-3s;
+                cursor: pointer;
+
+                &:hover {
+                    transform: translate(0 , -3px);
+                }
+
+                h3 {
+                    font-size: rem(15);
+                    @include heading-font;
+                    color: getColorHex('black');
+                    margin: rem(0 0 6 0);
+                    line-height: normal;
+                }
+
+                span {
+                    display: block;
+                    @include body-medium;
+                    font-size: rem(14);
+                    line-height: normal;
+                    color: getColorHex('gray');
+                }
+
+                .editorsCardImage {
+                    width: 100%;
+                    height: 100%;
+
+                    .imageStyle {
+                        width: 100%;
+                        height: 90px;
+                        border-radius: rem(8);
+                        min-height: rem(90);
+
+                        img {
+                        border-radius: rem(8);
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }   
+}

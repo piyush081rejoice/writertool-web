@@ -1,0 +1,76 @@
+@import '../../../assets/scss/main.scss';
+
+.sliderTabDesign {
+    :global(.slick-list) {
+
+        padding-left: 31px;
+
+        @include lg {
+            padding-left: 0;
+        }
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+
+    :global(.slick-slide) {
+        padding: 0 8px;
+    }
+
+    :global(.slick-list) {
+        margin: 0 auto;
+        max-width: 96%;
+    }
+    .disabled{
+        display: none;
+    }
+    .leftArrow {
+        position: absolute;
+        left: 0;
+        transform: translateY(-50%);
+        top: 50%;
+
+        svg {
+            transform: rotate(180deg);
+            cursor: pointer;
+        }
+    }
+
+    .rightArrow {
+        position: absolute;
+        right: 0;
+        transform: translateY(-50%);
+        top: 50%;
+
+        svg {
+            cursor: pointer;
+        }
+    }
+
+    button {
+        padding: rem(4 20);
+        background-color: transparent;
+        border: 1px solid getColorHex('border-color');
+        font-size: rem(12);
+        line-height: rem(20);
+        cursor: pointer;
+        @include body-medium;
+        border-radius: 99px;
+        color: getColorHex('black');
+        @include transition-3s;
+
+        @include md {
+            padding: rem(15 25);
+            font-size: rem(16);
+            letter-spacing: 0.48px;
+            line-height: normal;
+        }
+
+        &:hover {
+            background-color: getColorHex('black');
+            color: getColorHex('white');
+        }
+    }
+}

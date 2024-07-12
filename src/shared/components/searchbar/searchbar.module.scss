@@ -1,0 +1,45 @@
+@import '../../../assets/scss/main.scss';
+
+.searchbar {
+    position: relative;
+    max-width: rem(370);
+
+    .searchIcon {
+        width: rem(50);
+        height: rem(50);
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: getColorHex('black');
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    input {
+        width: 100%;
+        height: rem(50);
+        padding: rem(0 70 0 20);
+        font-size: rem(16);
+        @include body-medium;
+        line-height: normal;
+        color: getColorHex('black');
+        border: 1px solid getColorHex('border-color');
+        border-radius: 999px;
+        @include transition-3s;
+
+        &:focus {
+            border: 1px solid getColorHex('black');
+            outline: none;
+        }
+    }
+
+    ::placeholder {
+        color: getColorHex('light-gray');
+        font-size: rem(16);
+        @include body-medium;
+        line-height: normal;
+    }
+}

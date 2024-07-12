@@ -1,0 +1,256 @@
+@import '../../../assets/scss/main.scss';
+
+.signupModalWrapper {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(7.5px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+
+  &.openModalWrapper {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal {
+    box-shadow: 0px 1px 30px 0px rgba(0, 0, 0, 0.12);
+    background-color: getColorHex('white');
+    padding: rem(40 50);
+    width: rem(600);
+
+    @media (max-width:1500px) {
+      padding: rem(30);
+      width: rem(550);
+    }
+
+
+    .spacerAlignment {
+      padding: 0 0 24px 0;
+
+      .Tooltipiconalignment {
+        position: relative;
+        cursor: pointer;
+
+        &:hover {
+
+          .Tooltipmain {
+            display: block;
+          }
+        }
+
+        .tooltipicon {
+          cursor: pointer;
+        }
+
+        .Tooltipmain {
+          position: absolute;
+          z-index: 9;
+          top: -16px;
+          right: -360px;
+          display: none;
+          background-color: #FFF;
+          border: 1px solid #CBCAD7;
+          border-radius: 12px;
+          padding: 5px;
+          width: 350px;
+
+          p {
+            font-size: 12px;
+            font-weight: 500;
+            color: #000;
+          }
+
+          .tooltiptriangle {
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            margin-top: -12px;
+            width: 12px;
+            height: 24px;
+            overflow: hidden;
+
+            &::after {
+              content: '';
+              position: absolute;
+              width: 12px;
+              height: 12px;
+              left: 0;
+              top: 50%;
+              transform: translate(50%, -50%) rotate(-45deg);
+              background-color: #fff;
+              border: 1px solid #CBCAD7;
+              box-shadow: 0 1px 8px rgba(255, 255, 255, 0.5);
+            }
+          }
+        }
+
+      }
+
+
+      .errorMessage {
+        color: red;
+        margin-top: 10PX;
+      }
+
+      @media (max-width:1500px) {
+        padding: 0 0 20px 0;
+      }
+    }
+
+    h2 {
+      font-size: rem(32);
+      color: getColorHex('black');
+      @include heading-font;
+      margin: rem(0 0 20 0);
+
+      @media (max-width:1500px) {
+        margin: rem(0 0 16 0);
+        font-size: rem(22);
+      }
+    }
+
+    .checkboxText {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 10px;
+      padding: rem(0 0 20 0);
+
+      span {
+        font-size: rem(14);
+        line-height: normal;
+        color: getColorHex('black');
+
+        b {
+          @include body-bold;
+          text-decoration-line: underline;
+        }
+      }
+
+      input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: getColorHex('black');
+        position: relative;
+        top: 5px;
+        margin: 0;
+        padding: 0;
+        min-width: 16px;
+      }
+    }
+
+    .signupwithGoogle {
+      padding: rem(20 0 0 0);
+
+      button {
+        background-color: transparent;
+        padding: rem(18);
+        border-radius: rem(10);
+        font-size: rem(16);
+        justify-content: center;
+        border: 1px solid getColorHex('border-color-5');
+        @include body-medium;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        width: 100%;
+        gap: rem(16);
+        color: getColorHex('black');
+
+        @media (max-width:1500px) {
+          padding: rem(10);
+        }
+      }
+    }
+
+    .orContnetCenter {
+      max-width: rem(400);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 22px 1fr;
+      gap: rem(23);
+      align-items: center;
+
+      span {
+        display: block;
+        font-size: rem(16);
+        @include body-medium;
+        color: getColorHex('gray-870');
+      }
+
+      .line {
+        height: 1px;
+        opacity: 0.8;
+        position: relative;
+        top: rem(2);
+        background: getColorHex('border-color-5');
+        width: 100%;
+      }
+    }
+
+    .haveAccount {
+      padding: rem(0 0 20 0);
+
+      p {
+        color: getColorHex('black-400');
+        font-size: rem(16);
+        @include body-medium;
+        line-height: rem(20);
+        text-align: center;
+
+        a {
+          text-decoration-line: underline;
+          color: getColorHex('black');
+          cursor: pointer;
+        }
+      }
+    }
+
+    .signinButton {
+      padding: rem(0 0 20 0);
+
+      button {
+        border: none;
+        cursor: pointer;
+        color: getColorHex('white');
+        font-size: rem(18);
+        @include body-medium;
+        border: none;
+        border-radius: 999px;
+        padding: rem(12);
+        height: rem(58);
+        width: 100%;
+        background-color: getColorHex('black');
+
+        @media (max-width:1500px) {
+          padding: rem(10);
+          height: rem(45);
+          font-size: rem(16);
+        }
+      }
+    }
+
+    .modalHeader {
+      display: flex;
+      padding: rem(0 0 20 0);
+      align-items: center;
+      justify-content: space-between;
+
+      img[alt="Logo"] {
+        max-width: rem(144);
+      }
+
+      svg {
+        cursor: pointer;
+      }
+    }
+  }
+}

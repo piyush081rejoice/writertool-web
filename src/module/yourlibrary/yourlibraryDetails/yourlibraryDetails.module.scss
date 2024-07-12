@@ -1,0 +1,33 @@
+@import '../../../assets/scss/main.scss';
+
+.yourlibraryDetails {
+    padding: rem(0 0 100 0);
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr rem(440);
+        gap: rem(25);
+
+
+        .gridItems {
+            .pageTitle {
+                padding: rem(0 0 30 0);
+                h1 {
+                    font-size: rem(24);
+                    @include heading-font;
+                    color: getColorHex('black');
+                    line-height: normal;
+                }
+            }
+            .TrendingBlogBox {
+                padding: rem(30);
+                border-radius: rem(12);
+                border: 1px solid getColorHex('border-color-2');
+            }
+            .newsletterAlignment {
+                padding: rem(50 0 0 0);
+            }
+        }
+
+
+    }
+}

@@ -1,0 +1,124 @@
+@import '../../../../assets/scss/main.scss';
+
+.newsletter {
+    border: 1px solid getColorHex('border-color-2');
+    padding: rem(14);
+    border-radius: rem(12);
+    margin: rem(0 0 20 0);
+
+    @include md {
+        padding: rem(35);
+        margin: rem(0 0 50 0);
+
+    }
+
+    .lastText {
+        p {
+            font-size: rem(14);
+            line-height: normal;
+            @include body-medium;
+            color: getColorHex('gray');
+            text-align: center;
+
+            a {
+                color: getColorHex('black');
+            }
+        }
+    }
+
+    .buttonDesign {
+        padding: rem(0 0 20 0);
+
+        button {
+            border: none;
+            cursor: pointer;
+            font-size: rem(14);
+            line-height: rem(24);
+            color: getColorHex('white');
+            padding: rem(11);
+            width: 100%;
+            background-color: getColorHex('black');
+            border-radius: 99px;
+            @include body-medium;
+            letter-spacing: 0.48px;
+
+            @include md {
+                font-size: rem(16);
+                line-height: rem(28);
+            }
+        }
+    }
+
+    .input {
+        padding: rem(0 0 15 0);
+
+        input {
+            width: 100%;
+            border: 1px solid getColorHex('border-color-4');
+            border-radius: 999px;
+            padding: rem(0 20);
+            font-size: rem(16);
+            line-height: rem(28);
+            letter-spacing: 0.48px;
+            color: getColorHex('black');
+            @include body-medium;
+            height: 50px;
+            text-align: center;
+            @include transition-3s;
+
+            &:focus {
+                border: 1px solid getColorHex('black');
+                outline: none;
+            }
+        }
+
+        ::placeholder {
+            color: getColorHex("gray-800");
+            font-size: rem(16);
+            line-height: rem(28);
+            letter-spacing: 0.48px;
+            @include body-medium;
+        }
+
+    }
+
+    .textStyle {
+        padding: rem(0 0 14 0);
+
+        @include md {
+            padding: rem(0 0 35 0);
+
+        }
+
+        p {
+            font-size: rem(16);
+            @include heading-font;
+            color: getColorHex('black');
+            text-align: center;
+            line-height: normal;
+        }
+    }
+
+    .boxTitle {
+        padding: rem(0 0 14 0);
+
+        @include md {
+            padding: rem(0 0 35 0);
+        }
+
+        h2 {
+            font-size: rem(20);
+            line-height: rem(26);
+            text-transform: capitalize;
+            color: getColorHex('black');
+            text-align: center;
+            @include heading-font;
+            margin: rem(0 0 10 0);
+        }
+
+        .iconCenter {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

@@ -1,0 +1,99 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat-Regular";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+  margin: 0;
+}
+
+p:last-child {
+  margin: 0;
+}
+
+a{
+  text-decoration: none;
+}
+
+.wave-icon {
+  position: relative;
+  top: -6px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f5f5f5; 
+  border-radius: 999px;
+
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #292D36; 
+  border-radius: 999px;
+}
+
+
+
+.loader {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin-left: 7px;
+}
+.blackLoader {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #000;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin-left: 7px;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.Exploresvg:hover path {
+  fill: white !important; /* Change fill color to white on hover */
+}

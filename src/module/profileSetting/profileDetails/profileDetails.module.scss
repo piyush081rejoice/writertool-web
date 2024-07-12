@@ -1,0 +1,186 @@
+@import '../../../assets/scss/main.scss';
+
+.profileDetailsAllContentAlignment {
+    padding: rem(35 0 60 0);
+
+    .title {
+        padding: rem(0 0 30 0);
+
+        h1 {
+            font-size: rem(24);
+            @include heading-font;
+            color: getColorHex('black');
+        }
+    }
+
+    .box {
+        border: 1px solid getColorHex('border-color-2');
+        padding: rem(40);
+        border-radius: rem(12);
+
+        .blogInfo {
+            padding: rem(35 0 0 0);
+
+            h2 {
+                font-size: rem(18);
+                @include body-bold;
+                margin: rem(0 0 25 0);
+                color: getColorHex('black');
+            }
+
+            .buttonAlignment {
+                display: flex;
+                align-items: center;
+                gap: rem(15);
+                flex-wrap: wrap;
+                button {
+                    border-radius: 9999px;
+                    padding: rem(11 50);
+                    border: 1px solid getColorHex("gray");
+                    font-size: rem(16);
+                    cursor: pointer;
+                    letter-spacing: 0.48px;
+                    line-height: rem(28);
+                    color: getColorHex('gray');
+                    background-color: transparent;
+                    @include body-bold;
+                    transition: .3s ease-in-out;
+
+                    &:hover {
+                        border: 1px solid getColorHex('black');
+                        background-color: getColorHex('black');
+                        color: getColorHex('white');
+                    }
+                }
+            }
+        }
+
+        .allAlignment {
+            padding: rem(0 0 40 0);
+            border-bottom: 1px solid getColorHex('border-color-2');
+        }
+
+        .twoColGrid {
+            display: grid;
+            grid-template-columns: repeat(2 , 1fr);
+            align-items: flex-end;
+            gap: rem(30);
+
+            &.gap {
+                gap: rem(15);
+            }
+            
+        }
+
+        .button {
+            button {
+                padding: rem(14);
+                font-size: rem(16);
+                @include body-bold;
+                width: 100%;
+                letter-spacing: 0.48px;
+                border-radius: 999px;
+                cursor: pointer;
+
+                &.outline {
+                    border: 1px solid getColorHex('gray');
+                    color: getColorHex('gray');
+                    background-color: transparent;
+                }
+
+                &.fill {
+                    border: 1px solid transparent;
+                    background-color: getColorHex('black');
+                    color: getColorHex('white');
+                }
+            }
+        }
+
+        .profileHeaderalignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: rem(0 0 35 0);
+
+            .button {
+                button {
+                    border: none;
+                    padding: rem(2 10);
+                    cursor: pointer;
+                    border-radius: 99px;
+                    font-size: rem(12);
+                    line-height: rem(20);
+                    letter-spacing: 0.48px;
+                    display: flex;
+                    align-items: center;
+                    gap: rem(4);
+                    @include body-bold;
+
+                    &.fill {
+                        color: getColorHex('white');
+                        background-color: getColorHex('black');
+                    }
+
+                    &.outline {
+                        border: 1px solid getColorHex('black');
+                        background-color: transparent;
+                        color: getColorHex('black');
+                    }
+
+                    @include md {
+                        gap: rem(8);
+                        font-size: rem(15);
+                        padding: rem(8 25);
+                        height: rem(50);
+                        line-height: rem(24);
+                    }
+
+                    svg {
+                        width: rem(14);
+
+                        @include md {
+                            width: auto;
+                        }
+                    }
+                }
+            }
+
+            .leftContent {
+                display: flex;
+                gap: rem(30);
+                align-items: center;
+
+                p {
+                    font-size: rem(24);
+                    @include heading-font;
+                    margin: rem(0 0 12 0);
+                    color: getColorHex('black');
+                }
+
+                span {
+                    display: block;
+                    font-size: rem(16);
+                    @include body-medium;
+                    color: getColorHex("gray");
+                }
+
+                .profile {
+                    position: relative;
+                    background-color: rgba(41, 45, 54, 0.15);
+                    width: rem(100);
+                    height: rem(100);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .editIcon {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}

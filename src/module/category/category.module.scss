@@ -1,0 +1,6 @@
+@import '../../assets/scss/main.scss';
+
+.tabSpacer {
+    padding: rem(50 0);
+    border-bottom: 1px solid getColorHex('border-color-2');
+}

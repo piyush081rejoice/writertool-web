@@ -1,0 +1,166 @@
+@import '../../../assets/scss/main.scss';
+
+.profileInformationModal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.90);
+    backdrop-filter: blur(7.5px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+
+    &.openModalWrapper {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .profileInformationModalMd {
+        background-color: getColorHex('white');
+        width: rem(650);
+        padding: rem(60);
+        box-shadow: (0px 1px 30px rgba(0, 0, 0, 0.12));
+
+        .buttonRightAlignment {
+            display: flex;
+            justify-content: flex-end;
+            gap: rem(12);
+
+            button {
+                border: none;
+                cursor: pointer;
+                padding: rem(11 22);
+                font-size: rem(16);
+                letter-spacing: 0.48px;
+                line-height: rem(28);
+                border-radius: 99px;
+                cursor: pointer;
+                @include body-bold;
+            }
+
+            button:first-child {
+                color: getColorHex('black');
+                background-color: #ECECEC;
+            }
+
+            button:last-child {
+                background-color: getColorHex('black');
+                color: getColorHex('white');
+            }
+        }
+
+        .textareaDesign {
+            padding: rem(24 0);
+
+            label {
+                font-size: rem(16);
+                @include body-medium;
+                line-height: rem(24);
+                display: block;
+                padding: rem(0 0 8 0);
+                color: getColorHex('gray-900');
+            }
+
+            textarea {
+                width: 100%;
+                height: rem(125);
+                padding: rem(20);
+                font-size: rem(16);
+                resize: none;
+                border-radius: rem(6);
+                @include body-medium;
+                line-height: rem(24);
+                color: getColorHex('black');
+                @include transition-3s;
+                border: 1px solid getColorHex('border-color-5');
+
+                &:focus {
+                    outline: none;
+                    border: 1px solid getColorHex('black');
+                }
+            }
+
+            ::placeholder {
+                font-size: rem(16);
+                @include body-medium;
+                line-height: rem(24);
+                color: getColorHex('gray-870');
+            }
+        }
+
+        .profileGrid {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: rem(18);
+            padding: rem(0 0 25 0);
+            align-items: center;
+
+            p {
+                font-size: rem(24);
+                @include body-bold;
+                color: getColorHex('black');
+                margin: 0;
+            }
+
+            .profileImage {
+                width: 100%;
+                height: 100%;
+                position: relative;
+
+                .profileImageStyle {
+                    width: 100%;
+                    height: rem(100);
+                    background-color: rgba(41, 45, 54, 0.15);
+                    border-radius: 50%;
+
+                    img {
+                        border-radius: 50%;
+                    }
+                }
+
+                .profilepencilStyle {
+                    position: absolute !important;
+                    top: 56%;
+                    right: -12px;
+                    height: 38px;
+                    width: 38px;
+                    background-color: #292D36;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img {
+                        position: static !important;
+                        border-radius: 50%;
+                        width: 19px !important;
+                        height: 19px !important;
+                    }
+                }
+            }
+        }
+
+        h2 {
+            margin: rem(0 0 40 0);
+            font-size: rem(32);
+            line-height: normal;
+            @include heading-font;
+            color: getColorHex('black');
+        }
+
+        .closeIconRightAlignment {
+            display: flex;
+            justify-content: flex-end;
+
+            svg {
+                cursor: pointer;
+            }
+        }
+    }
+}

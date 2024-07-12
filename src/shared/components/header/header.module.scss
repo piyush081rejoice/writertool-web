@@ -1,0 +1,104 @@
+@import '../../../assets/scss/main.scss';
+
+.header {
+    padding: rem(10 0);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background-color: getColorHex('white');
+
+    @include md {
+        padding: rem(20 0);
+    }
+
+    .headerAlignment {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .profileImage {
+            background-color: rgba(41, 45, 54, 0.12);
+            width: rem(50);
+            height: rem(50);
+            display: flex;
+            align-items: center;
+            border-radius: 50%;
+            cursor: pointer;
+            justify-content: center;
+        }
+
+        .logo {
+            height: 100%;
+
+            img {
+                max-width: 100px;
+                cursor: pointer;
+
+                @include md {
+                    max-width: 130px;
+                }
+            }
+        }
+
+        .rightAllContent {
+            display: flex;
+            align-items: center;
+            gap: rem(10);
+
+            @include md {
+                gap: rem(30);
+            }
+
+            .notificationIcon {
+                width: rem(20);
+
+                @include md {
+                    width: rem(35);
+                }
+
+                img {
+                    cursor: pointer;
+                }
+            }
+
+            button {
+                border: none;
+                padding: rem(2 10);
+                cursor: pointer;
+                border-radius: 99px;
+                font-size: rem(12);
+                line-height: rem(20);
+                letter-spacing: 0.48px;
+                display: flex;
+                align-items: center;
+                gap: rem(4);
+                @include body-bold;
+                &.fill {
+                    color: getColorHex('white');
+                    background-color: getColorHex('black');
+                }
+
+                &.outline {
+                    border:1px solid getColorHex('black');
+                    background-color: transparent;
+                    color: getColorHex('black');
+                }
+                @include md {
+                    gap: rem(8);
+                    font-size: rem(15);
+                    padding: rem(8 22);
+                    height: rem(50);
+                    line-height: rem(24);
+                }
+
+                svg {
+                    width: rem(14);
+
+                    @include md {
+                        width: auto;
+                    }
+                }
+            }
+        }
+    }
+}

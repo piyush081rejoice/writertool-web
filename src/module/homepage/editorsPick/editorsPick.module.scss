@@ -1,0 +1,150 @@
+@import '../../../assets/scss/main.scss';
+
+.editorsPickSection {
+    padding: rem(40 0);
+
+    @include md {
+        padding: rem(60 0 50 0);
+    }
+
+    .title {
+        padding: rem(0 0 10 0);
+
+        @include md {
+            padding: rem(0 0 30 0);
+        }
+
+        h2 {
+            font-size: rem(22);
+            @include heading-font;
+            color: getColorHex('black');
+            text-transform: capitalize;
+            line-height: normal;
+            margin: rem(0 0 0 0);
+
+            @include md {
+                font-size: rem(24);
+            }
+        }
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: rem(25);
+
+        @include md {
+            grid-template-columns: 1fr;
+        }
+
+        @include lg {
+            grid-template-columns: 1fr 440px;
+        }
+
+        .gridItems {
+            border: 1px solid getColorHex('border-color-2');
+            border-radius: rem(12);
+            padding: rem(14);
+
+            @include md {
+                padding: rem(30);
+            }
+
+            .subGrid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: rem(30);
+
+                @include md {
+                    grid-template-columns: 320px 1fr;
+                }
+
+                .subGridItems {
+                    .editorsCard:last-child {
+                        padding-bottom: rem(0);
+                        border: none;
+                    }
+
+                    .editorsCard:first-child {
+                        padding-top: rem(0);
+                    }
+
+                    .editorsCard {
+                        padding: rem(20 0);
+                        border-bottom: rem(1) solid getColorHex("border-color-light");
+                        display: grid;
+                        grid-template-columns: 125px 1fr;
+                        gap: rem(10);
+                        @include transition-3s;
+                        cursor: pointer;
+
+                        @include md {
+                            gap: rem(15);
+                            padding: rem(25 0);
+                        }
+
+                        &:hover {
+                            transform: translate(0, -3px);
+                        }
+
+                        h3 {
+                            font-size: rem(13);
+                            @include heading-font;
+                            color: getColorHex('black');
+                            margin: rem(0 0 6 0);
+                            line-height: normal;
+                            @include transition-3s;
+
+                            &:hover {
+                                text-decoration-line: underline;
+                            }
+
+                            @include md {
+                                font-size: rem(15);
+                            }
+                        }
+
+                        span {
+                            display: block;
+                            @include body-medium;
+                            font-size: rem(12);
+                            line-height: normal;
+                            color: getColorHex('gray');
+
+                            @include md {
+                                font-size: rem(14);
+                            }
+                        }
+
+                        .editorsCardImage {
+                            width: 100%;
+                            height: 100%;
+
+                            .imageStyle {
+                                width: 100%;
+                                height: 90px;
+                                border-radius: rem(8);
+                                min-height: rem(90);
+
+                                img {
+                                    border-radius: rem(8);
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .SkeletonCard {
+        padding-bottom: 10px;
+        display: flex;
+
+        .sideLine {
+            margin-bottom: 5px;
+            
+        }
+    }
+}
