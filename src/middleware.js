@@ -4,9 +4,9 @@ export function middleware(request) {
 
   const userToken = request.cookies.has("userToken");
 
-  const protectedRoutes = ["/write-blog", "/your-stories",  "/update-blog/:path*"];
+  const protectedRoutes = ["/write-blog", "/your-stories"];
 
-  if (protectedRoutes.includes(currentPath) && !userToken) {
+  if (protectedRoutes.includes(currentPath) && !request.cookies.has("userToken")) {
     return NextResponse.redirect(new URL(`/sign-in`, request.url));
   }
 }
