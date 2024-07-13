@@ -34,7 +34,7 @@ const HomePage = ({getBlogCategoryData,getBlogsData,getTrendingBlogData}) => {
     <div>
       <HeroBanner {...{getBlogCategoryData}} />
       <EditorsPick {...{getBlogsData ,getTrendingBlogData}} />
-      <LatestPosts {...{getBlogsData}}  />
+      <LatestPosts {...{getBlogsData}}  /> 
       <FrequentlyAskedQuestions />
       {isOnBoardingComplete && <CustomizeyourOrganization  setIsOnBoardingComplete={setIsOnBoardingComplete} />}
       {/* <ChangePassword/> */}

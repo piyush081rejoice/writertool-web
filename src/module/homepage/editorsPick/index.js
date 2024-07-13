@@ -8,10 +8,11 @@ import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import { DateConvert } from "@/common";
+import { useRouter } from "next/router";
 
 const CardImage = "/assets/images/editors-pick.png";
 export default function EditorsPick({ getBlogsData ,getTrendingBlogData }) {
-  
+  const  router = useRouter()  
   return (
     <div className={styles.editorsPickSection}>
       <div className="container">
@@ -31,10 +32,10 @@ export default function EditorsPick({ getBlogsData ,getTrendingBlogData }) {
                       return (
                         <div className={styles.editorsCard} key={i}>
                           <div className={styles.editorsCardImage}>
-                            <Image src={item?.thumbnail} alt="CardImage" height={90} width={125} className={styles.imageStyle} />
+                            <Image style={{cursor:"pointer"}} onClick={()=>router.push(`/blog/${item?.slugId}`)} src={item?.thumbnail} alt="CardImage" height={90} width={125} className={styles.imageStyle} />
                           </div>
                           <div className={styles.editorsCardItems}>
-                            <Link href="/blog-inside">
+                            <Link href={`/blog/${item?.slugId}`}>
                               <h3>{item?.title}</h3>
                             </Link>
                             <span>{DateConvert(item?.createdAt)}</span>
@@ -57,7 +58,7 @@ export default function EditorsPick({ getBlogsData ,getTrendingBlogData }) {
                         </div>
                       ))}
               </div>
-            </div>
+            </div> 
           </div>
           <div className={styles.gridItems}>
             <TrendingBlog {...{getTrendingBlogData}} />

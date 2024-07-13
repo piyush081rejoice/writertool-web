@@ -30,6 +30,7 @@
             color: getColorHex('black');
             opacity: 0.9;
             margin: rem(0 0 15 0);
+            @include body-medium;
             @include md {
                 font-size: rem(16);
                 line-height: rem(28);

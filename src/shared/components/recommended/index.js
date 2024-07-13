@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import { DateConvert, GenerateDescription } from "@/common";
+import { useRouter } from "next/router";
 const CardImage = "/assets/images/latest-post.png";
 const ProfileImage = "/assets/images/profile.png";
 const BookmarkIcon = "/assets/icons/bookmark.svg";
@@ -15,6 +16,7 @@ const MenuIcon = "/assets/icons/menu.svg";
 export default function Recommended({ slugId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [blogData, setBlogData] = useState([]);
+  const router = useRouter()
 
   useEffect(() => {
     getBlogData();
@@ -23,7 +25,7 @@ export default function Recommended({ slugId }) {
   const getBlogData = async () => {
     try {
         setIsLoading(true)
-      const response = await ApiGet(`${slugId ?`blog-services/blogs/get?blogCategorySlugIds[0]=${slugId}` :"blog-services/blogs/get"}`);
+      const response = await ApiGet(`${slugId ?`blog-services/blogs/get?blogCategorySlugIds[0]=${slugId}&isActive=true` :"blog-services/blogs/get?isActive=true"}`);
       if (response?.data?.success) {
         setBlogData(response?.data?.payload?.blogs ?response?.data?.payload?.blogs :response?.data?.payload?.editor_blogs);
         setIsLoading(false);
@@ -63,7 +65,7 @@ export default function Recommended({ slugId }) {
             : blogData?.map((data, i) => (
                 <div className={styles.card} key={i}>
                   <div className={styles.cardImage}>
-                    <Image height={216} width={301} src={data?.thumbnail} alt="CardImage" className={styles.cardImageStyle} />
+                    <Image style={{cursor:"pointer"}} onClick={()=>router.push(`/blog/${data?.slugId}`)} height={216} width={301} src={data?.thumbnail} alt="CardImage" className={styles.cardImageStyle} />
                   </div>
                   <div>
                     <div className={styles.firstColumn}>
@@ -73,15 +75,16 @@ export default function Recommended({ slugId }) {
                         </div>
                         <span>{data?.Users?.userName}</span>    
                       </div>
-                      <ul>
+                      {data?.isTrending ? <ul>
                         <li>Trending</li>
-                      </ul>
+                      </ul> : null}
+                      
                       <ul>
                       <li>{DateConvert(data?.createdAt)}</li>
                       </ul>
                     </div>
-                    <h3>{data?.title}</h3>
-                    <p>{GenerateDescription(data?.description)}</p>
+                    <h3  onClick={()=>router.push(`/blog/${data?.slugId}`)} >{data?.title}</h3>
+                    <p className="texttruncatefourlines">{data?.sortDescription ?data?.sortDescription:""}</p>
                     <div className={styles.iconAlignment}>
                       <img src={BookmarkIcon} alt="BookmarkIcon" width="100%" height="100%" />
                       <img src={MinusIcon} alt="MinusIcon" width="100%" height="100%" />

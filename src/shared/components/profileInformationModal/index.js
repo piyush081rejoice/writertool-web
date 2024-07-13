@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './profileInformationModal.module.scss';
 import classNames from 'classnames';
 import CloseIcon from '@/assets/icons/closeIcon';
-import LazyImage from '@/helpers/lazyImage';
 import Input from '../input';
 import toast from 'react-hot-toast';
 import { ApiGet, ApiPut } from '@/helpers/API/ApiData';

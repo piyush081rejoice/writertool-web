@@ -1,19 +1,21 @@
-import { DateConvert, GenerateDescription } from "@/common";
+import { DateConvert } from "@/common";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./editorsPickDetails.module.scss";
-const CardImage = "/assets/images/card-image.png";
+import { useRouter } from "next/router";
 const ProfileImage = "/assets/images/profile.png";
 export default function EditorsPickDetails({ getBlogsData }) {
   const singleBlog = getBlogsData?.[0];
+  const  router = useRouter()
   return (
     <div className={styles.editorsPickDetails}>
       <div className={styles.imageStyle}>
-        <Image src={singleBlog?.thumbnail} alt="CardImage" height={250} width={320} className={styles.cardImage} />
-
-        <div className={styles.buttonDesign}>
-          <button>Trending</button>
-        </div>
+        <Image style={{cursor:"pointer"}} onClick={()=>router.push(`/blog/${singleBlog?.slugId}`)}  src={singleBlog?.thumbnail} alt="CardImage" height={250} width={320} className={styles.cardImage} />
+        {singleBlog?.isTrending ? (
+          <div className={styles.buttonDesign}>
+            <button>Trending</button>
+          </div>
+        ) : null}
       </div>
       <div className={styles.cardDetails}>
         <div className={styles.firstColumn}>
@@ -21,16 +23,16 @@ export default function EditorsPickDetails({ getBlogsData }) {
             <div className={styles.profileImage}>
               <Image src={singleBlog?.Users?.profileImage ? singleBlog?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
             </div>
-            <span>{singleBlog?.Users?.userName}</span>
+            <span style={{fontSize:"12px"}} >{singleBlog?.Users?.userName}</span>
           </div>
           <ul>
             <li>{DateConvert(singleBlog?.createdAt)}</li>
           </ul>
         </div>
-        <Link href="/blog-inside">
+        <Link href={`/blog/${singleBlog?.slugId}`}>
           <h3>{singleBlog?.title}</h3>
         </Link>
-        <p>{GenerateDescription(singleBlog?.description)}</p>
+        <p className={"texttruncatesixlines"}>{singleBlog?.sortDescription ? singleBlog?.sortDescription : ""}</p>
       </div>
     </div>
   );

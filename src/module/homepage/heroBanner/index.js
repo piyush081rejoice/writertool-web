@@ -3,6 +3,7 @@ import styles from "./heroBanner.module.scss";
 import Searchbar from "@/shared/components/searchbar";
 import LazyImage from "@/helpers/lazyImage";
 import { useRouter } from "next/router";
+import Image from "next/image";
 const HeroBannerImage = "/assets/images/herobanner.png";
 export default function HeroBanner({ getBlogCategoryData }) {
   const [showBlogs, setShowBlogs] = useState(getBlogCategoryData);
@@ -35,13 +36,7 @@ export default function HeroBanner({ getBlogCategoryData }) {
               </div>
               <div className={styles.flexBoxItems}>
                 <div className={styles.img}>
-                  <LazyImage
-                    image={{
-                      src: HeroBannerImage,
-                      alt: "CardImage",
-                    }}
-                    className={styles.herobannerImage}
-                  />
+                  <Image height={340} width={482} src={HeroBannerImage} alt="CardImage" className={styles.herobannerImage}/>
                 </div>
               </div>
             </div>

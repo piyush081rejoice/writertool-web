@@ -2,7 +2,7 @@ import { ApiGet } from "@/helpers/API/ApiData";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./PublishedStories.module.scss";
-import { DateConvert, GenerateDescription } from "@/common";
+import { DateConvert } from "@/common";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import DeleteBlog from "../DeleteBlog";
@@ -77,7 +77,7 @@ const PublishedStories = ({ status }) => {
                       </ul>
                     </div>
                     <h3>{data?.title}</h3>
-                    <p>{GenerateDescription(data?.description)}</p>
+                    <p>{data?.sortDescription ?data?.sortDescription:""}</p>
                     <div className={styles.iconAlignment}>
                       <div className={styles.imageAlignment}>
                         {data?.status !== "Rejected" ? (

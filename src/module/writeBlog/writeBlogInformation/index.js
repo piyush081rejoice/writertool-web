@@ -73,6 +73,10 @@ import { useRouter } from "next/router";
         formIsValid = false;
         updatedError["title"] = "Please provide a blog title.";
       }
+      if (isEmpty(inputValue?.sortDescription)) {
+        formIsValid = false;
+        updatedError["sortDescription"] = "Please provide a short Description.";
+      }
       if (isEmpty(inputValue?.coverPhoto)) {
         formIsValid = false;
         updatedError["coverPhoto"] = "Please upload cover photo.";
@@ -98,6 +102,7 @@ import { useRouter } from "next/router";
       let formData = new FormData();
         try {
           formData.append("title", inputValue?.title);
+          formData.append("sortDescription", inputValue?.sortDescription);
           formData.append("description", editorValue);
           formData.append("coverPhoto", inputValue?.coverPhoto);
           selectedBlogs.forEach((category, index) => {
@@ -105,7 +110,7 @@ import { useRouter } from "next/router";
           });
           if (keyWords.length>0) {
             keyWords.forEach((keyWord, index) => {
-              formData.append(`keyword[${index}]`, keyWord);
+              formData.append(`keyWords[${index}]`, keyWord);
             });
           }
           if (!isEmpty(inputValue?.youtubeLink)) {
@@ -163,7 +168,7 @@ import { useRouter } from "next/router";
     
     useEffect(() => {
       if (updateId) {
-        setInputValue({youtubeLink:updateBlogData?.youtubeLink ?updateBlogData?.youtubeLink :"" , twitterLink:updateBlogData?.twitterLink ?updateBlogData?.twitterLink :"", linkedinLink:updateBlogData?.linkedinLink ?updateBlogData?.linkedinLink :"", facebookLink:updateBlogData?.facebookLink ?updateBlogData?.facebookLink :"", instagramLink:updateBlogData?.instagramLink ?updateBlogData?.instagramLink :"",slugId:updateBlogData?.slugId ?updateBlogData?.slugId :"",websiteLink:updateBlogData?.websiteLink ?updateBlogData?.websiteLink :"",title:updateBlogData?.title ?updateBlogData?.title :"",coverPhoto:""})
+        setInputValue({sortDescription:updateBlogData?.sortDescription ?updateBlogData?.sortDescription :"",youtubeLink:updateBlogData?.youtubeLink ?updateBlogData?.youtubeLink :"" , twitterLink:updateBlogData?.twitterLink ?updateBlogData?.twitterLink :"", linkedinLink:updateBlogData?.linkedinLink ?updateBlogData?.linkedinLink :"", facebookLink:updateBlogData?.facebookLink ?updateBlogData?.facebookLink :"", instagramLink:updateBlogData?.instagramLink ?updateBlogData?.instagramLink :"",slugId:updateBlogData?.slugId ?updateBlogData?.slugId :"",websiteLink:updateBlogData?.websiteLink ?updateBlogData?.websiteLink :"",title:updateBlogData?.title ?updateBlogData?.title :"",coverPhoto:""})
         const extractFilenameFromUrl = (url) => {
           const parsedUrl = new URL(url);
           const pathname = parsedUrl.pathname;
@@ -175,11 +180,10 @@ import { useRouter } from "next/router";
         urlToFile(updateBlogData.coverPhoto, filename, mimeType).then(file => {
           setInputValue((prevValue) => ({ ...prevValue, coverPhoto: file }));
         });
-
         setKeyWords(updateBlogData?.keyWords? updateBlogData?.keyWords :null)
         setCoverPhotoPreview(updateBlogData?.coverPhoto ?updateBlogData?.coverPhoto :null)
-        setSelectedBlogs(getBlogCategoryData?.filter((data)=>updateBlogData?.blogCategoryId?.includes(data?._id)))
-        setAllBlogs(getBlogCategoryData?.filter((item) => !updateBlogData?.blogCategoryId?.includes(item?._id)));
+        setSelectedBlogs(getBlogCategoryData?.filter((data) =>updateBlogData?.blogCategoryId?.some((categoryObj) => categoryObj?._id === data?._id)));
+        setAllBlogs(getBlogCategoryData?.filter((item) => !updateBlogData?.blogCategoryId?.some((categoryObj) => categoryObj?._id === item?._id)));
         setEditorValue(updateBlogData?.description?updateBlogData?.description:"")
 
       }
@@ -268,6 +272,9 @@ import { useRouter } from "next/router";
                 </div>
                 <div className={styles.spacer}>
                   <Input label="Slug URL" placeholder="Type your slug url..." onChange={handleOnValueChange} name="slugId" value={inputValue?.slugId} errorMessage={errors?.slugId} />
+                </div>
+                <div className={styles.spacer}>
+                  <Input label="Short Description" placeholder="Type your Short Description..." onChange={handleChange} name="sortDescription" value={inputValue?.sortDescription} errorMessage={errors?.sortDescription} />
                 </div>
                 <div className={styles.spacer}>
                   <Input button={"Add Keyword"} label="Keywords" placeholder="Type your Keywords ..." onChange={handleChange} name="Keywords" value={inputValue?.Keywords}  onButtonClick={inputValue?.Keywords && handleOnKeyWordChange} />

@@ -131,6 +131,10 @@
                             @include heading-font;
                             margin: rem(0 0 12 0);
                             color: getColorHex('black');
+                            @include transition-3s;
+                            &:hover {
+                                text-decoration-line: underline;
+                            }
                             @include md {
                                 font-size: rem(20);
                                 line-height: rem(26);

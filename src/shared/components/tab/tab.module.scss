@@ -23,9 +23,11 @@
         margin: 0 auto;
         max-width: 96%;
     }
-    .disabled{
+
+    .disabled {
         display: none;
     }
+
     .leftArrow {
         position: absolute;
         left: 0;
@@ -55,6 +57,10 @@
         border: 1px solid getColorHex('border-color');
         font-size: rem(12);
         line-height: rem(20);
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
         cursor: pointer;
         @include body-medium;
         border-radius: 99px;
@@ -71,6 +77,15 @@
         &:hover {
             background-color: getColorHex('black');
             color: getColorHex('white');
+
+            svg {
+
+                g {
+                    path {
+                        fill: #fff;
+                    }
+                }
+            }
         }
     }
 }

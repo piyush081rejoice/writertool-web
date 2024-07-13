@@ -89,8 +89,13 @@
                     font-size: rem(20);
                     line-height: rem(26);
                     @include heading-font;
+                    cursor: pointer;
                     margin: rem(0 0 12 0);
                     color: getColorHex('black');
+                    @include transition-3s;
+                    &:hover {
+                        text-decoration-line: underline;
+                    }
                 }
 
                 .firstColumn {

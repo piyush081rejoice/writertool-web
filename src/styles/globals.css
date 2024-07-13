@@ -97,3 +97,20 @@ input[type=number] {
 .Exploresvg:hover path {
   fill: white !important; /* Change fill color to white on hover */
 }
+
+.texttruncatesixlines{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+.texttruncatefourlines{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}

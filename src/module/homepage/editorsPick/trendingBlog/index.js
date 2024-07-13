@@ -3,12 +3,13 @@ import styles from "./trendingBlog.module.scss";
 import LazyImage from "@/helpers/lazyImage";
 import Arrow from "@/assets/icons/arrow";
 import Link from "next/link";
-import { GenerateDescription } from "@/common";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
+import { useRouter } from "next/router";
 const ArrowIcon = "/assets/icons/arrow.svg";
 const ProfileImage = "/assets/images/profile-sm.png";
 export default function TrendingBlog({ getTrendingBlogData }) {
+  const  router = useRouter()  
   return (
     <div className={styles.trendingBlog}>
       <div className={styles.sectionTitle}>
@@ -20,8 +21,8 @@ export default function TrendingBlog({ getTrendingBlogData }) {
           ? getTrendingBlogData?.map((item, i) => {
               return (
                 <div className={styles.blogCard} key={i}>
-                  <h3>{item?.title}</h3>
-                  <span>{GenerateDescription(item?.description)}</span>
+                  <h3 onClick={()=>router.push(`/blog/${item?.slugId}`)} style={{cursor:"pointer"}}>{item?.title}</h3>
+                  <span>{item?.sortDescription ? item?.sortDescription : ""}</span>
                   <div className={styles.profileGrid}>
                     <div className={styles.profileImage}>
                       <Image src={item?.Users?.profileImage ? item?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
@@ -37,8 +38,15 @@ export default function TrendingBlog({ getTrendingBlogData }) {
               .fill(0)
               .map((_, index) => (
                 <div key={index} className={styles.blogCard}>
-                  <div>
-                    <Skeleton height={216} width={301} />
+                  <Skeleton height={25} width={356} />
+                  <div style={{display:"flex" ,gap:"10px"}}>
+                    <div >
+                      <Skeleton circle height={50} width={50} />
+                    </div>
+                    <div>
+                      <Skeleton height={20} width={301} />
+                      <Skeleton height={20} width={301} />
+                    </div>
                   </div>
                 </div>
               ))}

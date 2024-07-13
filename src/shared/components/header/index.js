@@ -15,6 +15,7 @@ const Header = () => {
   const router = useRouter();
   const handleWriteBlog =()=>{
     const userLogin =getCookie("userToken")
+    console.log("🚀 ~ file: index.js:18 ~ handleWriteBlog ~ userLogin:", userLogin)
     if (userLogin !== undefined) {
       router.push("/write-blog")
     }else{
@@ -29,6 +30,7 @@ const Header = () => {
     }else{
       setUserLoggedIn(true);
     }
+    
   }, [getCookie("userToken")]);
 
   return (

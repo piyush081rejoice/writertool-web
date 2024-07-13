@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./customizeyourOrganization.module.scss";
 import classNames from "classnames";
 import Input from "../input";

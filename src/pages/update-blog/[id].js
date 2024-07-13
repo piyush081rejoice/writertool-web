@@ -19,8 +19,7 @@ export async function getServerSideProps(context) {
   const { id } = context.params;
   try {
     const blogCategoryData = await ApiGet("blog-services/blog-categories/get?isActive=true&skip=1&limit=50").then((resp) => resp?.data?.payload);
-    const updateBlogData = await ApiGet(`blog-services/blogs/get?id=${id}`).then((resp) => resp?.data?.payload?.blog_category);
-
+    const updateBlogData = await ApiGet(`blog-services/blogs/get?id=${id}`).then((resp) => resp?.data?.payload?.blogs);
     return {
       props: {
         getBlogCategoryData: blogCategoryData?.blog_category,
