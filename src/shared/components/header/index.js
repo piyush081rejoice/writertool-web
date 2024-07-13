@@ -14,8 +14,16 @@ const Header = () => {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const router = useRouter();
   const handleWriteBlog = () => {
-    console.log(`HEllo`)
-    router.push("/write-blog");
+    const userLogin = getCookie("userToken")            
+    if (userLogin != undefined) {
+        router.push("/write-blog")
+        console.log(`write-blog`)
+        
+      }else{
+        router.push("/sign-in")
+        console.log(`sign-in`)
+        
+    }
   };
   useEffect(() => {
     const userEmail = getCookie("userToken");
