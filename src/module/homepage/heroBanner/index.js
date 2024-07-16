@@ -5,19 +5,19 @@ import LazyImage from "@/helpers/lazyImage";
 import { useRouter } from "next/router";
 import Image from "next/image";
 const HeroBannerImage = "/assets/images/herobanner.png";
-export default function HeroBanner({ getBlogCategoryData }) {
-  const [showBlogs, setShowBlogs] = useState(getBlogCategoryData);
-  const [searchKeyWord, setSearchKeyWord] = useState("");
+export default function HeroBanner({ getBlogCategoryData ,showBlogs,searchKeyWord, setSearchKeyWord }) {
+  // const [showBlogs, setShowBlogs] = useState(getBlogCategoryData);
+  // const [searchKeyWord, setSearchKeyWord] = useState("");
   const router = useRouter();
-  const handleOnSearchClick = () => {
-    if (searchKeyWord !== "") {
-      const keyword = searchKeyWord?.toLowerCase();
-      const updatedData = getBlogCategoryData?.filter((data) => data?.title?.toLowerCase().includes(keyword));
-      setShowBlogs(updatedData);
-    } else {
-      setShowBlogs(getBlogCategoryData);
-    }
-  };
+  // const handleOnSearchClick = () => {
+  //   if (searchKeyWord !== "") {
+  //     const keyword = searchKeyWord?.toLowerCase();
+  //     const updatedData = getBlogCategoryData?.filter((data) => data?.title?.toLowerCase().includes(keyword));
+  //     setShowBlogs(updatedData);
+  //   } else {
+  //     setShowBlogs(getBlogCategoryData);
+  //   }
+  // };
   return (
     <>
       <div className={styles.heroBanner}>
@@ -31,7 +31,7 @@ export default function HeroBanner({ getBlogCategoryData }) {
               <div className={styles.flexBoxItems}>
                 <h1>Write Like a Pro: Tools to Unleash Your Content Superpower</h1>
                 <p>Unlock your full writing potential with the WriterTools Blog. Discover powerful tools for effortless writing, impactful reading, and content that shines brighter than ever.</p>
-                <Searchbar {...{ searchKeyWord, setSearchKeyWord, handleOnSearchClick }} />
+                <Searchbar {...{ searchKeyWord, setSearchKeyWord }} />
               
               </div>
               <div className={styles.flexBoxItems}>

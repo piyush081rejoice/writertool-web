@@ -206,10 +206,10 @@ export const Api = (type, methodtype, userData) => {
     });
 };
 
-export const ApiGet = (type) => {
+export const ApiGet = (type,AdditionalHeader) => {
     return new Promise((resolve, reject) => {
         axios
-            .get(BaseURL + type, getHttpOptions())
+            .get(BaseURL + type, {...getHttpOptions(),...AdditionalHeader})
             .then((responseJson) => {
                 resolve(responseJson);
           

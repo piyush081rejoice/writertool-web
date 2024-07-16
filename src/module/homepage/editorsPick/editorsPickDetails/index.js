@@ -11,11 +11,6 @@ export default function EditorsPickDetails({ getBlogsData }) {
     <div className={styles.editorsPickDetails}>
       <div className={styles.imageStyle}>
         <Image style={{cursor:"pointer"}} onClick={()=>router.push(`/blog/${singleBlog?.slugId}`)}  src={singleBlog?.thumbnail} alt="CardImage" height={250} width={320} className={styles.cardImage} />
-        {singleBlog?.isTrending ? (
-          <div className={styles.buttonDesign}>
-            <button>Trending</button>
-          </div>
-        ) : null}
       </div>
       <div className={styles.cardDetails}>
         <div className={styles.firstColumn}>

@@ -3,6 +3,7 @@ import styles from "./tab.module.scss";
 import Slider from "react-slick";
 import Explore from "@/assets/icons/Explore";
 import { useRouter } from "next/router";
+import { getCookie } from "@/hooks/useCookie";
 
 function SampleNextArrow(props) {
   const { onClick, disabled } = props;
@@ -33,6 +34,14 @@ function SamplePrevArrow(props) {
 }
 
 export default function Tab({ getBlogCategoryData }) {
+  const [userIsLoggedIn, setUserIsLoggedIn] = useState(false)
+  useEffect(() => {
+    const userToken = getCookie("userToken")
+    if (userToken != undefined) {
+      setUserIsLoggedIn(true)
+    }
+  }, [])
+  
   const [isNextDisabled, setIsNextDisabled] = useState(false);
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [slider, setSlider] = useState(null);
@@ -77,6 +86,12 @@ export default function Tab({ getBlogCategoryData }) {
             <button style={{ color: "white" }}  onClick={()=>router.push("/category")}>
               <Explore /> Explore Topics
             </button>
+            {
+              userIsLoggedIn ? <button style={{ color: "white" }}  onClick={()=>router.push("/category/for-you")}>
+              For You
+            </button> :null
+            }
+            
             {getBlogCategoryData?.map?.((data, index) => (
               <button key={index} onClick={()=>router.push(`/category/${data?.slugId}`)}>{data?.title}</button>
             ))}

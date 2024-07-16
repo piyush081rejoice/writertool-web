@@ -12,7 +12,7 @@ import { auth } from "@/shared/loginWithGoogle/firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import toast, { Toaster } from "react-hot-toast";
 import { ApiPostNoAuth } from "@/helpers/API/ApiData";
-import { setCookie } from "@/hooks/useCookie";
+import { getCookie, removeCookie, setCookie } from "@/hooks/useCookie";
 import OtpVerificationModal from "../otpVerificationModal";
 import Loader from "@/common/Loader";
 import Image from "next/image";
@@ -49,7 +49,9 @@ export default function SignupModal() {
           setCookie("userToken", userToken);
           setCookie("isProfileCompleted", resp?.data?.payload?.user?.isProfileCompleted);
           toast.success("You have successfully signed up.");
-          router.push("/");
+          const  redirectUrl =getCookie("redirectUrl")
+          router.push(redirectUrl != undefined ? redirectUrl : "/")
+          removeCookie("redirectUrl")        
         }
       } else {
         toast.error("Please reach out to your administrator to activate your account.");

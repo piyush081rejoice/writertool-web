@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { ApiGet } from "@/helpers/API/ApiData";
 import DownArrow from "@/assets/icons/downArrow";
 import { WEBSITE_URL_REGEX } from "@/helpers/Constant";
+import OnClickOutside from "@/hooks/useClickOutside";
 const Logo = "/assets/logo/logo.svg";
 
 export default function CustomizeyourOrganization({ setIsOnBoardingComplete }) {
@@ -16,6 +17,7 @@ export default function CustomizeyourOrganization({ setIsOnBoardingComplete }) {
   const [productValue, setProductValue] = useState("Select product category");
   const [openBlogsCategory, setOpenBlogsCategory] = useState(false);
   const [errors, setError] = useState({});
+  const dropDownRef =useRef(null)
 
   const validateForm = () => {
     let errors = {};
@@ -36,6 +38,8 @@ export default function CustomizeyourOrganization({ setIsOnBoardingComplete }) {
   };
 
   const [showDropdown, setShowDropdown] = useState(false);
+  const toggleDropDown =( )=> setShowDropdown(false)
+  OnClickOutside([dropDownRef], toggleDropDown )
 
   useEffect(() => {
     handleProductCategoryData();
@@ -71,12 +75,12 @@ export default function CustomizeyourOrganization({ setIsOnBoardingComplete }) {
           </div>
           <div className={styles.selectDropdownDesign}>
             <label>Product Category</label>
-            <div className={styles.relative}>
-              <input style={{cursor:"pointer"}} readOnly type="text" value={productValue?.title ? productValue?.title : productValue} onClick={() => setShowDropdown(!showDropdown)} />
+            <div ref={dropDownRef} className={styles.relative}>
+              <input style={{cursor:"pointer"}} readOnly type="text" value={productValue?.title ? productValue?.title : productValue} onClick={() => setShowDropdown(!showDropdown)}/>
               <div className={classNames(styles.icon, showDropdown ? styles.toggleIcon : styles.toggledIcon)}>
                 <DownArrow />
               </div>
-              <div className={classNames(styles.dropdownDesign, showDropdown ? styles.show : styles.hide)}>
+              <div  className={classNames(styles.dropdownDesign, showDropdown ? styles.show : styles.hide)}>
                 {getProductCategoryData?.product_category?.map((data, index) => (
                   <span onClick={() => handleProductChange(data)} key={index}>
                     {data?.title}

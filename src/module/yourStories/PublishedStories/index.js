@@ -9,6 +9,7 @@ import DeleteBlog from "../DeleteBlog";
 import Skeleton from "react-loading-skeleton";
 import DeleteIcon from "../../../../public/assets/images/Delete.png";
 import PencilEdit from "../../../../public/assets/images/Edit.png";
+import NoBlogPublished from "@/shared/components/NoBlogFound/NoBlogPublished";
 const ProfileImage = "/assets/images/profile.png";
 
 const statusClasses = {
@@ -121,7 +122,7 @@ const PublishedStories = ({ status }) => {
                   </div>
                 </div>
               </div>
-            )) : <div> The blogs that you are looking for have not been found.</div>
+            )) : <NoBlogPublished/>
             
             }
         </div>

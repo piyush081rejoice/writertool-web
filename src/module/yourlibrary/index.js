@@ -1,17 +1,10 @@
-import React from 'react'
-import styles from './yourlibrary.module.scss';
-import YourlibraryDetails from './yourlibraryDetails';
-export default function Yourlibrary() {
-    return (
-        <div>
-            <div className="container">
-                <div className={styles.yourlibrarybreadcumbalignment}>
-                    <span>Writertools</span>
-                    <span>/</span>
-                    <span>Library</span>
-                </div>
-            </div>
-            <YourlibraryDetails/>
-        </div>
-    )
+import Breadcrumb from "../writeBlog/breadcrumb";
+import YourlibraryDetails from "./yourlibraryDetails";
+export default function Yourlibrary({isTrendingBlogsData,getBlogCategoryData}) {
+  return (
+    <div>
+      <Breadcrumb dynamicList={"Library"} />
+      <YourlibraryDetails {...{ isTrendingBlogsData ,getBlogCategoryData }} />
+    </div>
+  );
 }

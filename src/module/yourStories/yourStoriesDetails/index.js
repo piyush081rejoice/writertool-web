@@ -15,23 +15,9 @@ const MinusIcon = '/assets/icons/minus.svg'
 const MenuIcon = '/assets/icons/menu.svg'
 
 
-export default function YourStoriesDetails() {
+export default function YourStoriesDetails({isTrendingBlogsData,getBlogCategoryData}) {
   const [navTab, setNavTab] = useState("1");
-  const [isTrendingData, setIsTrendingData] = useState([])
-    useEffect(() => {
-        handleIsTrendingData();
-      }, []);
-      const handleIsTrendingData = async () => {
-        try {
-          const response = await ApiGet(`blog-services/blogs/get?isTrending=true&skip=1&limit=3`);
-          const data = response?.data?.payload?.blogs;
-        
-          setIsTrendingData(data);
-        } catch (error) {
-          toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
-        }
-      };  
-  
+
   return (
     <div>
       <div className={styles.yourStoriesDetailsAlignment}>
@@ -55,12 +41,12 @@ export default function YourStoriesDetails() {
             </div>
             <div className={styles.gridItems}>
               <div className={styles.TrendingBlogBox}>
-              <TrendingBlog getTrendingBlogData={isTrendingData} />
+              <TrendingBlog getTrendingBlogData={isTrendingBlogsData} />
               </div>
               <div className={styles.newsletterAlignment}>
                 <Newsletter />
               </div>
-              <TagClouds />
+              <TagClouds getBlogCategoryData={getBlogCategoryData} />
             </div>
           </div>
         </div>

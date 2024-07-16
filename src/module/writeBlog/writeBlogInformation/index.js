@@ -20,6 +20,7 @@
   import PreviewIcon from "@/assets/icons/Preview";
   import Loader from "@/common/Loader";
 import { useRouter } from "next/router";
+import OnClickOutside from "@/hooks/useClickOutside";
   const SunEditor = dynamic(() => import("suneditor-react"), { ssr: false });
 
   export default function WriteBlogInformation({ getBlogCategoryData ,updateId ,updateBlogData  }) {
@@ -34,7 +35,9 @@ import { useRouter } from "next/router";
     const fileInputRef = useRef(null);
     const sunEditorRef = useRef(null);
     const router =useRouter()
-
+    const dropDownRef =useRef(null)
+    const toggleDropDown =( )=> setShowDropdown(false)
+    OnClickOutside([dropDownRef], toggleDropDown )
     const handleBlogChange = (data) => {
       setSelectedBlogs([...selectedBlogs, data]);
       setAllBlogs(allBlogs?.filter((item) => item?._id !== data?._id));
@@ -251,8 +254,8 @@ import { useRouter } from "next/router";
                         ))}
                       </div>
                     )}
-                    <div className={styles.relative}>
-                      <input style={{ cursor: "pointer" }} readOnly type="text" value={"Select blog category from below"} onClick={() => setShowDropdown(!showDropdown)} />
+                    <div className={styles.relative} ref={dropDownRef} >
+                      <input style={{ cursor: "pointer" }} readOnly type="text" value={"Select blog category from below"} onClick={()=>setShowDropdown(!showDropdown)} />
                       <div className={classNames(styles.icon, showDropdown ? styles.toggleIcon : styles.toggledIcon)}>
                         <DownArrow />
                       </div>

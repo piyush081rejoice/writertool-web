@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./yourStories.module.scss";
 import YourStoriesDetails from "./yourStoriesDetails";
 import Breadcrumb from "../writeBlog/breadcrumb";
-export default function YourStories() {
+export default function YourStories({isTrendingBlogsData ,getBlogCategoryData}) {
   return (
     <div>
       <Breadcrumb dynamicList={"Your Stories"} />
@@ -13,7 +13,7 @@ export default function YourStories() {
                     <span>Library</span>
                 </div>
             </div> */}
-      <YourStoriesDetails />
+      <YourStoriesDetails {...{isTrendingBlogsData,getBlogCategoryData}} />
     </div>
   );
 }

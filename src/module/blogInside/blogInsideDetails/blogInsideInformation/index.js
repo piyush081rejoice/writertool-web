@@ -1,54 +1,28 @@
 import { DateConvert } from "@/common";
-import { ApiGet } from "@/helpers/API/ApiData";
-import CommonSection from "@/shared/components/commonSection";
 
 import Recommended from "@/shared/components/recommended";
+import { marked } from "marked";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import Skeleton from "react-loading-skeleton";
 import ShareProfile from "../../shareProfile";
 import styles from "./blogInsideInformation.module.scss";
-import Skeleton from "react-loading-skeleton";
+import { useEffect } from "react";
 const ProfileImage = "/assets/images/profile.png";
-import {marked} from "marked"
-export default function BlogInsideInformation({ slugId }) {
-  
-  const [blogIsLoading, setBlogIsLoading] = useState(false);
+export default function BlogInsideInformation({ singleBlog }) {
   useEffect(() => {
-    if (blogIsLoading) {
-      document.body.style.overflow = 'hidden'
+    if (!singleBlog) {
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = ''
+      document.body.style.overflow = "";
     }
-  }, [blogIsLoading])
-
-  const [singleBlog, setSingleBlog] = useState();
-  useEffect(() => {
-    if(slugId){
-    handleIsTrendingData();}
-  }, [slugId]);
-  const handleIsTrendingData = async () => {
-    try {
-      setBlogIsLoading(true);
-      const response = await ApiGet(`blog-services/blogs/get?slugId=${slugId}`);
-      if (response?.data?.success) {
-        const data = response?.data?.payload?.blogs;
-        setSingleBlog(data);
-        setBlogIsLoading(false);
-      }
-    } catch (error) {
-      toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
-      setBlogIsLoading(false);
-    }
-  };
-
+  }, [singleBlog]);
   return (
     <>
-      {blogIsLoading ? (
-        <div style={{marginTop:"25px"}}> 
+      {!singleBlog ? (
+        <div style={{ marginTop: "25px" }}>
           <Skeleton height={30} width={775} />
-          <Skeleton style={{marginTop:"25px"}} height={30} width={775} />
-          <Skeleton style={{marginTop:"25px"}}  height={600} width={775} />
+          <Skeleton style={{ marginTop: "25px" }} height={30} width={775} />
+          <Skeleton style={{ marginTop: "25px" }} height={600} width={775} />
         </div>
       ) : (
         <div className={styles.blogInsideInformation}>
@@ -79,9 +53,9 @@ export default function BlogInsideInformation({ slugId }) {
             <Image height={496} width={775} src={singleBlog?.coverPhoto} alt="BlogImage" className={styles.profileImage} />
           </div>
           <div className={styles.details}>
-            <p>{singleBlog?.sortDescription}</p>          
-          <div  dangerouslySetInnerHTML={{__html: marked(singleBlog?.description || "-"),}} />
-          </div>
+            <p>{singleBlog?.sortDescription}</p>
+            <div  dangerouslySetInnerHTML={{__html: marked(singleBlog?.description || "-"),}} />
+            </div>
 
           <div className={styles.line}></div>
           <ShareProfile {...{ singleBlog }} />

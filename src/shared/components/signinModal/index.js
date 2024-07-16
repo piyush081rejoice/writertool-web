@@ -8,7 +8,7 @@ const Logo = '/assets/logo/logo.svg';
 const GoogleIcon = '/assets/icons/google.svg';
 import { useOnChange } from '@/hooks/onChangeHook';
 import { ApiPost } from '@/helpers/API/ApiData';
-import { setCookie } from '@/hooks/useCookie';
+import { getCookie, removeCookie, setCookie } from '@/hooks/useCookie';
 import { useRouter } from 'next/router';
 import toast, { Toaster } from 'react-hot-toast';
 import { auth } from '@/shared/loginWithGoogle/firebase';
@@ -44,7 +44,9 @@ export default function SigninModal() {
           setCookie("userToken", userToken);
           setCookie("isProfileCompleted",resp?.data?.payload?.user?.isProfileCompleted)
           toast.success("You have successfully signed up.");
-          router.push("/");
+          const  redirectUrl =getCookie("redirectUrl")
+          router.push(redirectUrl != undefined ? redirectUrl : "/")
+          removeCookie("redirectUrl")
         }
       }else{
         toast.error("Please reach out to your administrator to activate your account.")
@@ -69,14 +71,16 @@ export default function SigninModal() {
           setCookie("userToken",userToken)
           setCookie("isProfileCompleted",resp?.data?.payload?.user?.isProfileCompleted)
           toast.success("Login successfully")
-          router.push("/")
+          const  redirectUrl =getCookie("redirectUrl")
+          router.push(redirectUrl != undefined ? redirectUrl : "/")
+          removeCookie("redirectUrl")
           setIsLoading(false)
+          setInputValue("")
         }
       }else{
         toast.error("Please reach out to your administrator to activate your account.")
         setIsLoading(false)
       }
-      setInputValue("")
     } catch (error) {
       toast.error(error?.response?.data?.payload?.message  ?error?.response?.data?.payload?.message :error?.response?.data?.message ||"Something went wrong")
       setIsLoading(false)

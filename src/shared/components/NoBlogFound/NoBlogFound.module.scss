@@ -1,0 +1,46 @@
+@import '../../../assets/scss/main.scss';
+.mainDiv {
+    width: 775px;
+    height: 976px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    button {
+        padding: rem(4 20);
+        background-color: getColorHex('black');
+        border: 1px solid getColorHex('border-color');
+        font-size: rem(12);
+        line-height: rem(20);
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        @include body-medium;
+        border-radius: 99px;
+        color: getColorHex('white');
+        @include transition-3s;
+
+        @include md {
+            padding: rem(15 25);
+            font-size: rem(16);
+            letter-spacing: 0.48px;
+            line-height: normal;
+        }
+
+        &:hover {
+            background-color: transparent;
+            color: getColorHex('black');
+
+            svg {
+
+                g {
+                    path {
+                        fill: #fff;
+                    }
+                }
+            }
+        }
+    }
+}

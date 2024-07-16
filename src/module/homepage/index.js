@@ -5,11 +5,15 @@ import EditorsPick from "./editorsPick";
 import FrequentlyAskedQuestions from "./frequentlyAskedQuestions";
 import HeroBanner from "./heroBanner";
 import LatestPosts from "./latestPosts";
+import { ApiGet } from "@/helpers/API/ApiData";
+import toast from "react-hot-toast";
+import useDebounce from "@/helpers/useDebounce";
 
-const HomePage = ({getBlogCategoryData,getBlogsData,getTrendingBlogData}) => {
+const HomePage = ({ getBlogCategoryData, getBlogsData, getTrendingBlogData, onLoadMore, isLoadMoreDisabled, blogDataLoading ,handleGetBlogsData }) => {
   const [isOnBoardingComplete, setIsOnBoardingComplete] = useState(false);
-
-
+  const [showBlogs, setShowBlogs] = useState(getBlogCategoryData);
+  const [searchKeyWord, setSearchKeyWord] = useState("");
+  const debouncedSearch = useDebounce(searchKeyWord, 300);
   useEffect(() => {
     const userTokenFromCookie = getCookie("userToken");
     const isProfileCompleted = getCookie("isProfileCompleted");
@@ -21,22 +25,43 @@ const HomePage = ({getBlogCategoryData,getBlogsData,getTrendingBlogData}) => {
       }
     }
   }, []);
+  
+  useEffect(() => {
+    handleBlogSearchCategory();
+  }, [debouncedSearch,]);
+
+  const handleBlogSearchCategory = async () => {
+    try {
+      const response = await ApiGet(`blog-services/blog-categories/get?isActive=true${debouncedSearch?`&search=${debouncedSearch}`  :``}`);
+      const data = response?.data?.payload?.blog_category;
+      if (response?.data?.payload?.blog_category?.length>0) {
+        setShowBlogs(data);
+      }else{
+        setShowBlogs([])
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
+    }
+  };
 
   useEffect(() => {
     if (isOnBoardingComplete) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = ''
+      document.body.style.overflow = "";
     }
-  }, [isOnBoardingComplete])
+  }, [isOnBoardingComplete]);
 
   return (
     <div>
-      <HeroBanner {...{getBlogCategoryData}} />
-      <EditorsPick {...{getBlogsData ,getTrendingBlogData}} />
-      <LatestPosts {...{getBlogsData}}  /> 
+      <HeroBanner {...{ showBlogs ,searchKeyWord, setSearchKeyWord }} />
+      <EditorsPick {...{ getBlogsData, getTrendingBlogData }} />
+      {getBlogsData?.length > 5 ?
+         <LatestPosts getBlogCategoryData={getBlogCategoryData} handleGetBlogsData={handleGetBlogsData} getBlogsData={getBlogsData} onLoadMore={onLoadMore} isLoadMoreDisabled={isLoadMoreDisabled} blogDataLoading={blogDataLoading} />  
+       :null}
+      
       <FrequentlyAskedQuestions />
-      {isOnBoardingComplete && <CustomizeyourOrganization  setIsOnBoardingComplete={setIsOnBoardingComplete} />}
+      {isOnBoardingComplete && <CustomizeyourOrganization setIsOnBoardingComplete={setIsOnBoardingComplete} />}
       {/* <ChangePassword/> */}
       {/* <DeleteBlog/> */}
       {/* <LogoutModal/> */}
