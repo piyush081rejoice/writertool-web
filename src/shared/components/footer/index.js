@@ -1,12 +1,7 @@
-import React from "react";
-import styles from "./footer.module.scss";
-import LocationIcon from "@/assets/icons/locationIcon";
-import CallIcon from "@/assets/icons/callIcon";
-import EmailIcon from "@/assets/icons/emailIcon";
-import Link from "next/link";
-import Image from "next/image";
-import FacebookIcon from "@/assets/icons/facebookIcon";
 import { FacebookWhiteIcon, InstagramWhiteIcon, LinkedinWhiteIcon, TwitterWhiteIcon, YoutubeWhiteIcon } from "@/assets/icons/Icons";
+import LazyImage from "@/helpers/lazyImage";
+import Link from "next/link";
+import styles from "./footer.module.scss";
 
 const WriterToolsFooterLogo = "/assets/logo/FooterLogo.png";
 
@@ -20,7 +15,7 @@ const Footer = () => {
         <div className={styles.footerAlignment}>
           <div className={styles.firstContnet}>
             <div className={styles.logo}>
-              <Image src={WriterToolsFooterLogo} alt="WriterTools" width={164} height={62} />
+              <LazyImage src={WriterToolsFooterLogo} alt="WriterTools" width={164} height={62} />
             </div>
             <div className={styles.text}>
               <p>Write with confidence. The WriterTools Blog empowers you to craft captivating content with ease. Discover tools and strategies for powerful writing and engaging reading.</p>

@@ -1,16 +1,12 @@
-import React from 'react'
-import styles from './shareProfile.module.scss';
 import FacebookIcon from '@/assets/icons/facebookIcon';
-import TwitterIcon from '@/assets/icons/twitterIcon';
-import LinkdinIcon from '@/assets/icons/linkdinIcon';
-import TelegramIcon from '@/assets/icons/telegramIcon';
-import GmailIcon from '@/assets/icons/gmailIcon';
-import LazyImage from '@/helpers/lazyImage';
-import Image from 'next/image';
-import InstagramIcon from '@/assets/icons/Instagram';
-import YouTubeIcon from '@/assets/icons/YoutubeIcon';
 import { FacebookWhiteIcon, InstagramWhiteIcon, LinkedinWhiteIcon, TwitterWhiteIcon, YoutubeWhiteIcon } from '@/assets/icons/Icons';
-const ProfileLg = '/assets/images/profile-lg.png';
+import InstagramIcon from '@/assets/icons/Instagram';
+import LinkdinIcon from '@/assets/icons/linkdinIcon';
+import TwitterIcon from '@/assets/icons/twitterIcon';
+import YouTubeIcon from '@/assets/icons/YoutubeIcon';
+import LazyImage from '@/helpers/lazyImage';
+import styles from './shareProfile.module.scss';
+const ProfileLg = '/assets/images/userWhite.png';
 export default function ShareProfile({singleBlog}) {
     const handleLinkClick = (link) => {
         window.open(link);

@@ -25,7 +25,7 @@ export default function TrendingBlog({ getTrendingBlogData }) {
                   <span>{item?.sortDescription ? item?.sortDescription : ""}</span>
                   <div className={styles.profileGrid}>
                     <div className={styles.profileImage}>
-                      <Image src={item?.Users?.profileImage ? item?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
+                      <LazyImage src={item?.Users?.profileImage ? item?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
                     </div>
                     <div>
                       <p>{item?.Users?.userName}</p>

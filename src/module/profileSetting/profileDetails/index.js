@@ -17,11 +17,13 @@ import Image from "next/image";
 import Loader from "@/common/Loader";
 import ChangePassword from "@/shared/components/changePassword";
 import LazyImage from "@/helpers/lazyImage";
+import CloseIcon from "@/assets/icons/closeIcon";
 
 export default function ProfileDetails({ userProfileData, getProductCategoryData, blogCategories }) {
   const [editButtonDisable, setEditButtonDisable] = useState(true);
   const { inputValue, handleChange, setInputValue, errors, setErrors } = useOnChange(userProfileData);
   const [interestedCategories, setInterestedCategories] = useState([]);
+  const [blogCategoriesData, setBlogCategoriesData] = useState();
   const [productCategoryID, setProductCategoryID] = useState("");
   const [coverPhotoPreview, setCoverPhotoPreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,14 +36,18 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
     }
   }, [showPasswordModal]);
   const dropDownRef = useRef(null);
+  const blogCategoryRef = useRef(null);
   const fileInputRef = useRef(null);
 
   const ProfileImage = "/assets/images/profile-lg.png";
 
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showBlogDropdown, setShowBlogDropdown] = useState(false);
   const [userProfile, setUserProfile] = useState({});
   const toggleDropDown = () => setShowDropdown(false);
+  const toggleBlogDropDown = () => setShowBlogDropdown(false);
   OnClickOutside([dropDownRef], toggleDropDown);
+  OnClickOutside([blogCategoryRef], toggleBlogDropDown);
   const handleProductChange = (data) => {
     setProductCategoryID(data?._id);
     setInputValue((prevErrors) => ({ ...prevErrors, productCategoryName: data?.title }));
@@ -49,21 +55,21 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
   };
 
   useEffect(() => {
-    setInterestedCategories(blogCategories?.filter(category => inputValue?.interestedCategoriesNames?.includes(category.title)).map(category => category._id))
-  }, [])
-  
+    setInterestedCategories(blogCategories?.filter((category) => inputValue?.interestedCategoriesNames?.includes(category.title)));
+    setBlogCategoriesData(blogCategories?.filter((category) => !inputValue?.interestedCategoriesNames?.includes(category.title)));
+  }, []);
+  const removeSelectedBlog = (data) => {
+    setBlogCategoriesData([...blogCategoriesData, data]);
+    setInterestedCategories(interestedCategories?.filter((item) => item?._id !== data?._id));
+  };
   const handleBlogsCategories = (category) => {
-    if (inputValue?.interestedCategoriesNames.includes(category?.title)) {
-      setInputValue((prevErrors) => ({ ...prevErrors, interestedCategoriesNames: inputValue?.interestedCategoriesNames?.filter((item) => item !== category?.title) }));
-      setInterestedCategories(interestedCategories.filter((ids) => ids !== category?._id));
+    if (interestedCategories?.length < 3) {
+      setInterestedCategories([...interestedCategories, category]);
+      setBlogCategoriesData(blogCategoriesData?.filter((data) => data?._id != category?._id));
     } else {
-      if (inputValue?.interestedCategoriesNames?.length < 3) {
-        setInputValue((prevErrors) => ({ ...prevErrors, interestedCategoriesNames: [...inputValue?.interestedCategoriesNames, category?.title] }));
-        setInterestedCategories([...interestedCategories, category?._id]);
-      } else {
-        toast.error("You can select a maximum of 3 categories.");
-      }
+      toast.error("You can select a maximum of 3 categories.");
     }
+
   };
 
   const validateForm = () => {
@@ -73,19 +79,15 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
       formIsValid = false;
       updatedError["userName"] = "Please enter user name .";
     }
-    if (isEmpty(inputValue?.email)) {
-      formIsValid = false;
-      updatedError["email"] = "Please enter email.";
-    }
 
-    const socialMediaFields = ["productURL","facebookLink","instagramLink","linkedinLink","twitterLink","youtubeLink"];
+    const socialMediaFields = ["productURL", "facebookLink", "instagramLink", "linkedinLink", "twitterLink", "youtubeLink"];
 
     socialMediaFields.forEach((field) => {
       if (inputValue[field]?.length && !validateUrl(inputValue[field], field, updatedError)) {
         formIsValid = false;
       }
     });
-    if (!inputValue?.interestedCategoriesNames?.length > 0) {
+    if (!interestedCategories?.length > 0) {
       formIsValid = false;
       updatedError["interestedCategoriesNames"] = "Please select at least one category of your interest.";
     }
@@ -100,12 +102,13 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
     }
   };
   const handleSaveChange = async () => {
+    if (validateForm()) {
     setIsLoading(true);
     let formData = new FormData();
     formData.append("userName", inputValue?.userName);
     formData.append("email", inputValue?.email);
     interestedCategories.forEach((category, index) => {
-      formData.append(`interestedCategories[${index}]`, category);
+      formData.append(`interestedCategories[${index}]`, category?._id);
     });
 
     if (!isEmpty(inputValue?.productName)) {
@@ -148,6 +151,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
       toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
       setIsLoading(false);
     }
+  }
   };
 
   const handleImageUpload = () => {
@@ -201,7 +205,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                 <div className={styles.twoColGrid}>
                   <Input required={true} errorMessage={errors?.userName} name={"userName"} value={inputValue?.userName} onChange={handleChange} label="Name*" placeholder="Dolphine Devtra" />
                   <Input
-                   readonly
+                    readonly
                     pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                     errorMessage={errors?.email}
                     name={"email"}
@@ -233,14 +237,34 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                       </div>
                     </div>
                   </div>
-                  <Input name={"productURL"} value={inputValue?.productURL} onChange={handleChange} errorMessage={errors?.productURL} 
-                  label="Product URL" placeholder="UI/UX Designing" />
+                  <Input name={"productURL"} value={inputValue?.productURL} onChange={handleChange} errorMessage={errors?.productURL} label="Product URL" placeholder="UI/UX Designing" />
                   <Input name={"shortBio"} value={inputValue?.shortBio} onChange={handleChange} label="Short Bio" placeholder="Enter your short bio" />
-                  <Input  errorMessage={errors?.youtubeLink} name={"youtubeLink"} value={inputValue?.youtubeLink} onChange={handleChange} label="Youtube Link" placeholder="Enter your Youtube Link" />
-                  <Input  errorMessage={errors?.twitterLink} name={"twitterLink"} value={inputValue?.twitterLink} onChange={handleChange} label="Twitter Link" placeholder="Enter your Twitter Link" />
-                  <Input  errorMessage={errors?.linkedinLink} name={"linkedinLink"} value={inputValue?.linkedinLink} onChange={handleChange} label="Linkedin Link" placeholder="Enter your Linkedin Link" />
-                  <Input  errorMessage={errors?.instagramLink} name={"instagramLink"} value={inputValue?.instagramLink} onChange={handleChange} label="Instagram Link" placeholder="Enter your Instagram Link" />
-                  <Input  errorMessage={errors?.facebookLink} name={"facebookLink"} value={inputValue?.facebookLink} onChange={handleChange} label="Facebook Link" placeholder="Enter your Facebook Link" />
+                  <Input errorMessage={errors?.youtubeLink} name={"youtubeLink"} value={inputValue?.youtubeLink} onChange={handleChange} label="Youtube Link" placeholder="Enter your Youtube Link" />
+                  <Input errorMessage={errors?.twitterLink} name={"twitterLink"} value={inputValue?.twitterLink} onChange={handleChange} label="Twitter Link" placeholder="Enter your Twitter Link" />
+                  <Input
+                    errorMessage={errors?.linkedinLink}
+                    name={"linkedinLink"}
+                    value={inputValue?.linkedinLink}
+                    onChange={handleChange}
+                    label="Linkedin Link"
+                    placeholder="Enter your Linkedin Link"
+                  />
+                  <Input
+                    errorMessage={errors?.instagramLink}
+                    name={"instagramLink"}
+                    value={inputValue?.instagramLink}
+                    onChange={handleChange}
+                    label="Instagram Link"
+                    placeholder="Enter your Instagram Link"
+                  />
+                  <Input
+                    errorMessage={errors?.facebookLink}
+                    name={"facebookLink"}
+                    value={inputValue?.facebookLink}
+                    onChange={handleChange}
+                    label="Facebook Link"
+                    placeholder="Enter your Facebook Link"
+                  />
 
                   <div className={classNames(styles.twoColGrid, styles.gap)}>
                     <div className={styles.button}>
@@ -266,6 +290,44 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
             <div className={styles.blogInfo}>
               <h2>Interested Blog’s Categories 👋</h2>
               <div className={styles.buttonAlignment}>
+                {/* <div className={styles.buttonclsmain}> */}
+                  {interestedCategories?.length > 0
+                    ? interestedCategories?.map((item, index) => (
+                        <button key={index}>
+                          {item?.title}{" "}
+                          {!editButtonDisable && (
+                            <div style={{lineHeight: "normal", height: "15px"}} onClick={() => removeSelectedBlog(item)}>
+                              <CloseIcon />
+                            </div>
+                          )}
+                        </button>
+                      ))
+                    : errors?.interestedCategoriesNames ? <ShowError errorMessage={errors?.interestedCategoriesNames} /> : <div style={{color:"red"}}> Please select one at least one category from below.</div>}
+                {/* </div> */}
+              </div>
+              {
+                !editButtonDisable ? <div style={{marginTop:"10px"}} className={styles.selectDropdownDesign}>
+                <label>Blog’s Categories</label>
+                <div className={styles.relative} ref={blogCategoryRef}>
+                  <input style={{ cursor: "pointer" }} readOnly type="text" value={"Select blog category from below"} onClick={() => setShowBlogDropdown(!showBlogDropdown)} />
+                  <div className={classNames(styles.icon, showBlogDropdown ? styles.toggleIcon : styles.toggledIcon)}>
+                    <DownArrow />
+                  </div>
+                  <div className={classNames(styles.dropdownDesign, showBlogDropdown ? styles.show : styles.hide)}>
+                    {blogCategoriesData?.length > 0
+                      ? blogCategoriesData?.map((data, index) => (
+                          <span onClick={() => handleBlogsCategories(data)} key={index}>
+                            {data?.title}
+                          </span>
+                        ))
+                      : "No category's found"}
+                  </div>
+                </div>
+              </div> :null
+
+              }
+              
+              {/* <div className={styles.buttonAlignment}>
                 {blogCategories?.length > 0
                   ? blogCategories?.map((data, index) => (
                       <button onClick={() => handleBlogsCategories(data)} className={inputValue?.interestedCategoriesNames?.includes(data?.title) ? styles.selected : ""} key={index}>
@@ -273,8 +335,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                       </button>
                     ))
                   : "No Blog’s Categories Found"}
-              </div>
-              {errors?.interestedCategoriesNames ? <ShowError errorMessage={errors?.interestedCategoriesNames} /> : null}
+              </div> */}
             </div>
           </div>
         </div>

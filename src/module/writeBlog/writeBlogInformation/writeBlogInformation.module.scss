@@ -41,13 +41,16 @@
       padding: rem(25 0 0 0);
 
       .uploadBox {
-        height: rem(450);
+        // height: rem(450);
         border: 2px dashed getColorHex("border-color-2");
         border-radius: 6px;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
+        // img{
+        //   height: auto;
+        // }
 
         p {
           font-size: rem(16);

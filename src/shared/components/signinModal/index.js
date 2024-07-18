@@ -15,6 +15,7 @@ import { auth } from '@/shared/loginWithGoogle/firebase';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import ResetPassword from '../resetPassword';
 import Loader from '@/common/Loader';
+import LazyImage from '@/helpers/lazyImage';
 const EyeIcon = '/assets/icons/eye.svg';
 const OpenEye = '/assets/icons/OpenEye.svg';
 
@@ -70,9 +71,9 @@ export default function SigninModal() {
           let userToken = resp?.data?.payload?.tokens
           setCookie("userToken",userToken)
           setCookie("isProfileCompleted",resp?.data?.payload?.user?.isProfileCompleted)
-          toast.success("Login successfully")
           const  redirectUrl =getCookie("redirectUrl")
           router.push(redirectUrl != undefined ? redirectUrl : "/")
+          toast.success("Login successfully")
           removeCookie("redirectUrl")
           setIsLoading(false)
           setInputValue("")
@@ -95,7 +96,7 @@ export default function SigninModal() {
       <div className={styles.modal}>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className={styles.modalHeader}>
-            <img src={Logo} alt="Logo" width="100%" height="100%" />
+            <LazyImage src={Logo} alt="Logo" width="100%" height="100%" />
             <span onClick={()=>router.push("/")}>
               <CloseIcon />
             </span>

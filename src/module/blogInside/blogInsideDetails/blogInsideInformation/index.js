@@ -2,11 +2,12 @@ import { DateConvert } from "@/common";
 
 import Recommended from "@/shared/components/recommended";
 import { marked } from "marked";
-import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import ShareProfile from "../../shareProfile";
 import styles from "./blogInsideInformation.module.scss";
 import { useEffect } from "react";
+import LazyImage from "@/helpers/lazyImage";
+import CommonSection from "@/shared/components/commonSection";
 const ProfileImage = "/assets/images/profile.png";
 export default function BlogInsideInformation({ singleBlog }) {
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function BlogInsideInformation({ singleBlog }) {
           <div className={styles.personalInformation}>
             <div className={styles.profileInformation}>
               <div className={styles.img}>
-                <Image src={singleBlog?.uid?.profileImage ? singleBlog?.uid?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImage} />
+                <LazyImage src={singleBlog?.uid?.profileImage ? singleBlog?.uid?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImage} />
               </div>
               <span>{singleBlog?.uid?.userName}</span>
             </div>
@@ -50,7 +51,7 @@ export default function BlogInsideInformation({ singleBlog }) {
         </div> */}
           </div>
           <div className={styles.blogImage}>
-            <Image height={496} width={775} src={singleBlog?.coverPhoto} alt="BlogImage" className={styles.profileImage} />
+            <LazyImage  src={singleBlog?.coverPhoto} alt="BlogImage"  />
           </div>
           <div className={styles.details}>
             <p>{singleBlog?.sortDescription}</p>

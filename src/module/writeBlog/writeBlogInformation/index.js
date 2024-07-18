@@ -172,6 +172,7 @@ import OnClickOutside from "@/hooks/useClickOutside";
     useEffect(() => {
       if (updateId) {
         setInputValue({sortDescription:updateBlogData?.sortDescription ?updateBlogData?.sortDescription :"",youtubeLink:updateBlogData?.youtubeLink ?updateBlogData?.youtubeLink :"" , twitterLink:updateBlogData?.twitterLink ?updateBlogData?.twitterLink :"", linkedinLink:updateBlogData?.linkedinLink ?updateBlogData?.linkedinLink :"", facebookLink:updateBlogData?.facebookLink ?updateBlogData?.facebookLink :"", instagramLink:updateBlogData?.instagramLink ?updateBlogData?.instagramLink :"",slugId:updateBlogData?.slugId ?updateBlogData?.slugId :"",websiteLink:updateBlogData?.websiteLink ?updateBlogData?.websiteLink :"",title:updateBlogData?.title ?updateBlogData?.title :"",coverPhoto:""})
+        setCoverPhotoPreview(updateBlogData?.coverPhoto ?updateBlogData?.coverPhoto :null)
         const extractFilenameFromUrl = (url) => {
           const parsedUrl = new URL(url);
           const pathname = parsedUrl.pathname;
@@ -184,7 +185,6 @@ import OnClickOutside from "@/hooks/useClickOutside";
           setInputValue((prevValue) => ({ ...prevValue, coverPhoto: file }));
         });
         setKeyWords(updateBlogData?.keyWords? updateBlogData?.keyWords :null)
-        setCoverPhotoPreview(updateBlogData?.coverPhoto ?updateBlogData?.coverPhoto :null)
         setSelectedBlogs(getBlogCategoryData?.filter((data) =>updateBlogData?.blogCategoryId?.some((categoryObj) => categoryObj?._id === data?._id)));
         setAllBlogs(getBlogCategoryData?.filter((item) => !updateBlogData?.blogCategoryId?.some((categoryObj) => categoryObj?._id === item?._id)));
         setEditorValue(updateBlogData?.description?updateBlogData?.description:"")
@@ -316,7 +316,7 @@ import OnClickOutside from "@/hooks/useClickOutside";
               <input type="file" onChange={handleImageChange} accept="image/*" style={{ display: "none" }} ref={fileInputRef} />
               {coverPhotoPreview ? (
                 <>
-                  <div className={styles.uploadBox} style={{overflow:"auto"}}>
+                  <div className={styles.uploadBox} style={{height:"auto"}} >
                     <img src={coverPhotoPreview} alt="Cover Preview" style={{ width: "auto", height: "auto", }} />
                   </div>
                   <div className={styles.removeIcon}>
@@ -324,7 +324,7 @@ import OnClickOutside from "@/hooks/useClickOutside";
                   </div>
                 </>
               ) : (
-                <div className={styles.uploadBox} onClick={handleImageUpload}>
+                <div className={styles.uploadBox} style={{height:"450px"}} onClick={handleImageUpload}>
                   <div>
                     <div className={styles.centeralignmentIcon}>
                       <GalleryIcon />

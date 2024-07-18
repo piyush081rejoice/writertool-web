@@ -86,7 +86,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
       <div className={styles.subBoxDesign}>
         <div className={styles.allCardDesign}>
           {isLoading ? (
-            Array(blogData?.length)
+            Array(blogData?.length ?blogData?.length :4)
               .fill(0)
               .map((_, index) => (
                 <div className={styles.SkeletonCard} key={index}>

@@ -21,11 +21,9 @@ const Header = () => {
     const userLogin =getCookie("userToken")
     if (userLogin !== undefined) {
       router.push("/write-blog")
-      console.log(`trueCondition`)
     }else{
       router.push("/sign-in")
       setCookie("redirectUrl","/write-blog")
-      console.log(`falseCondition`)
     }
 
   }

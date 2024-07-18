@@ -10,13 +10,14 @@
             color: getColorHex('black');
             line-height: normal;
             margin: rem(0 0 18 0);
-            @include md {
-            font-size: rem(20);
-            @include transition-3s;
 
-            &:hover {
-                text-decoration-line: underline;
-            }
+            @include md {
+                font-size: rem(20);
+                @include transition-3s;
+
+                &:hover {
+                    text-decoration-line: underline;
+                }
             }
         }
 
@@ -26,6 +27,7 @@
             color: getColorHex('gray');
             opacity: 0.9;
             @include body-medium;
+
             @include md {
                 font-size: rem(16);
                 line-height: rem(28);
@@ -37,10 +39,12 @@
             align-items: center;
             gap: rem(20);
             padding: rem(0 0 18 0);
+
             ul {
                 margin: 0;
                 padding: 0 0 0 20px;
                 list-style: disc;
+
                 li {
                     font-size: rem(14);
                     @include body-medium;
@@ -48,16 +52,18 @@
                 }
             }
 
-            .leftContent{
+            .leftContent {
                 display: flex;
                 align-items: center;
                 gap: rem(8);
+
                 span {
                     display: block;
                     font-size: rem(14);
                     @include body-medium;
                     color: getColorHex('gray');
                 }
+
                 .profileImage {
                     border-radius: 50%;
 
@@ -66,15 +72,19 @@
                         height: rem(34);
                         min-height: rem(34);
                         border-radius: 50%;
+
                         img {
                             display: block;
-                        border-radius: 50%;
+                            height: rem(34);
+                            object-fit: cover;
+                            border-radius: 50%;
                         }
                     }
                 }
             }
         }
     }
+
     .imageStyle {
         width: 100%;
         height: 100%;
@@ -85,6 +95,7 @@
             position: absolute;
             top: 0;
             left: 0;
+
             button {
                 border: none;
                 padding: rem(8 15);
@@ -95,10 +106,12 @@
                 @include body-bold;
             }
         }
+
         .cardImage {
             width: 100%;
             height: 250px;
             border-radius: rem(10);
+
             img {
                 border-radius: rem(10);
                 display: block;
