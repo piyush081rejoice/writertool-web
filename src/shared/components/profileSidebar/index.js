@@ -6,20 +6,16 @@ import StoriesIcon from "@/assets/icons/storiesIcon";
 import { getCookie } from "@/hooks/useCookie";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import LogoutModal from "../logoutModal";
-import ProfileInformationModal from "../profileInformationModal";
 import styles from "./profileSidebar.module.scss";
-import OnClickOutside from "@/hooks/useClickOutside";
 const WriterTools = "/assets/logo/logo.svg";
 export default function ProfileSidebar(props) {
   const { sidebar, setSidebar } = props;
   const [updateProfile, setUpdateProfile] = useState(false);
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const router = useRouter();
-  const sidebarRef = useRef(null);
-  const toggleSideBar = () => setSidebar(false);
-  OnClickOutside([sidebarRef], toggleSideBar);
+  
 
   const navigateBlog = (redirectPath) => {
     const userLogin = getCookie("userToken");
@@ -35,7 +31,7 @@ export default function ProfileSidebar(props) {
     <>
       <div>
         {sidebar && <div className={styles.profileblur}></div>}
-        <div ref={sidebarRef} className={classNames(styles.profileSidebar, sidebar ? styles.show : styles.hide)}>
+        <div  className={classNames(styles.profileSidebar, sidebar ? styles.show : styles.hide)}>
           <div className={styles.closeIconRightAlignment} onClick={() => setSidebar(false)}>
             <CloseIcon />
           </div>
