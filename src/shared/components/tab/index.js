@@ -34,18 +34,19 @@ function SamplePrevArrow(props) {
 }
 
 export default function Tab({ getBlogCategoryData }) {
-  const [userIsLoggedIn, setUserIsLoggedIn] = useState(false)
+  const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
   useEffect(() => {
-    const userToken = getCookie("userToken")
+    const userToken = getCookie("userToken");
     if (userToken != undefined) {
-      setUserIsLoggedIn(true)
+      setUserIsLoggedIn(true);
     }
-  }, [])
-  
+  }, []);
+
   const [isNextDisabled, setIsNextDisabled] = useState(false);
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [slider, setSlider] = useState(null);
-  const router = useRouter()
+  const router = useRouter();
+  const currentSlugId = router.query.slugId;
   const totalSlides = getBlogCategoryData ? getBlogCategoryData?.length : 0;
   const slidesToShow = 4;
   const slidesToScroll = 3;
@@ -66,6 +67,11 @@ export default function Tab({ getBlogCategoryData }) {
       setIsNextDisabled(lastVisibleSlide >= totalSlides);
     },
   };
+  const updateArrows = (currentSlide) => {
+    const lastVisibleSlide = currentSlide + slidesToShow;
+    setIsPrevDisabled(currentSlide === 0);
+    setIsNextDisabled(lastVisibleSlide >= totalSlides);
+  };
 
   useEffect(() => {
     setIsNextDisabled(totalSlides <= slidesToShow);
@@ -77,23 +83,34 @@ export default function Tab({ getBlogCategoryData }) {
       setIsNextDisabled(lastVisibleSlide >= totalSlides);
     }
   }, [slider, totalSlides, slidesToShow]);
+  useEffect(() => {
+    if (slider && currentSlugId) {
+      const currentIndex = getBlogCategoryData?.findIndex((data) => data?.slugId === currentSlugId);
+      if (currentIndex !== -1) {
+        slider.slickGoTo(currentIndex);
+        updateArrows(currentIndex);
+      }
+    }
+  }, [slider, currentSlugId, getBlogCategoryData]);
 
   return (
     <div className={styles.sliderTabDesign}>
       <div className="container">
         <div className="tab">
           <Slider ref={(c) => setSlider(c)} {...NavSlider}>
-            <button style={{ color: "white" }}  onClick={()=>router.push("/category")}>
+            <button style={{ color: "white" }} onClick={() => router.push("/category")} className={`${router.pathname === "/category" ? styles.active : ""}`}>
               <Explore /> Explore Topics
             </button>
-            {
-              userIsLoggedIn ? <button style={{ color: "white" }}  onClick={()=>router.push("/category/for-you")}>
-              For You
-            </button> :null
-            }
-            
+            {userIsLoggedIn ? (
+              <button className={`${currentSlugId === "for-you" ? styles.active : ""}`} style={{ color: "white" }} onClick={() => router.push("/category/for-you")}>
+                For You
+              </button>
+            ) : null}
+
             {getBlogCategoryData?.map?.((data, index) => (
-              <button key={index} onClick={()=>router.push(`/category/${data?.slugId}`)}>{data?.title}</button>
+              <button key={index} onClick={() => router.push(`/category/${data?.slugId}`)} className={currentSlugId === data?.slugId ? styles.active : ""}>
+                {data?.title}
+              </button>
             ))}
           </Slider>
         </div>

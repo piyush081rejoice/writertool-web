@@ -4,7 +4,7 @@
     padding: rem(10 0);
     position: sticky;
     top: 0;
-    z-index: 99;
+    z-index: 9;
     background-color: getColorHex('white');
 
     @include md {
@@ -49,8 +49,87 @@
                 gap: rem(30);
             }
 
+            .relativeDiv {
+                position: relative;
+
+                .dropdownNotification {
+                    width: 500px;
+                    box-shadow: (0px 1px 30px rgba(0, 0, 0, 0.12));
+                    position: absolute;
+                    right: 0;
+                    border-radius: 6px;
+                    background-color: #fff;
+                    z-index: 99999;
+                    top: 60px;
+
+                    &.hide {
+                        max-height: 0px;
+                        overflow: hidden;
+                        transition: .5s ease-in-out;
+                    }
+
+                    &.show {
+                        max-height: 550px;
+                        overflow: auto;
+                        transition: .5s ease-in-out;
+                    }
+
+                    .spacer {
+                        padding: 30px;
+                    }
+
+                    .allnotificationAlignment {
+                        .nofiticationGrid {
+                            display: grid;
+                            grid-template-columns: 47px 1fr;
+                            gap: 10px;
+                            padding: rem(24 0);
+                            border-bottom: 1px solid getColorHex('border-color-3');
+                            align-items: center;
+
+                            h6 {
+                                font-size: rem(14);
+                                @include body-medium;
+                                font-weight: 500;
+                                color: getColorHex('gray-800');
+                            }
+                            p {
+                                font-size: rem(16);
+                                color: getColorHex('gray');
+                                @include body-regular;
+                                line-height: normal;
+                                margin: rem(0 0 5 0);
+
+                                span {
+                                    color: getColorHex('black');
+                                    @include body-bold;
+                                }
+                            }
+                            
+                            img {
+                                width: 47px;
+                                height: 47px;
+                                border-radius: 50%;
+                                object-fit: cover;
+                            }
+                        }
+                    }
+
+                    h2 {
+                        font-size: rem(24);
+                        line-height: rem(32);
+                        color: getColorHex('black');
+                        margin: rem(0 0 20 0);
+                        @include heading-font;
+                    }
+                }
+            }
+
             .notificationIcon {
                 width: rem(20);
+                position: relative;
+
+
 
                 @include md {
                     width: rem(35);
@@ -73,16 +152,18 @@
                 align-items: center;
                 gap: rem(4);
                 @include body-bold;
+
                 &.fill {
                     color: getColorHex('white');
                     background-color: getColorHex('black');
                 }
 
                 &.outline {
-                    border:1px solid getColorHex('black');
+                    border: 1px solid getColorHex('black');
                     background-color: transparent;
                     color: getColorHex('black');
                 }
+
                 @include md {
                     gap: rem(8);
                     font-size: rem(15);

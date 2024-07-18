@@ -2,8 +2,7 @@ import React from 'react'
 import styles from './writeBlog.module.scss';
 import Breadcrumb from './breadcrumb';
 import WriteBlogInformation from './writeBlogInformation';
-import withAuth from '@/common/withAuth';
- function WriteBlog({getBlogCategoryData ,updateId,updateBlogData}) {
+export default function WriteBlog({getBlogCategoryData ,updateId,updateBlogData}) {
   return (
     <div>
         <Breadcrumb dynamicList={updateId ? "Update Blog" :"Create Blog"}/>
@@ -11,4 +10,3 @@ import withAuth from '@/common/withAuth';
     </div>
   )
 }
-export default withAuth(WriteBlog);

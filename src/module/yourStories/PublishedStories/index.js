@@ -45,7 +45,7 @@ const PublishedStories = ({ status }) => {
         setBlogsData(data);
         setLoading(false)
       }else{
-        toast.error("The blogs that you are looking for have not been found.")
+        
         setLoading(false)
       }
     } catch (error) {

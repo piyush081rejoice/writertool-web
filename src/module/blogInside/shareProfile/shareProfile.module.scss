@@ -42,9 +42,14 @@
                 width: 100%;
                 height: rem(90);
                 border-radius: 50%;
-                img {
-                border-radius: 50%;
-                }
+                    img{
+                        width: rem(100);
+                        height: rem(100);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      }
             }
         }
         

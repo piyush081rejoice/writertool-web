@@ -65,6 +65,7 @@
                 }
 
                 .iconAlignment {
+                    cursor: pointer;
                     display: flex;
                     align-items: center;
                     gap: rem(12);
@@ -149,6 +150,26 @@
                 .cardImage {
                     width: 100%;
                     height: 100%;
+                    position: relative;
+
+
+                    .buttonDesign {
+                        padding: rem(15);
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+
+                        button {
+                            border: none;
+                            padding: rem(8 15);
+                            background-color: getColorHex('black');
+                            color: getColorHex('white');
+                            border-radius: 999px;
+                            font-size: rem(12);
+                            @include body-bold;
+                        }
+                    }
+
 
                     .cardImageStyle {
                         width: 100%;

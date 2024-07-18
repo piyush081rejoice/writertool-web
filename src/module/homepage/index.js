@@ -27,7 +27,11 @@ const HomePage = ({ getBlogCategoryData, getBlogsData, getTrendingBlogData, onLo
   }, []);
   
   useEffect(() => {
-    handleBlogSearchCategory();
+    if (debouncedSearch) {
+      handleBlogSearchCategory();
+    }else{
+      setShowBlogs(getBlogCategoryData)
+    }
   }, [debouncedSearch,]);
 
   const handleBlogSearchCategory = async () => {

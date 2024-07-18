@@ -7,11 +7,14 @@ import { useEffect, useState } from 'react';
 import ProfileSidebar from '../profileSidebar';
 import styles from './header.module.scss';
 import Explore from '@/assets/icons/Explore';
+import classNames from 'classnames';
 const WriterTools = '/assets/logo/logo.svg';
 const NotificationIcon = '/assets/icons/notification.svg';
 const VectoreIcon = '/assets/icons/vectore.svg';
+const NotificationImage = '/assets/images/notification.svg';
 const Header = () => {
   const [sidebar, setSidebar] = useState(false);
+  const [ notification , setNotification ] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const router = useRouter();
   const handleWriteBlog =()=>{
@@ -59,10 +62,32 @@ const Header = () => {
                     Sign In
                   </button>
               }
+              <div className={styles.relativeDiv}>
               <div className={styles.notificationIcon}>
-                <Link href="/notifications">
-                <img width='100%' height='100%' src={NotificationIcon} alt='NotificationIcon' />
-                </Link>
+                {/* <Link href="/notifications"> */}
+                <img width='100%' height='100%' src={NotificationIcon} alt='NotificationIcon' onClick={()=> setNotification(!notification)} />
+                {/* </Link>dd */}
+              </div>
+              <div className={ classNames(styles.dropdownNotification , notification ? styles.show : styles.hide) }>
+                <div className={styles.spacer}>
+              <h2>Recent Notification</h2>
+              <div className={styles.allnotificationAlignment}>
+               {
+                [...Array(10)].map(()=> {
+                  return(
+                    <div className={ styles.nofiticationGrid}>
+                    <img src={NotificationImage} alt='NotificationImage' width='100%' height='100%' />
+                    <div>
+                      <p><span>HTCustomerStudio</span> started following you.</p>
+                      <h6>Apr 11, 2024</h6>
+                    </div>
+                  </div>
+                  )
+                })
+               }
+              </div>
+              </div>
+              </div>
               </div>
               {userLoggedIn &&
               <div className={styles.profileImage} onClick={() => setSidebar(!sidebar)}>
@@ -74,6 +99,9 @@ const Header = () => {
         </div>
       </header>
       <ProfileSidebar sidebar={sidebar} setSidebar={setSidebar} />
+      <div className={styles.notificationLayer}>
+   
+      </div>
     </>
   )
 }

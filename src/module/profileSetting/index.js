@@ -1,12 +1,10 @@
-import React from 'react'
-import styles from './profileSetting.module.scss';
-import Breadcrumb from '../writeBlog/breadcrumb';
-import ProfileDetails from './profileDetails';
-export default function ProfileSetting() {
+import Breadcrumb from "../writeBlog/breadcrumb";
+import ProfileDetails from "./profileDetails";
+export default function ProfileSetting({userProfileData,productCategoryData,blogCategories}) {
   return (
     <div>
-      <Breadcrumb/>
-      <ProfileDetails/>
+      <Breadcrumb dynamicList={"Profile Setting"} />
+      <ProfileDetails userProfileData={userProfileData} getProductCategoryData={productCategoryData} blogCategories={blogCategories} />
     </div>
-  )
+  );
 }

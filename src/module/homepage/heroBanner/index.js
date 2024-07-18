@@ -36,7 +36,7 @@ export default function HeroBanner({ getBlogCategoryData ,showBlogs,searchKeyWor
               </div>
               <div className={styles.flexBoxItems}>
                 <div className={styles.img}>
-                  <Image height={340} width={482} src={HeroBannerImage} alt="CardImage" className={styles.herobannerImage}/>
+                  <LazyImage src={HeroBannerImage} alt="CardImage" className={styles.herobannerImage}/>
                 </div>
               </div>
             </div>

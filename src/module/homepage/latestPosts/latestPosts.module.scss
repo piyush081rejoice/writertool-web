@@ -19,6 +19,7 @@
                 position: sticky;
                 top: 102px;
             }
+
             .latestpostsTitle {
                 padding: rem(0 0 10 0);
 
@@ -43,8 +44,9 @@
                 border: 1px solid getColorHex('border-color-2');
                 padding: rem(14);
                 border-radius: rem(12);
+
                 @include md {
-                padding: rem(30);
+                    padding: rem(30);
                 }
 
                 .loadMoreButton {
@@ -64,9 +66,10 @@
                         background-color: transparent;
                         cursor: pointer;
                         @include transition-3s;
+
                         @include md {
                             font-size: rem(16);
-                        padding: rem(8 25);
+                            padding: rem(8 25);
                             line-height: rem(28);
                         }
 
@@ -96,10 +99,11 @@
                         @include md {
                             grid-template-columns: 301px 1fr;
                             gap: rem(25);
-                        padding: rem(35 0);
+                            padding: rem(35 0);
                         }
 
                         .iconAlignment {
+                            cursor: pointer;
                             display: flex;
                             align-items: center;
                             gap: rem(12);
@@ -118,9 +122,10 @@
                             opacity: 0.9;
                             margin: rem(0 0 12 0);
                             line-height: rem(24);
+
                             @include md {
-                            font-size: rem(16);
-                            line-height: rem(28);
+                                font-size: rem(16);
+                                line-height: rem(28);
 
                             }
                         }
@@ -132,9 +137,11 @@
                             margin: rem(0 0 12 0);
                             color: getColorHex('black');
                             @include transition-3s;
+
                             &:hover {
                                 text-decoration-line: underline;
                             }
+
                             @include md {
                                 font-size: rem(20);
                                 line-height: rem(26);
@@ -197,6 +204,25 @@
                         .cardImage {
                             width: 100%;
                             height: 100%;
+                            position: relative;
+
+
+                            .buttonDesign {
+                                padding: rem(15);
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+
+                                button {
+                                    border: none;
+                                    padding: rem(8 15);
+                                    background-color: getColorHex('black');
+                                    color: getColorHex('white');
+                                    border-radius: 999px;
+                                    font-size: rem(12);
+                                    @include body-bold;
+                                }
+                            }
 
                             .cardImageStyle {
                                 width: 100%;

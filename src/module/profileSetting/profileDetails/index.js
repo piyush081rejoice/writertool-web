@@ -1,71 +1,285 @@
-import React from 'react'
-import styles from './profileDetails.module.scss';
-import WaveIcon from '@/assets/icons/waveIcon';
-import EditIcon from '@/assets/icons/editIcon';
-import WriteIcon from '@/assets/icons/writeIcon';
-import Input from '@/shared/components/input';
-import classNames from 'classnames';
-export default function ProfileDetails() {
-    return (
-        <div className={styles.profileDetailsAllContentAlignment}>
-            <div className='container'>
-                <div className={styles.title}>
-                    <h1>
-                        Profile Setting
-                    </h1>
-                    <WaveIcon />
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./profileDetails.module.scss";
+import WaveIcon from "@/assets/icons/waveIcon";
+import EditIcon from "@/assets/icons/editIcon";
+import WriteIcon from "@/assets/icons/writeIcon";
+import Input from "@/shared/components/input";
+import classNames from "classnames";
+import { useOnChange } from "@/hooks/onChangeHook";
+import OnClickOutside from "@/hooks/useClickOutside";
+import DownArrow from "@/assets/icons/downArrow";
+import toast from "react-hot-toast";
+import { isEmpty } from "@/hooks/isEmpty";
+import { validateUrl } from "@/hooks/validateUrl";
+import ShowError from "@/common/ShowError";
+import { ApiPut } from "@/helpers/API/ApiData";
+import Image from "next/image";
+import Loader from "@/common/Loader";
+import ChangePassword from "@/shared/components/changePassword";
+import LazyImage from "@/helpers/lazyImage";
+
+export default function ProfileDetails({ userProfileData, getProductCategoryData, blogCategories }) {
+  const [editButtonDisable, setEditButtonDisable] = useState(true);
+  const { inputValue, handleChange, setInputValue, errors, setErrors } = useOnChange(userProfileData);
+  const [interestedCategories, setInterestedCategories] = useState([]);
+  const [productCategoryID, setProductCategoryID] = useState("");
+  const [coverPhotoPreview, setCoverPhotoPreview] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  useEffect(() => {
+    if (showPasswordModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [showPasswordModal]);
+  const dropDownRef = useRef(null);
+  const fileInputRef = useRef(null);
+
+  const ProfileImage = "/assets/images/profile-lg.png";
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [userProfile, setUserProfile] = useState({});
+  const toggleDropDown = () => setShowDropdown(false);
+  OnClickOutside([dropDownRef], toggleDropDown);
+  const handleProductChange = (data) => {
+    setProductCategoryID(data?._id);
+    setInputValue((prevErrors) => ({ ...prevErrors, productCategoryName: data?.title }));
+    setShowDropdown(!showDropdown);
+  };
+
+  useEffect(() => {
+    setInterestedCategories(blogCategories?.filter(category => inputValue?.interestedCategoriesNames?.includes(category.title)).map(category => category._id))
+  }, [])
+  
+  const handleBlogsCategories = (category) => {
+    if (inputValue?.interestedCategoriesNames.includes(category?.title)) {
+      setInputValue((prevErrors) => ({ ...prevErrors, interestedCategoriesNames: inputValue?.interestedCategoriesNames?.filter((item) => item !== category?.title) }));
+      setInterestedCategories(interestedCategories.filter((ids) => ids !== category?._id));
+    } else {
+      if (inputValue?.interestedCategoriesNames?.length < 3) {
+        setInputValue((prevErrors) => ({ ...prevErrors, interestedCategoriesNames: [...inputValue?.interestedCategoriesNames, category?.title] }));
+        setInterestedCategories([...interestedCategories, category?._id]);
+      } else {
+        toast.error("You can select a maximum of 3 categories.");
+      }
+    }
+  };
+
+  const validateForm = () => {
+    let updatedError = {};
+    let formIsValid = true;
+    if (isEmpty(inputValue?.userName)) {
+      formIsValid = false;
+      updatedError["userName"] = "Please enter user name .";
+    }
+    if (isEmpty(inputValue?.email)) {
+      formIsValid = false;
+      updatedError["email"] = "Please enter email.";
+    }
+
+    const socialMediaFields = ["productURL","facebookLink","instagramLink","linkedinLink","twitterLink","youtubeLink"];
+
+    socialMediaFields.forEach((field) => {
+      if (inputValue[field]?.length && !validateUrl(inputValue[field], field, updatedError)) {
+        formIsValid = false;
+      }
+    });
+    if (!inputValue?.interestedCategoriesNames?.length > 0) {
+      formIsValid = false;
+      updatedError["interestedCategoriesNames"] = "Please select at least one category of your interest.";
+    }
+    setErrors(updatedError);
+    return formIsValid;
+  };
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      setEditButtonDisable(false);
+    }
+  };
+  const handleSaveChange = async () => {
+    setIsLoading(true);
+    let formData = new FormData();
+    formData.append("userName", inputValue?.userName);
+    formData.append("email", inputValue?.email);
+    interestedCategories.forEach((category, index) => {
+      formData.append(`interestedCategories[${index}]`, category);
+    });
+
+    if (!isEmpty(inputValue?.productName)) {
+      formData.append("productName", inputValue?.productName);
+    }
+    if (!isEmpty(productCategoryID)) {
+      formData.append("productCategory", productCategoryID);
+    }
+    if (!isEmpty(inputValue?.productURL)) {
+      formData.append("productURL", inputValue?.productURL);
+    }
+    if (!isEmpty(userProfile)) {
+      formData.append("profileImage", userProfile);
+    }
+    if (!isEmpty(inputValue?.shortBio)) {
+      formData.append("shortBio", inputValue?.shortBio);
+    }
+    if (!isEmpty(inputValue?.youtubeLink)) {
+      formData.append("youtubeLink", inputValue?.youtubeLink);
+    }
+    if (!isEmpty(inputValue?.twitterLink)) {
+      formData.append("twitterLink", inputValue?.twitterLink);
+    }
+    if (!isEmpty(inputValue?.linkedinLink)) {
+      formData.append("linkedinLink", inputValue?.linkedinLink);
+    }
+    if (!isEmpty(inputValue?.instagramLink)) {
+      formData.append("instagramLink", inputValue?.instagramLink);
+    }
+    if (!isEmpty(inputValue?.facebookLink)) {
+      formData.append("facebookLink", inputValue?.facebookLink);
+    }
+    try {
+      const resp = await ApiPut("user-services/user/update-profile", formData, { "Content-Type": "multipart/form-data" });
+      if (resp?.data?.success) {
+        toast.success("Your profile has been successfully updated!");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
+      setIsLoading(false);
+    }
+  };
+
+  const handleImageUpload = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith("image/")) {
+      toast.error("Please select an image file (JPEG, PNG, GIF)");
+    } else {
+      setUserProfile(file);
+
+      setCoverPhotoPreview(URL.createObjectURL(file));
+    }
+  };
+
+  return (
+    <>
+      <div className={styles.profileDetailsAllContentAlignment}>
+        <div className="container">
+          <div className={styles.title}>
+            <h1>Profile Setting</h1>
+            <WaveIcon />
+          </div>
+          <div className={styles.box}>
+            <form onSubmit={(e) => handleSubmitForm(e)}>
+              <div className={styles.profileHeaderalignment}>
+                <div className={styles.leftContent}>
+                  <div className={styles.profile}>
+                    <LazyImage src={coverPhotoPreview ? coverPhotoPreview : inputValue?.profileImage ? inputValue?.profileImage : ProfileImage} alt="ProfileImage" height={100} width={100} />
+                    <input type="file" style={{ display: "none" }} onChange={handleImageChange} ref={fileInputRef} />
+                    <div className={styles.editIcon} onClick={handleImageUpload}>
+                      <EditIcon />
+                    </div>
+                  </div>
+                  <div>
+                    <p>{inputValue?.userName}</p>
+                    <span>{inputValue?.email}</span>
+                  </div>
                 </div>
-                <div className={styles.box}>
-                    <div className={styles.profileHeaderalignment}>
-                        <div className={styles.leftContent}>
-                            <div className={styles.profile}>
-                                <div className={styles.editIcon}>
-                                    <EditIcon />
-                                </div>
-                            </div>
-                            <div>
-                                <p>
-                                    Dolphine Devtra
-                                </p>
-                                <span>Writertools123@gmail.com</span>
-                            </div>
-                        </div>
-                        <div className={styles.button}>
-                            <button className={styles.fill}>
-                                <WriteIcon />
-                                Edit
-                            </button>
-                        </div>
-                    </div>
-                    <div className={styles.allAlignment}>
-                        <div className={styles.twoColGrid}>
-                            <Input label='Name*' placeholder='Dolphine Devtra' />
-                            <Input label='Email*' placeholder='Writertools123@gmail.com' />
-                            <Input label='Product Name**' placeholder='Writer Tools' />
-                            <Input label='Product Category*' placeholder='UI/UX Designing' />
-                            <Input label='Product URL*' placeholder='WWW.writertool.com' />
-                            <div className={classNames(styles.twoColGrid, styles.gap)}>
-                                <div className={styles.button}>
-                                    <button className={styles.fill}>Save Changes</button>
-                                </div>
-                                <div className={styles.button}>
-                                    <button className={styles.outline}>Change Password</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.blogInfo}>
-                        <h2>
-                        Interested Blog’s Categories 👋
-                        </h2>
-                        <div className={styles.buttonAlignment}>
-                            <button>UI/UX Designing</button>
-                            <button>Lifestyle</button>
-                            <button>Education</button>
-                        </div>
-                    </div>
+
+                <div className={styles.button}>
+                  <button type="submit" className={styles.fill}>
+                    <WriteIcon />
+                    Edit
+                  </button>
                 </div>
+              </div>
+              <div className={styles.allAlignment}>
+                <div className={styles.twoColGrid}>
+                  <Input required={true} errorMessage={errors?.userName} name={"userName"} value={inputValue?.userName} onChange={handleChange} label="Name*" placeholder="Dolphine Devtra" />
+                  <Input
+                   readonly
+                    pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                    errorMessage={errors?.email}
+                    name={"email"}
+                    value={inputValue?.email}
+                    onChange={handleChange}
+                    label="Email"
+                    placeholder="Writertools123@gmail.com"
+                  />
+                  <Input name={"productName"} value={inputValue?.productName} onChange={handleChange} label="Product Name" placeholder="Writer Tools" />
+                  <div className={styles.selectDropdownDesign}>
+                    <label>Product Category</label>
+                    <div ref={dropDownRef} className={styles.relative}>
+                      <input
+                        style={{ cursor: "pointer" }}
+                        readOnly
+                        type="text"
+                        value={inputValue?.productCategoryName ? inputValue?.productCategoryName : "Select product category"}
+                        onClick={() => setShowDropdown(!showDropdown)}
+                      />
+                      <div className={classNames(styles.icon, showDropdown ? styles.toggleIcon : styles.toggledIcon)}>
+                        <DownArrow />
+                      </div>
+                      <div className={classNames(styles.dropdownDesign, showDropdown ? styles.show : styles.hide)}>
+                        {getProductCategoryData?.product_category?.map((data, index) => (
+                          <span onClick={() => handleProductChange(data)} key={index}>
+                            {data?.title}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <Input name={"productURL"} value={inputValue?.productURL} onChange={handleChange} errorMessage={errors?.productURL} 
+                  label="Product URL" placeholder="UI/UX Designing" />
+                  <Input name={"shortBio"} value={inputValue?.shortBio} onChange={handleChange} label="Short Bio" placeholder="Enter your short bio" />
+                  <Input  errorMessage={errors?.youtubeLink} name={"youtubeLink"} value={inputValue?.youtubeLink} onChange={handleChange} label="Youtube Link" placeholder="Enter your Youtube Link" />
+                  <Input  errorMessage={errors?.twitterLink} name={"twitterLink"} value={inputValue?.twitterLink} onChange={handleChange} label="Twitter Link" placeholder="Enter your Twitter Link" />
+                  <Input  errorMessage={errors?.linkedinLink} name={"linkedinLink"} value={inputValue?.linkedinLink} onChange={handleChange} label="Linkedin Link" placeholder="Enter your Linkedin Link" />
+                  <Input  errorMessage={errors?.instagramLink} name={"instagramLink"} value={inputValue?.instagramLink} onChange={handleChange} label="Instagram Link" placeholder="Enter your Instagram Link" />
+                  <Input  errorMessage={errors?.facebookLink} name={"facebookLink"} value={inputValue?.facebookLink} onChange={handleChange} label="Facebook Link" placeholder="Enter your Facebook Link" />
+
+                  <div className={classNames(styles.twoColGrid, styles.gap)}>
+                    <div className={styles.button}>
+                      <button
+                        style={{ cursor: editButtonDisable ? "not-allowed" : "pointer" }}
+                        disabled={editButtonDisable || isLoading}
+                        type="button"
+                        onClick={handleSaveChange}
+                        className={styles.fill}
+                      >
+                        Save Changes {isLoading ? <Loader /> : null}
+                      </button>
+                    </div>
+                    <div className={styles.button}>
+                      <button onClick={() => setShowPasswordModal(true)} className={styles.outline}>
+                        Change Password
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div className={styles.blogInfo}>
+              <h2>Interested Blog’s Categories 👋</h2>
+              <div className={styles.buttonAlignment}>
+                {blogCategories?.length > 0
+                  ? blogCategories?.map((data, index) => (
+                      <button onClick={() => handleBlogsCategories(data)} className={inputValue?.interestedCategoriesNames?.includes(data?.title) ? styles.selected : ""} key={index}>
+                        {data?.title}
+                      </button>
+                    ))
+                  : "No Blog’s Categories Found"}
+              </div>
+              {errors?.interestedCategoriesNames ? <ShowError errorMessage={errors?.interestedCategoriesNames} /> : null}
             </div>
+          </div>
         </div>
-    )
+      </div>
+      {showPasswordModal && <ChangePassword setShowPasswordModal={setShowPasswordModal} />}
+    </>
+  );
 }

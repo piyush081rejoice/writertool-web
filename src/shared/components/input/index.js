@@ -20,7 +20,7 @@ import { handleEmailKeyPress, handleSpaceKeyPress } from "@/hooks/usehandleSpace
 import styles from "./input.module.scss";
 import ShowError from "@/common/ShowError";
 
-export default function Input({ label, placeholder, type, value, onChange, name, required, icon, onIconClick, options, pattern, className, children,labelClassName,errorMessage ,onButtonClick,button }) {
+export default function Input({ readonly, label, placeholder, type, value, onChange, name, required, icon, onIconClick, options, pattern, className, children,labelClassName,errorMessage ,onButtonClick,button }) {
   return (
     <div className={styles.input}>
       <div style={{display: "flex",alignItems: "start", justifyContent: "start", gap: "10px"}} className={labelClassName?labelClassName:""}>
@@ -38,8 +38,8 @@ export default function Input({ label, placeholder, type, value, onChange, name,
               ))}
           </select>
         ) : type == "email" ? (
-          <input onKeyDown={handleEmailKeyPress}  type={type} pattern={pattern} placeholder={placeholder} value={value} onChange={onChange} name={name} required={required} />
-        ): <input onKeyDown={handleSpaceKeyPress}  type={type} pattern={pattern} placeholder={placeholder} value={value} onChange={onChange} name={name} required={required} />
+          <input onKeyDown={handleEmailKeyPress}  type={type} pattern={pattern} placeholder={placeholder} value={value} onChange={onChange} name={name} required={required} readOnly={readonly} />
+        ): <input onKeyDown={handleSpaceKeyPress}  type={type} pattern={pattern} placeholder={placeholder} value={value} onChange={onChange} name={name} required={required} readOnly={readonly}  />
       
       }
         {icon && (

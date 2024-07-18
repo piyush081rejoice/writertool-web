@@ -9,6 +9,7 @@ import LazyImage from '@/helpers/lazyImage';
 import Image from 'next/image';
 import InstagramIcon from '@/assets/icons/Instagram';
 import YouTubeIcon from '@/assets/icons/YoutubeIcon';
+import { FacebookWhiteIcon, InstagramWhiteIcon, LinkedinWhiteIcon, TwitterWhiteIcon, YoutubeWhiteIcon } from '@/assets/icons/Icons';
 const ProfileLg = '/assets/images/profile-lg.png';
 export default function ShareProfile({singleBlog}) {
     const handleLinkClick = (link) => {
@@ -23,11 +24,11 @@ export default function ShareProfile({singleBlog}) {
                     <div className={styles.leftContent}>
                     <span>Share this:</span>
                     <div className={styles.socialIconAlignment}>
-                        {singleBlog?.facebookLink ? <span onClick={()=>handleLinkClick(singleBlog?.facebookLink)}><FacebookIcon /></span> : null}
+                         {singleBlog?.facebookLink ? <span onClick={()=>handleLinkClick(singleBlog?.facebookLink)}><FacebookIcon /></span> : null}
                         {singleBlog?.twitterLink ? <span onClick={()=>handleLinkClick(singleBlog?.twitterLink)}><TwitterIcon /></span> : null}
                         {singleBlog?.linkedinLink ? <span onClick={()=>handleLinkClick(singleBlog?.linkedinLink)}><LinkdinIcon /></span> : null}
                         {singleBlog?.instagramLink ? <span onClick={()=>handleLinkClick(singleBlog?.instagramLink)}><InstagramIcon/></span> : null}
-                        {singleBlog?.youtubeLink ? <span onClick={()=>handleLinkClick(singleBlog?.youtubeLink)}><YouTubeIcon /></span> : null}
+                        {singleBlog?.youtubeLink ? <span onClick={()=>handleLinkClick(singleBlog?.youtubeLink)}><YouTubeIcon /></span> : null} 
                     </div>
                 </div>
                     :null
@@ -40,8 +41,7 @@ export default function ShareProfile({singleBlog}) {
             </div>
             <div className={styles.profileBox}>
                 <div className={styles.profile}>
-                <Image src={singleBlog?.uid?.profileImage ? singleBlog?.uid?.profileImage : ProfileLg} alt="ProfileImage" height={90} width={90} className={styles.profileImage} />
-                
+                <LazyImage src={singleBlog?.uid?.profileImage ? singleBlog?.uid?.profileImage : ProfileLg} alt="ProfileImage" height={90} width={90} className={styles.profileImage} />
                 </div>
                 <div>
                     <h3>{singleBlog?.uid?.userName}</h3>
@@ -50,11 +50,11 @@ export default function ShareProfile({singleBlog}) {
                     }
                     
                     <div className={styles.icons}>
-                       {singleBlog?.facebookLink ? <span onClick={()=>handleLinkClick(singleBlog?.facebookLink)}><FacebookIcon /></span> : null}
-                       {singleBlog?.twitterLink ? <span onClick={()=>handleLinkClick(singleBlog?.twitterLink)}><TwitterIcon /></span> : null}
-                       {singleBlog?.linkedinLink ? <span onClick={()=>handleLinkClick(singleBlog?.linkedinLink)}><LinkdinIcon /></span> : null}
-                       {singleBlog?.instagramLink ? <span onClick={()=>handleLinkClick(singleBlog?.instagramLink)}><InstagramIcon/></span> : null}
-                       {singleBlog?.youtubeLink ? <span onClick={()=>handleLinkClick(singleBlog?.youtubeLink)}><YouTubeIcon /></span> : null}
+                       {singleBlog?.facebookLink ? <span onClick={()=>handleLinkClick(singleBlog?.facebookLink)}><FacebookWhiteIcon /></span> : null}
+                       {singleBlog?.twitterLink ? <span onClick={()=>handleLinkClick(singleBlog?.twitterLink)}><TwitterWhiteIcon /></span> : null}
+                       {singleBlog?.linkedinLink ? <span onClick={()=>handleLinkClick(singleBlog?.linkedinLink)}><LinkedinWhiteIcon /></span> : null}
+                       {singleBlog?.instagramLink ? <span onClick={()=>handleLinkClick(singleBlog?.instagramLink)}><InstagramWhiteIcon /></span> : null}
+                       {singleBlog?.youtubeLink ? <span onClick={()=>handleLinkClick(singleBlog?.youtubeLink)}><YoutubeWhiteIcon /></span> : null}
                     </div>
                 </div>
             </div>

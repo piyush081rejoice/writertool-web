@@ -1,10 +1,10 @@
-import React from 'react'
-import styles from './logoutModal.module.scss';
-import classNames from 'classnames';
-import Cookies from 'js-cookie';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/router';
-const DangerIcon = '/assets/icons/danger.svg';
+import React from "react";
+import styles from "./logoutModal.module.scss";
+import classNames from "classnames";
+import Cookies from "js-cookie";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
+const DangerIcon = "/assets/icons/danger.svg";
 export default function LogoutModal({ setIsDeleteModal, setSidebar }) {
   const router = useRouter();
   const handleSignOut = () => {
@@ -15,7 +15,7 @@ export default function LogoutModal({ setIsDeleteModal, setSidebar }) {
     toast.success("You have succesfully signed out");
     router.push("/");
     setIsDeleteModal(false);
-    setSidebar(false)
+    setSidebar(false);
   };
   return (
     <div className={classNames(styles.openModalWrapper, styles.logoutWrapper)}>
@@ -26,7 +26,7 @@ export default function LogoutModal({ setIsDeleteModal, setSidebar }) {
         <p>Logout</p>
         <span>Are You sure want to Logout?</span>
         <div className={styles.buttonGrid}>
-          <button className={styles.fill}>No</button>
+          <button onClick={() => setIsDeleteModal(false)} className={styles.fill}>No</button>
           <button className={styles.dangerButton} onClick={handleSignOut}>
             Yes
           </button>

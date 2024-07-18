@@ -6,11 +6,11 @@ import Newsletter from '@/module/homepage/latestPosts/newsletter';
 import TagClouds from '@/module/homepage/latestPosts/tagClouds';
 export default function YourlibraryDetails({isTrendingBlogsData ,getBlogCategoryData}) {
     return (
-        <div style={{marginTop:"40px"}} className={styles.yourlibraryDetails}>
+        <div className={styles.yourlibraryDetails}>
             <div className='container'>
                 <div className={styles.grid}>
                     <div className={styles.gridItems}>
-                        <Recommended differentName={"Your library"} isSavedBlogs differentApi={"blog-services/blogs/get-saved-blogs?limit=5"} />
+                        <Recommended differentName={"Your library"} isSavedBlogs  />
                     </div>
                     <div className={styles.gridItems}>
                         <div className={styles.TrendingBlogBox}>

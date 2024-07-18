@@ -114,3 +114,16 @@ input[type=number] {
   -webkit-box-orient: vertical;
   white-space: normal;
 }
+
+.image-loaded {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.image-loading {
+  opacity: 0;
+}
+.lazy-load-image-background {
+  height: inherit;
+  width: -webkit-fill-available;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./latestPosts.module.scss";
 import Newsletter from "./newsletter";
 import TagClouds from "./tagClouds";
@@ -10,32 +10,40 @@ import { useRouter } from "next/router";
 import { getCookie } from "@/hooks/useCookie";
 import toast from "react-hot-toast";
 import { ApiPost } from "@/helpers/API/ApiData";
+import { BookmarkIcon, UnBookmarkIcon } from "@/assets/icons/Icons";
 const CardImage = "/assets/images/latest-post.png";
 const ProfileImage = "/assets/images/profile.png";
-const BookmarkIcon = "/assets/icons/bookmark.svg";
-const unBookmarkIcon = "/assets/icons/unBookmark.svg";
+// const BookmarkIcon = "/assets/icons/bookmark.png";
+// const unBookmarkIcon = "/assets/icons/unbookmark.png";
 const MinusIcon = "/assets/icons/minus.svg";
 const MenuIcon = "/assets/icons/menu.svg";
 
-export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabled, blogDataLoading ,handleGetBlogsData ,getBlogCategoryData }) {
+export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabled, blogDataLoading, handleGetBlogsData, getBlogCategoryData }) {
   const router = useRouter();
-  const handleShowBlog = async (id)=>{
-    const userToken =getCookie("userToken")
+  const [isUserSignOut, setIsUserSignOut] = useState(true);
+  useEffect(() => {
+    const userTokenFromCookie = getCookie("userToken");
+    if (userTokenFromCookie !== undefined) {
+      setIsUserSignOut(false);
+    }
+  }, []);
+
+  const handleShowBlog = async (id) => {
+    const userToken = getCookie("userToken");
     if (userToken == undefined) {
-      toast.error("Please login to save to bookmark")
-    }else{
+      toast.error("Please login to save to bookmark");
+    } else {
       try {
-        const resp = await ApiPost(`blog-services/blogs/saved-blogs?blogId=${id}`)
+        const resp = await ApiPost(`blog-services/blogs/saved-blogs?blogId=${id}`);
         if (resp?.data?.success) {
-          toast.success(resp?.data?.message)
-          handleGetBlogsData()
+          toast.success(resp?.data?.message);
+          handleGetBlogsData();
         }
       } catch (error) {
-        toast.error(error?.response?.data?.payload?.message  ?error?.response?.data?.payload?.message :error?.response?.data?.message ||"Something went wrong")
+        toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
       }
     }
-
-  }
+  };
   return (
     <div className={styles.latestPostsContnetAlignment}>
       <div className="container">
@@ -60,25 +68,37 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
                           width={301}
                           className={styles.cardImageStyle}
                         />
+                        {item?.isTrending ? (
+                          <div className={styles.buttonDesign}>
+                            <button>Trending</button>
+                          </div>
+                        ) : null}
                       </div>
                       <div>
                         <div className={styles.firstColumn}>
                           <div className={styles.leftContent}>
                             <div className={styles.profileImage}>
-                              <Image src={item?.Users?.profileImage ? item?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
+                              <LazyImage src={item?.Users?.profileImage ? item?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
                             </div>
                             <span>{item?.Users?.userName}</span>
                           </div>
-                          {item?.isTrending ? (
+                          {/* {item?.isTrending ? (
                             <ul>
                               <li>Trending</li>
                             </ul>
-                          ) : null}
+                          ) : null} */}
                           <ul>
                             <li>{DateConvert(item?.createdAt)}</li>
                           </ul>
                           <div className={styles.iconAlignment}>
-                            <Image onClick={()=>handleShowBlog(item?._id)} src={item?.isSaved ?  unBookmarkIcon : BookmarkIcon  } alt="BookmarkIcon" width={15.09} height={20} />
+                            <div onClick={() => handleShowBlog(item?._id)}>
+                              {
+                                isUserSignOut ? <UnBookmarkIcon /> :item ?.isSaved ?<BookmarkIcon /> :<UnBookmarkIcon />
+                              }
+                            </div>
+                            
+                            {/* <LazyImage onClick={() => handleShowBlog(item?._id)} src={ isUserSignOut ? unBookmarkIcon :item?.isSaved ? unBookmarkIcon : BookmarkIcon} alt="BookmarkIcon" width={23} height={25} /> */}
+
                             {/* <img src={MinusIcon} alt="MinusIcon" width="100%" height="100%" /> */}
                             {/* <img src={MenuIcon} alt="MenuIcon" width="100%" height="100%" /> */}
                           </div>

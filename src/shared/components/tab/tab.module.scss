@@ -87,5 +87,19 @@
                 }
             }
         }
+
+        &.active {
+            background-color: getColorHex('black');
+            color: getColorHex('white');
+
+            svg {
+
+                g {
+                    path {
+                        fill: #fff;
+                    }
+                }
+            }
+        }
     }
 }

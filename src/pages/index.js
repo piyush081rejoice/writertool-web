@@ -1,13 +1,13 @@
 import { ApiGet, ApiGetNoAuth, BaseURL, getHttpOptions } from "@/helpers/API/ApiData";
 import { getCookie } from "@/hooks/useCookie";
 import HomePage from "@/module/homepage";
+import ProfileDetails from "@/module/profileSetting/profileDetails";
 import axios from "axios";
 import { parse } from "cookie";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlogData, blogsTotalCount }) {
-  console.log("🚀 ~ file: index.js:10 ~ Home ~ blogsTotalCount:", blogsTotalCount);
   const [blogDataLoading, setBlogDataLoading] = useState(false);
   const [blogData, setBlogData] = useState(getBlogsData);
   const [limit, setLimit] = useState(10);
@@ -41,6 +41,7 @@ export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlo
 
   return (
     <>
+    {/* <ProfileDetails/> */}
       <HomePage
         handleGetBlogsData={handleGetBlogsData}
         onLoadMore={handleLoadMore}
@@ -62,7 +63,7 @@ export async function getServerSideProps(context) {
   headers["x-auth-token"] = `${userToken}`;
 
   try {
-    const blogCategoryData = await ApiGet("blog-services/blog-categories/get?isActive=true&skip=1&limit=50").then((resp) => resp?.data?.payload);
+    const blogCategoryData = await ApiGet("blog-services/blog-categories/get?isActive=true&skip=1&limit=10").then((resp) => resp?.data?.payload);
     const blogsData = userToken
       ? await axios
           .get(BaseURL + "blog-services/blogs/get-editor-blogs?isActive=true&limit=10", {
