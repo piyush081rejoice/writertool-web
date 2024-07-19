@@ -1,6 +1,58 @@
 @import '../../../assets/scss/main.scss';
 
 .blogInsideDetails {
+    .buttonAlignment {
+        display: flex;
+        align-items: center;
+        gap: rem(15);
+        flex-wrap: wrap;
+        button {
+          border-radius: 9999px;
+          padding: 0.6875rem 2.125rem;
+          border: 1px solid #6C6F75;
+          font-size: 1rem;
+          cursor: pointer;
+          letter-spacing: 0.48px;
+          line-height: 1.75rem;
+          color: #6C6F75;
+          background-color: transparent;
+          font-family: "Montserrat-SemiBold";
+          display: flex;
+          transition: 0.3s ease-in-out;
+          justify-content: space-between;
+          align-items: center;
+          gap: 15px;
+            
+            svg {
+              
+              width: 15px;
+              height: 15px;
+      
+              path {
+                fill: #000;
+                stroke: #000;
+              }
+            }
+
+            &:hover {
+                border: 1px solid getColorHex('black');
+                background-color: getColorHex('black');
+                color: getColorHex('white');
+            svg {
+
+              path {
+                fill: #fff;
+                stroke: #fff;
+              }
+            }
+            }
+            // &.selected {
+            //     border: 1px solid getColorHex('black');
+            //     background-color: getColorHex('black');
+            //     color: getColorHex('white');
+            // }
+        }
+    }
     padding: rem(40 0);
 
     @include sm {

@@ -48,6 +48,7 @@ export default function SignupModal() {
           let userToken = resp?.data?.payload?.tokens;
           setCookie("userToken", userToken);
           setCookie("isProfileCompleted", resp?.data?.payload?.user?.isProfileCompleted);
+          localStorage.setItem("userData",JSON.stringify(resp?.data?.payload?.user))
           toast.success("You have successfully signed up.");
           const  redirectUrl =getCookie("redirectUrl")
           router.push(redirectUrl != undefined ? redirectUrl : "/")

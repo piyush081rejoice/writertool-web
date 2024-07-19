@@ -20,7 +20,7 @@ export default function ShareProfile({singleBlog}) {
                     <div className={styles.leftContent}>
                     <span>Share this:</span>
                     <div className={styles.socialIconAlignment}>
-                         {singleBlog?.facebookLink ? <span onClick={()=>handleLinkClick(singleBlog?.facebookLink)}><FacebookIcon /></span> : null}
+                        {singleBlog?.facebookLink ? <span onClick={()=>handleLinkClick(singleBlog?.facebookLink)}><FacebookIcon /></span> : null}
                         {singleBlog?.twitterLink ? <span onClick={()=>handleLinkClick(singleBlog?.twitterLink)}><TwitterIcon /></span> : null}
                         {singleBlog?.linkedinLink ? <span onClick={()=>handleLinkClick(singleBlog?.linkedinLink)}><LinkdinIcon /></span> : null}
                         {singleBlog?.instagramLink ? <span onClick={()=>handleLinkClick(singleBlog?.instagramLink)}><InstagramIcon/></span> : null}
@@ -42,15 +42,15 @@ export default function ShareProfile({singleBlog}) {
                 <div>
                     <h3>{singleBlog?.uid?.userName}</h3>
                     {
-                        singleBlog?.uid?.sortBio ? <p>{singleBlog?.uid?.sortBio} </p> : null
+                        singleBlog?.uid?.shortBio ? <p>{singleBlog?.uid?.shortBio} </p> : null
                     }
                     
                     <div className={styles.icons}>
-                       {singleBlog?.facebookLink ? <span onClick={()=>handleLinkClick(singleBlog?.facebookLink)}><FacebookWhiteIcon /></span> : null}
-                       {singleBlog?.twitterLink ? <span onClick={()=>handleLinkClick(singleBlog?.twitterLink)}><TwitterWhiteIcon /></span> : null}
-                       {singleBlog?.linkedinLink ? <span onClick={()=>handleLinkClick(singleBlog?.linkedinLink)}><LinkedinWhiteIcon /></span> : null}
-                       {singleBlog?.instagramLink ? <span onClick={()=>handleLinkClick(singleBlog?.instagramLink)}><InstagramWhiteIcon /></span> : null}
-                       {singleBlog?.youtubeLink ? <span onClick={()=>handleLinkClick(singleBlog?.youtubeLink)}><YoutubeWhiteIcon /></span> : null}
+                       {singleBlog?.uid?.facebookLink ? <span onClick={()=>handleLinkClick(singleBlog?.uid?.facebookLink)}><FacebookWhiteIcon /></span> : null}
+                       {singleBlog?.uid?.twitterLink ? <span onClick={()=>handleLinkClick(singleBlog?.uid?.twitterLink)}><TwitterWhiteIcon /></span> : null}
+                       {singleBlog?.uid?.linkedinLink ? <span onClick={()=>handleLinkClick(singleBlog?.uid?.linkedinLink)}><LinkedinWhiteIcon /></span> : null}
+                       {singleBlog?.uid?.instagramLink ? <span onClick={()=>handleLinkClick(singleBlog?.uid?.instagramLink)}><InstagramWhiteIcon /></span> : null}
+                       {singleBlog?.uid?.youtubeLink ? <span onClick={()=>handleLinkClick(singleBlog?.uid?.youtubeLink)}><YoutubeWhiteIcon /></span> : null}
                     </div>
                 </div>
             </div>

@@ -44,6 +44,7 @@ export default function SigninModal() {
           let userToken = resp?.data?.payload?.tokens;
           setCookie("userToken", userToken);
           setCookie("isProfileCompleted",resp?.data?.payload?.user?.isProfileCompleted)
+          localStorage.setItem("userData",JSON.stringify(resp?.data?.payload?.user))
           toast.success("You have successfully signed up.");
           const  redirectUrl =getCookie("redirectUrl")
           router.push(redirectUrl != undefined ? redirectUrl : "/")
@@ -72,6 +73,7 @@ export default function SigninModal() {
           setCookie("userToken",userToken)
           setCookie("isProfileCompleted",resp?.data?.payload?.user?.isProfileCompleted)
           const  redirectUrl =getCookie("redirectUrl")
+          localStorage.setItem("userData",JSON.stringify(resp?.data?.payload?.user))
           router.push(redirectUrl != undefined ? redirectUrl : "/")
           toast.success("Login successfully")
           removeCookie("redirectUrl")

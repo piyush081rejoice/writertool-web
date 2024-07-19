@@ -41,7 +41,6 @@ export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlo
 
   return (
     <>
-    {/* <ProfileDetails/> */}
       <HomePage
         handleGetBlogsData={handleGetBlogsData}
         onLoadMore={handleLoadMore}
@@ -72,7 +71,6 @@ export async function getServerSideProps(context) {
           })
           .then((resp) => resp?.data?.payload)
       : await ApiGet("blog-services/blogs/get?isActive=true&skip=1&limit=10").then((resp) => resp?.data?.payload);
-
     const trendingBlogData = await ApiGet(`blog-services/blogs/get?isTrending=true&skip=1&limit=3`).then((resp) => resp?.data?.payload);
 
     return {

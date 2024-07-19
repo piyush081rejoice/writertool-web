@@ -253,6 +253,8 @@
                       display: flex;
                       align-items: center;
                       justify-content: center;
+                      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+
                     }
                     .editIcon {
                       cursor: pointer;
@@ -265,7 +267,6 @@
         }
     }
     .selectDropdownDesign {
-        padding: rem(0 0 20 0);
     
         .dropdownDesign {
           position: absolute;
@@ -376,5 +377,9 @@
           line-height: rem(24);
           color: getColorHex('gray-870');
         }
+      }
+      .saveButton{
+        margin-top: 20px;
+        width: 50%;
       }
 }

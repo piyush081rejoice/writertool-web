@@ -121,6 +121,12 @@
                             color: getColorHex('gray');
                             opacity: 0.9;
                             margin: rem(0 0 12 0);
+                            overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: normal;
                             line-height: rem(24);
 
                             @include md {
@@ -137,6 +143,12 @@
                             margin: rem(0 0 12 0);
                             color: getColorHex('black');
                             @include transition-3s;
+                            overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: normal;
 
                             &:hover {
                                 text-decoration-line: underline;
@@ -187,9 +199,9 @@
                                     border-radius: 50%;
 
                                     .profileImageStyle {
-                                        width: rem(34);
-                                        height: rem(34);
-                                        min-height: rem(34);
+                                        width: rem(26);
+                                        height: rem(26);
+                                        min-height: rem(26);
                                         border-radius: 50%;
 
                                         img {

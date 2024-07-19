@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
-import styles from "./recommended.module.scss";
+import { BookmarkIcon, UnBookmarkIcon } from "@/assets/icons/Icons";
 import WaveIcon from "@/assets/icons/waveIcon";
-import LazyImage from "@/helpers/lazyImage";
+import { DateConvert } from "@/common";
 import { ApiGet, ApiPost } from "@/helpers/API/ApiData";
+import LazyImage from "@/helpers/lazyImage";
+import { getCookie } from "@/hooks/useCookie";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
-import Image from "next/image";
-import { DateConvert, GenerateDescription } from "@/common";
-import { useRouter } from "next/router";
 import NoBlogFound from "../NoBlogFound";
-import { getCookie } from "@/hooks/useCookie";
-import { BookmarkIcon, UnBookmarkIcon } from "@/assets/icons/Icons";
-const CardImage = "/assets/images/latest-post.png";
+import styles from "./recommended.module.scss";
+
 const ProfileImage = "/assets/images/profile.png";
-// const BookmarkIcon = "/assets/icons/bookmark.png";
-// const unBookmarkIcon = "/assets/icons/unbookmark.png";
-const MinusIcon = "/assets/icons/minus.svg";
-const MenuIcon = "/assets/icons/menu.svg";
+
 export default function Recommended({ slugId, isSavedBlogs, differentName }) {
   const [isLoading, setIsLoading] = useState(false);
   const [blogData, setBlogData] = useState([]);
@@ -29,6 +26,9 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
       setIsUserSignOut(false);
     }
   }, []);
+  useEffect(()=>{
+    setLimit(5)
+  },[slugId,isSavedBlogs])
 
   const router = useRouter();
 
@@ -62,7 +62,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
             ? `blog-services/blogs/get-saved-blogs?limit=${limit}`
             : slugId
             ? slugId == "for-you"
-              ? "blog-services/blogs/get-editor-blogs?isActive=true&limit=5"
+              ? `blog-services/blogs/get-editor-blogs?isActive=true&limit=${limit}`
               : `blog-services/blogs/get?blogCategorySlugIds[0]=${slugId}&isActive=true&limit=${limit}`
             : `blog-services/blogs/get?isActive=true&limit=${limit}`
         }`
@@ -129,7 +129,8 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
                       <div className={styles.profileImage}>
                         <LazyImage src={data?.Users?.profileImage ? data?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
                       </div>
-                      <span style={{ fontSize: "10px" }}>{data?.Users?.userName}</span>
+                      {/* <span style={{ fontSize: "10px" }}>{data?.Users?.userName}</span> */}
+                      <span>{data?.Users?.userName}</span>
                     </div>
                     {/* {data?.isTrending ? <ul>
                         <li>Trending</li>
@@ -139,7 +140,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
                       <li>{DateConvert(data?.createdAt)}</li>
                     </ul>
                     <div className={styles.iconAlignment}>
-                      <div onClick={() => handleShowBlog(data?._id)}>{isUserSignOut ? <UnBookmarkIcon /> : data?.isSaved ? <BookmarkIcon /> : <UnBookmarkIcon />}</div>
+                      <div onClick={() => handleShowBlog(data?._id)}>{isUserSignOut ? <UnBookmarkIcon /> : isSavedBlogs ? <BookmarkIcon /> : data?.isSaved ? <BookmarkIcon /> : <UnBookmarkIcon />}</div>
                       {/* <Image onClick={()=>handleShowBlog(data?._id)} src={isSavedBlogs ?unBookmarkIcon :  data?.isSaved ?  unBookmarkIcon : BookmarkIcon  } alt="BookmarkIcon" width={23} height={25} /> */}
                       {/* <img src={MinusIcon} alt="MinusIcon" width="100%" height="100%" />
                       <img src={MenuIcon} alt="MenuIcon" width="100%" height="100%" /> */}

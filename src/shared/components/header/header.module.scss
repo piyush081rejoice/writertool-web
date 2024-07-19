@@ -25,6 +25,22 @@
             border-radius: 50%;
             cursor: pointer;
             justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+
+            .userLogo {
+                width: rem(50);
+                height: rem(50);
+                border-radius: 50%;
+
+                img {
+                    width: rem(50);
+                    height: rem(50);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
         }
 
         .logo {
@@ -93,6 +109,7 @@
                                 font-weight: 500;
                                 color: getColorHex('gray-800');
                             }
+
                             p {
                                 font-size: rem(16);
                                 color: getColorHex('gray');
@@ -105,7 +122,7 @@
                                     @include body-bold;
                                 }
                             }
-                            
+
                             img {
                                 width: 47px;
                                 height: 47px;

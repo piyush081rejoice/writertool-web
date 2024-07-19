@@ -8,7 +8,14 @@ export const DateConvert = (isoDateString) => {
 
   return formattedDate;
 };
+export const getCurrentFormattedDate = () => {
+  const currentDate = new Date();
 
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = currentDate.toLocaleDateString("en-US", options);
+
+  return formattedDate;
+};
 export const GenerateDescription = (htmlString) => {
   const maxLength = 200;
   const paragraphRegex = /<p>([^<]*(<br\s*\/?>)?[^<]*)*<\/p>/g;

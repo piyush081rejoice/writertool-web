@@ -13,7 +13,6 @@ import { isEmpty } from "@/hooks/isEmpty";
 import { validateUrl } from "@/hooks/validateUrl";
 import ShowError from "@/common/ShowError";
 import { ApiPut } from "@/helpers/API/ApiData";
-import Image from "next/image";
 import Loader from "@/common/Loader";
 import ChangePassword from "@/shared/components/changePassword";
 import LazyImage from "@/helpers/lazyImage";
@@ -39,7 +38,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
   const blogCategoryRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  const ProfileImage = "/assets/images/profile-lg.png";
+  const ProfileImage = "/assets/images/headerUser.jpg";
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [showBlogDropdown, setShowBlogDropdown] = useState(false);
@@ -69,7 +68,6 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
     } else {
       toast.error("You can select a maximum of 3 categories.");
     }
-
   };
 
   const validateForm = () => {
@@ -103,55 +101,59 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
   };
   const handleSaveChange = async () => {
     if (validateForm()) {
-    setIsLoading(true);
-    let formData = new FormData();
-    formData.append("userName", inputValue?.userName);
-    formData.append("email", inputValue?.email);
-    interestedCategories.forEach((category, index) => {
-      formData.append(`interestedCategories[${index}]`, category?._id);
-    });
+      setIsLoading(true);
+      let formData = new FormData();
+      formData.append("userName", inputValue?.userName);
+      formData.append("email", inputValue?.email);
+      interestedCategories.forEach((category, index) => {
+        formData.append(`interestedCategories[${index}]`, category?._id);
+      });
 
-    if (!isEmpty(inputValue?.productName)) {
-      formData.append("productName", inputValue?.productName);
-    }
-    if (!isEmpty(productCategoryID)) {
-      formData.append("productCategory", productCategoryID);
-    }
-    if (!isEmpty(inputValue?.productURL)) {
-      formData.append("productURL", inputValue?.productURL);
-    }
-    if (!isEmpty(userProfile)) {
-      formData.append("profileImage", userProfile);
-    }
-    if (!isEmpty(inputValue?.shortBio)) {
-      formData.append("shortBio", inputValue?.shortBio);
-    }
-    if (!isEmpty(inputValue?.youtubeLink)) {
-      formData.append("youtubeLink", inputValue?.youtubeLink);
-    }
-    if (!isEmpty(inputValue?.twitterLink)) {
-      formData.append("twitterLink", inputValue?.twitterLink);
-    }
-    if (!isEmpty(inputValue?.linkedinLink)) {
-      formData.append("linkedinLink", inputValue?.linkedinLink);
-    }
-    if (!isEmpty(inputValue?.instagramLink)) {
-      formData.append("instagramLink", inputValue?.instagramLink);
-    }
-    if (!isEmpty(inputValue?.facebookLink)) {
-      formData.append("facebookLink", inputValue?.facebookLink);
-    }
-    try {
-      const resp = await ApiPut("user-services/user/update-profile", formData, { "Content-Type": "multipart/form-data" });
-      if (resp?.data?.success) {
-        toast.success("Your profile has been successfully updated!");
+      if (!isEmpty(inputValue?.productName)) {
+        formData.append("productName", inputValue?.productName);
+      }
+      if (!isEmpty(productCategoryID)) {
+        formData.append("productCategory", productCategoryID);
+      }
+      if (!isEmpty(inputValue?.productURL)) {
+        formData.append("productURL", inputValue?.productURL);
+      }
+      if (!isEmpty(userProfile)) {
+        formData.append("profileImage", userProfile);
+      }
+      if (!isEmpty(inputValue?.shortBio)) {
+        formData.append("shortBio", inputValue?.shortBio);
+      }
+      if (!isEmpty(inputValue?.youtubeLink)) {
+        formData.append("youtubeLink", inputValue?.youtubeLink);
+      }
+      if (!isEmpty(inputValue?.twitterLink)) {
+        formData.append("twitterLink", inputValue?.twitterLink);
+      }
+      if (!isEmpty(inputValue?.linkedinLink)) {
+        formData.append("linkedinLink", inputValue?.linkedinLink);
+      }
+      if (!isEmpty(inputValue?.instagramLink)) {
+        formData.append("instagramLink", inputValue?.instagramLink);
+      }
+      if (!isEmpty(inputValue?.facebookLink)) {
+        formData.append("facebookLink", inputValue?.facebookLink);
+      }
+      try {
+        const resp = await ApiPut("user-services/user/update-profile", formData, { "Content-Type": "multipart/form-data" });
+        if (resp?.data?.success) {
+          localStorage.setItem("userData", JSON.stringify(resp?.data?.payload));
+          const event = new Event("localStorageUpdate");
+          window.dispatchEvent(event);
+          toast.success("Your profile has been successfully updated!");
+          setIsLoading(false);
+          setEditButtonDisable(true);
+        }
+      } catch (error) {
+        toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
         setIsLoading(false);
       }
-    } catch (error) {
-      toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
-      setIsLoading(false);
     }
-  }
   };
 
   const handleImageUpload = () => {
@@ -265,25 +267,6 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                     label="Facebook Link"
                     placeholder="Enter your Facebook Link"
                   />
-
-                  <div className={classNames(styles.twoColGrid, styles.gap)}>
-                    <div className={styles.button}>
-                      <button
-                        style={{ cursor: editButtonDisable ? "not-allowed" : "pointer" }}
-                        disabled={editButtonDisable || isLoading}
-                        type="button"
-                        onClick={handleSaveChange}
-                        className={styles.fill}
-                      >
-                        Save Changes {isLoading ? <Loader /> : null}
-                      </button>
-                    </div>
-                    <div className={styles.button}>
-                      <button onClick={() => setShowPasswordModal(true)} className={styles.outline}>
-                        Change Password
-                      </button>
-                    </div>
-                  </div>
                 </div>
               </div>
             </form>
@@ -291,51 +274,56 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
               <h2>Interested Blog’s Categories 👋</h2>
               <div className={styles.buttonAlignment}>
                 {/* <div className={styles.buttonclsmain}> */}
-                  {interestedCategories?.length > 0
-                    ? interestedCategories?.map((item, index) => (
-                        <button key={index}>
-                          {item?.title}{" "}
-                          {!editButtonDisable && (
-                            <div style={{lineHeight: "normal", height: "15px"}} onClick={() => removeSelectedBlog(item)}>
-                              <CloseIcon />
-                            </div>
-                          )}
-                        </button>
-                      ))
-                    : errors?.interestedCategoriesNames ? <ShowError errorMessage={errors?.interestedCategoriesNames} /> : <div style={{color:"red"}}> Please select one at least one category from below.</div>}
+                {interestedCategories?.length > 0 ? (
+                  interestedCategories?.map((item, index) => (
+                    <button key={index}>
+                      {item?.title}{" "}
+                      {!editButtonDisable && (
+                        <div style={{ lineHeight: "normal", height: "15px" }} onClick={() => removeSelectedBlog(item)}>
+                          <CloseIcon />
+                        </div>
+                      )}
+                    </button>
+                  ))
+                ) : errors?.interestedCategoriesNames ? (
+                  <ShowError errorMessage={errors?.interestedCategoriesNames} />
+                ) : (
+                  <div style={{ color: "red" }}> Please select one at least one category from below.</div>
+                )}
                 {/* </div> */}
               </div>
-              {
-                !editButtonDisable ? <div style={{marginTop:"10px"}} className={styles.selectDropdownDesign}>
-                <label>Blog’s Categories</label>
-                <div className={styles.relative} ref={blogCategoryRef}>
-                  <input style={{ cursor: "pointer" }} readOnly type="text" value={"Select blog category from below"} onClick={() => setShowBlogDropdown(!showBlogDropdown)} />
-                  <div className={classNames(styles.icon, showBlogDropdown ? styles.toggleIcon : styles.toggledIcon)}>
-                    <DownArrow />
-                  </div>
-                  <div className={classNames(styles.dropdownDesign, showBlogDropdown ? styles.show : styles.hide)}>
-                    {blogCategoriesData?.length > 0
-                      ? blogCategoriesData?.map((data, index) => (
-                          <span onClick={() => handleBlogsCategories(data)} key={index}>
-                            {data?.title}
-                          </span>
-                        ))
-                      : "No category's found"}
+              {!editButtonDisable ? (
+                <div style={{ marginTop: "10px" }} className={styles.selectDropdownDesign}>
+                  <label>Blog’s Categories</label>
+                  <div className={styles.relative} ref={blogCategoryRef}>
+                    <input style={{ cursor: "pointer" }} readOnly type="text" value={"Select blog category from below"} onClick={() => setShowBlogDropdown(!showBlogDropdown)} />
+                    <div className={classNames(styles.icon, showBlogDropdown ? styles.toggleIcon : styles.toggledIcon)}>
+                      <DownArrow />
+                    </div>
+                    <div className={classNames(styles.dropdownDesign, showBlogDropdown ? styles.show : styles.hide)}>
+                      {blogCategoriesData?.length > 0
+                        ? blogCategoriesData?.map((data, index) => (
+                            <span onClick={() => handleBlogsCategories(data)} key={index}>
+                              {data?.title}
+                            </span>
+                          ))
+                        : "No category's found"}
+                    </div>
                   </div>
                 </div>
-              </div> :null
-
-              }
-              
-              {/* <div className={styles.buttonAlignment}>
-                {blogCategories?.length > 0
-                  ? blogCategories?.map((data, index) => (
-                      <button onClick={() => handleBlogsCategories(data)} className={inputValue?.interestedCategoriesNames?.includes(data?.title) ? styles.selected : ""} key={index}>
-                        {data?.title}
-                      </button>
-                    ))
-                  : "No Blog’s Categories Found"}
-              </div> */}
+              ) : null}
+            </div>
+            <div className={classNames(styles.twoColGrid, styles.gap ,styles.saveButton)}>
+              <div className={styles.button}>
+                <button style={{ cursor: editButtonDisable ? "not-allowed" : "pointer" }} disabled={editButtonDisable || isLoading} type="button" onClick={handleSaveChange} className={styles.fill}>
+                  Save Changes {isLoading ? <Loader /> : null}
+                </button>
+              </div>
+              <div className={styles.button}>
+                <button onClick={() => setShowPasswordModal(true)} className={styles.outline}>
+                  Change Password
+                </button>
+              </div>
             </div>
           </div>
         </div>

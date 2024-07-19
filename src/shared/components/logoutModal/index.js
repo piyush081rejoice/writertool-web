@@ -8,6 +8,7 @@ const DangerIcon = "/assets/icons/danger.svg";
 export default function LogoutModal({ setIsDeleteModal, setSidebar }) {
   const router = useRouter();
   const handleSignOut = () => {
+    localStorage.clear();
     const cookies = Cookies.get(); // Get all cookies
     for (let cookie in cookies) {
       Cookies.remove(cookie); // Remove each cookie

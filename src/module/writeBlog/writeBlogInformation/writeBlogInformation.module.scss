@@ -137,123 +137,42 @@
 
     }
 
-    .box {
-        padding: rem(20);
-        border: 1px solid getColorHex("border-color-2");
-        border-radius: 12px;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: rem(20);
 
-        @include sm {
-            padding: rem(20);
-        }
+      @include sm {
+          gap: rem(20);
+          grid-template-columns: repeat(2, 1fr);
+      }
 
-        @include lg {
-            padding: rem(40);
+      @include lg {
+          gap: rem(40);
+      }
 
-        }
+      .spacer:last-child {
+          padding: 0;
+      }
 
-        .coverPhoto {
-            padding: rem(25 0 0 0);
+      .spacer {
+          padding: rem(0 0 25 0);
+      }
 
-            .uploadBox {
-                height: rem(250);
-                border: 2px dashed getColorHex("border-color-2");
-                border-radius: 6px;
-                position: relative;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+      .gridItems:first-child {
+          padding-right: 0;
 
-                @include sm {
-                    height: rem(350);
-                }
+          @include sm {
+              padding-right: 20px;
+              border-right: 1px solid getColorHex("border-color-2");
+          }
 
-                @include lg {
-                    height: rem(450);
-                }
+          @include lg {
+              padding-right: 20px;
+          }
 
-                p {
-                    font-size: rem(14);
-                    text-align: center;
-                    @include body-medium;
-                    color: getColorHex('gray-800');
-                    cursor: pointer;
-                    @include sm {
-                    font-size: rem(14);
-                    }
-
-                    @include lg {
-                    font-size: rem(16);
-                    }
-
-                    span {
-                        text-decoration-line: underline;
-                        color: getColorHex('black');
-                    }
-                }
-
-                .centeralignmentIcon {
-                    display: flex;
-                    justify-content: center;
-                    padding: rem(0 0 20 0);
-
-                }
-
-
-            }
-
-            label {
-                font-size: rem(14);
-                @include body-medium;
-                line-height: rem(20);
-                display: block;
-                padding: rem(0 0 8 0);
-                color: getColorHex('black');
-
-                @media (max-width:1500px) {
-                    font-size: rem(14);
-                    line-height: rem(20);
-                    padding: rem(0 0 5 0);
-                }
-            }
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: rem(20);
-
-            @include sm {
-                gap: rem(20);
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            @include lg {
-                gap: rem(40);
-            }
-
-            .spacer:last-child {
-                padding: 0;
-            }
-
-            .spacer {
-                padding: rem(0 0 25 0);
-            }
-
-            .gridItems:first-child {
-                padding-right: 0;
-
-                @include sm {
-                    padding-right: 20px;
-                    border-right: 1px solid getColorHex("border-color-2");
-                }
-
-                @include lg {
-                    padding-right: 20px;
-                }
-
-            }
-        }
-    }
+      }
+  }
   }
   .buttonclsmain {
     display: flex;
@@ -301,9 +220,6 @@
     }
   }
   .selectDropdownDesign {
-    padding: rem(0 0 20 0);
-
-
     .dropdownDesign {
       position: absolute;
       left: 0;
