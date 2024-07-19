@@ -22,8 +22,9 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import "suneditor/dist/css/suneditor.min.css";
 import styles from "./writeBlogInformation.module.scss";
+import Link from "next/link";
 const SunEditor = dynamic(() => import("suneditor-react"), { ssr: false });
-
+const LinkIcon = '/assets/icons/link.svg';
 export default function WriteBlogInformation({ getBlogCategoryData, updateId, updateBlogData  }) {
   const { inputValue, handleChange, setInputValue, errors, setErrors } = useOnChange({ youtubeLink: "", twitterLink: "", linkedinLink: "", facebookLink: "", instagramLink: "", websiteLink: "" });
   const [showDropdown, setShowDropdown] = useState(false);
@@ -171,7 +172,6 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
     }
   };
 
-
   useEffect(() => {
     if (updateId) {
       setInputValue(updateBlogData)
@@ -265,15 +265,15 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                     {errors?.blogCategory ? <ShowError errorMessage={errors?.blogCategory} /> : null}
                   </div>
                   <div className={styles.spacer}>
-                    <Input label="Website URL" placeholder="Type your url..." onChange={handleChange} name="websiteLink" value={inputValue?.websiteLink} errorMessage={errors?.websiteLink} />
+                    <Input icon={LinkIcon} label="Website URL" placeholder="Type your URL" onChange={handleChange} name="websiteLink" value={inputValue?.websiteLink} errorMessage={errors?.websiteLink} />
                   </div>
                   <div className={styles.spacer}>
-                    <Input label="Slug URL" placeholder="Type your slug url..." onChange={handleOnValueChange} name="slugId" value={inputValue?.slugId} errorMessage={errors?.slugId} />
+                    <Input icon={LinkIcon} label="Slug URL" placeholder="Type your slug URL" onChange={handleOnValueChange} name="slugId" value={inputValue?.slugId} errorMessage={errors?.slugId} />
                   </div>
                   <div className={styles.spacer}>
                     <Input
                       label="Short Description"
-                      placeholder="Type your Short Description..."
+                      placeholder="Type your Short Description"
                       onChange={handleChange}
                       name="sortDescription"
                       value={inputValue?.sortDescription}
@@ -309,21 +309,22 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                 </div>
                 <div className={styles.gridItems}>
                   <div className={styles.spacer}>
-                    <Input label="Instagram" placeholder="www.instagram.com" onChange={handleChange} errorMessage={errors?.instagramLink} name="instagramLink" value={inputValue?.instagramLink} />
+                    <Input icon={LinkIcon} label="Instagram" placeholder="www.instagram.com" onChange={handleChange} errorMessage={errors?.instagramLink} name="instagramLink" value={inputValue?.instagramLink} />
                   </div>
                   <div className={styles.spacer}>
-                    <Input label="Facebook" placeholder="www.facebook.com" onChange={handleChange} name="facebookLink" errorMessage={errors?.facebookLink} value={inputValue?.facebookLink} />
+                    <Input icon={LinkIcon} label="Facebook" placeholder="www.facebook.com" onChange={handleChange} name="facebookLink" errorMessage={errors?.facebookLink} value={inputValue?.facebookLink} />
                   </div>
                   <div className={styles.spacer}>
-                    <Input label="LinkedIn" placeholder="www.linkdin.com" onChange={handleChange} name="linkedinLink" errorMessage={errors?.linkedinLink} value={inputValue?.linkedinLink} />
+                    <Input icon={LinkIcon} label="LinkedIn" placeholder="www.linkdin.com" onChange={handleChange} name="linkedinLink" errorMessage={errors?.linkedinLink} value={inputValue?.linkedinLink} />
                   </div>
                   <div className={styles.spacer}>
-                    <Input label="Twitter" placeholder="www.twitter.com" onChange={handleChange} name="twitterLink" errorMessage={errors?.twitterLink} value={inputValue?.twitterLink} />
+                    <Input icon={LinkIcon} label="Twitter" placeholder="www.twitter.com" onChange={handleChange} name="twitterLink" errorMessage={errors?.twitterLink} value={inputValue?.twitterLink} />
                   </div>
                   <div className={styles.spacer}>
-                    <Input label="Youtube" placeholder="www.youtube.com" onChange={handleChange} name="youtubeLink" errorMessage={errors?.youtubeLink} value={inputValue?.youtubeLink} />
+                    <Input icon={LinkIcon} label="Youtube" placeholder="www.youtube.com" onChange={handleChange} name="youtubeLink" errorMessage={errors?.youtubeLink} value={inputValue?.youtubeLink} />
                   </div>
                 </div>
+                {errors?.blogCategory ? <ShowError errorMessage={errors?.blogCategory} /> : null}
               </div>
               <div className={styles.coverPhoto}>
                 <label>Add Cover Photo*</label>

@@ -11,12 +11,7 @@ import { getCookie } from "@/hooks/useCookie";
 import toast from "react-hot-toast";
 import { ApiPost } from "@/helpers/API/ApiData";
 import { BookmarkIcon, UnBookmarkIcon } from "@/assets/icons/Icons";
-const CardImage = "/assets/images/latest-post.png";
 const ProfileImage = "/assets/images/profile.png";
-// const BookmarkIcon = "/assets/icons/bookmark.png";
-// const unBookmarkIcon = "/assets/icons/unbookmark.png";
-const MinusIcon = "/assets/icons/minus.svg";
-const MenuIcon = "/assets/icons/menu.svg";
 
 export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabled, blogDataLoading, handleGetBlogsData, getBlogCategoryData }) {
   const router = useRouter();
@@ -25,6 +20,14 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
     const userTokenFromCookie = getCookie("userToken");
     if (userTokenFromCookie !== undefined) {
       setIsUserSignOut(false);
+    }
+  }, []);
+
+  const [userDetails, setUserDetails] = useState({});
+  useEffect(() => {
+    const localStorageUserData = localStorage.getItem("userData");
+    if (localStorageUserData) {
+      setUserDetails(JSON.parse(localStorageUserData));
     }
   }, []);
 
@@ -59,18 +62,16 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
                   return (
                     <div className={styles.card} key={key}>
                       <div className={styles.cardImage}>
-                        <Image
-                          src={item?.thumbnail}
-                          style={{ cursor: "pointer" }}
-                          onClick={() => router.push(`/blog/${item?.slugId}`)}
-                          alt="CardImage"
-                          height={216}
-                          width={301}
-                          className={styles.cardImageStyle}
-                        />
+                        <LazyImage src={item?.thumbnail} className={styles.cardImageStyle} onClick={() => router.push(`/blog/${item?.slugId}`)} alt="ProfileImage" />
+
                         {item?.isTrending ? (
                           <div className={styles.buttonDesign}>
                             <button>Trending</button>
+                          </div>
+                        ) : null}
+                        {userDetails?._id != item?.uid ? (
+                          <div className={styles.iconRoundDesign} onClick={() => handleShowBlog(item?._id)}>
+                            {isUserSignOut ? <UnBookmarkIcon /> : item?.isSaved ? <BookmarkIcon /> : <UnBookmarkIcon />}
                           </div>
                         ) : null}
                       </div>
@@ -90,18 +91,6 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
                           <ul>
                             <li>{DateConvert(item?.createdAt)}</li>
                           </ul>
-                          <div className={styles.iconAlignment}>
-                            <div onClick={() => handleShowBlog(item?._id)}>
-                              {
-                                isUserSignOut ? <UnBookmarkIcon /> :item ?.isSaved ?<BookmarkIcon /> :<UnBookmarkIcon />
-                              }
-                            </div>
-                            
-                            {/* <LazyImage onClick={() => handleShowBlog(item?._id)} src={ isUserSignOut ? unBookmarkIcon :item?.isSaved ? unBookmarkIcon : BookmarkIcon} alt="BookmarkIcon" width={23} height={25} /> */}
-
-                            {/* <img src={MinusIcon} alt="MinusIcon" width="100%" height="100%" /> */}
-                            {/* <img src={MenuIcon} alt="MenuIcon" width="100%" height="100%" /> */}
-                          </div>
                         </div>
                         <h3 style={{ cursor: "pointer" }} onClick={() => router.push(`/blog/${item?.slugId}`)}>
                           {item?.title}

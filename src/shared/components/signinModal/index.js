@@ -104,7 +104,7 @@ export default function SigninModal() {
             </span>
           </div>
           <div className={styles.spacerAlignment}>
-            <Input type="email" label='Email ID' placeholder='Enter your email ID' name="email" value={inputValue?.email || ""} onChange={handleChange} required={true} />
+            <Input pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" type="email" label='Email ID' placeholder='Enter your email ID' name="email" value={inputValue?.email || ""} onChange={handleChange} required={true} />
           </div>
           <div className={styles.spacerAlignment}>
             <Input onIconClick={togglePassword} icon={`${showPassword ? EyeIcon : OpenEye}`} type={showPassword ?"text" : "password"} label='Password' placeholder='Password' name="password" value={inputValue?.password || ""} onChange={handleChange} required={true} />

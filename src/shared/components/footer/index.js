@@ -26,7 +26,9 @@ const Footer = () => {
             <div className={styles.menu}>
               <Link href="/category">Explore Blogs</Link>
               <Link href="/privacy-policy">Privacy Policy</Link>
-              <a>Terms & Conditions</a>
+              <Link href="/terms-and-conditions">Terms & Conditions</Link>
+              <Link href="/disclaimer">Disclaimer</Link>
+              
               {/* <a>Contact Us</a> */}
             </div>
           </div>

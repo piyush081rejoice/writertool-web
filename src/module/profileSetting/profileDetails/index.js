@@ -17,7 +17,7 @@ import Loader from "@/common/Loader";
 import ChangePassword from "@/shared/components/changePassword";
 import LazyImage from "@/helpers/lazyImage";
 import CloseIcon from "@/assets/icons/closeIcon";
-
+const LinkIcon = '/assets/icons/link.svg';
 export default function ProfileDetails({ userProfileData, getProductCategoryData, blogCategories }) {
   const [editButtonDisable, setEditButtonDisable] = useState(true);
   const { inputValue, handleChange, setInputValue, errors, setErrors } = useOnChange(userProfileData);
@@ -93,13 +93,11 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
     return formIsValid;
   };
 
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
+  const handleOnEditButtonClick = () => {
       setEditButtonDisable(false);
-    }
   };
-  const handleSaveChange = async () => {
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
     if (validateForm()) {
       setIsLoading(true);
       let formData = new FormData();
@@ -197,7 +195,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                 </div>
 
                 <div className={styles.button}>
-                  <button type="submit" className={styles.fill}>
+                  <button type="button" onClick={handleOnEditButtonClick} className={styles.fill}>
                     <WriteIcon />
                     Edit
                   </button>
@@ -205,9 +203,10 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
               </div>
               <div className={styles.allAlignment}>
                 <div className={styles.twoColGrid}>
-                  <Input required={true} errorMessage={errors?.userName} name={"userName"} value={inputValue?.userName} onChange={handleChange} label="Name*" placeholder="Dolphine Devtra" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}  required={true} errorMessage={errors?.userName} name={"userName"} value={inputValue?.userName} onChange={handleChange} label="Name*" placeholder="Dolphine Devtra" />
                   <Input
                     readonly
+                    inputClassName={styles.editButtonDisable}
                     pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                     errorMessage={errors?.email}
                     name={"email"}
@@ -216,12 +215,13 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                     label="Email"
                     placeholder="Writertools123@gmail.com"
                   />
-                  <Input name={"productName"} value={inputValue?.productName} onChange={handleChange} label="Product Name" placeholder="Writer Tools" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false} name={"productName"} value={inputValue?.productName} onChange={handleChange} label="Product Name" placeholder="Writer Tools" />
                   <div className={styles.selectDropdownDesign}>
                     <label>Product Category</label>
                     <div ref={dropDownRef} className={styles.relative}>
                       <input
                         style={{ cursor: "pointer" }}
+                        inputClassName={editButtonDisable? styles.editButtonDisable :""} disabled={editButtonDisable ? true :false}
                         readOnly
                         type="text"
                         value={inputValue?.productCategoryName ? inputValue?.productCategoryName : "Select product category"}
@@ -239,11 +239,13 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                       </div>
                     </div>
                   </div>
-                  <Input name={"productURL"} value={inputValue?.productURL} onChange={handleChange} errorMessage={errors?.productURL} label="Product URL" placeholder="UI/UX Designing" />
-                  <Input name={"shortBio"} value={inputValue?.shortBio} onChange={handleChange} label="Short Bio" placeholder="Enter your short bio" />
-                  <Input errorMessage={errors?.youtubeLink} name={"youtubeLink"} value={inputValue?.youtubeLink} onChange={handleChange} label="Youtube Link" placeholder="Enter your Youtube Link" />
-                  <Input errorMessage={errors?.twitterLink} name={"twitterLink"} value={inputValue?.twitterLink} onChange={handleChange} label="Twitter Link" placeholder="Enter your Twitter Link" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}  icon={LinkIcon} name={"productURL"} value={inputValue?.productURL} onChange={handleChange} errorMessage={errors?.productURL} label="Product URL" placeholder="UI/UX Designing" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}  name={"shortBio"} value={inputValue?.shortBio} onChange={handleChange} label="Short Bio" placeholder="Enter your short bio" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false} icon={LinkIcon} errorMessage={errors?.youtubeLink} name={"youtubeLink"} value={inputValue?.youtubeLink} onChange={handleChange} label="Youtube Link" placeholder="Enter your Youtube Link" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false} icon={LinkIcon} errorMessage={errors?.twitterLink} name={"twitterLink"} value={inputValue?.twitterLink} onChange={handleChange} label="Twitter Link" placeholder="Enter your Twitter Link" />
                   <Input
+                   inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}
+                    icon={LinkIcon}
                     errorMessage={errors?.linkedinLink}
                     name={"linkedinLink"}
                     value={inputValue?.linkedinLink}
@@ -252,6 +254,8 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                     placeholder="Enter your Linkedin Link"
                   />
                   <Input
+                   icon={LinkIcon}
+                   inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}
                     errorMessage={errors?.instagramLink}
                     name={"instagramLink"}
                     value={inputValue?.instagramLink}
@@ -260,6 +264,8 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                     placeholder="Enter your Instagram Link"
                   />
                   <Input
+                    icon={LinkIcon}
+                    inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}
                     errorMessage={errors?.facebookLink}
                     name={"facebookLink"}
                     value={inputValue?.facebookLink}
@@ -269,14 +275,14 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                   />
                 </div>
               </div>
-            </form>
+            
             <div className={styles.blogInfo}>
               <h2>Interested Blog’s Categories 👋</h2>
               <div className={styles.buttonAlignment}>
                 {/* <div className={styles.buttonclsmain}> */}
                 {interestedCategories?.length > 0 ? (
                   interestedCategories?.map((item, index) => (
-                    <button key={index}>
+                    <button type="button" key={index}>
                       {item?.title}{" "}
                       {!editButtonDisable && (
                         <div style={{ lineHeight: "normal", height: "15px" }} onClick={() => removeSelectedBlog(item)}>
@@ -293,6 +299,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                 {/* </div> */}
               </div>
               {!editButtonDisable ? (
+                <div className={styles.selectGrid}>
                 <div style={{ marginTop: "10px" }} className={styles.selectDropdownDesign}>
                   <label>Blog’s Categories</label>
                   <div className={styles.relative} ref={blogCategoryRef}>
@@ -311,11 +318,12 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                     </div>
                   </div>
                 </div>
+                </div>
               ) : null}
             </div>
             <div className={classNames(styles.twoColGrid, styles.gap ,styles.saveButton)}>
               <div className={styles.button}>
-                <button style={{ cursor: editButtonDisable ? "not-allowed" : "pointer" }} disabled={editButtonDisable || isLoading} type="button" onClick={handleSaveChange} className={styles.fill}>
+                <button style={{ cursor: editButtonDisable ? "not-allowed" : "pointer" }} disabled={editButtonDisable || isLoading} type="submit"  className={styles.fill}>
                   Save Changes {isLoading ? <Loader /> : null}
                 </button>
               </div>
@@ -325,6 +333,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                 </button>
               </div>
             </div>
+            </form>
           </div>
         </div>
       </div>

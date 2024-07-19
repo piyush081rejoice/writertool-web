@@ -6,6 +6,7 @@
     top: 0;
     z-index: 9;
     background-color: getColorHex('white');
+    border-bottom: 1px solid getColorHex('border-color');
 
     @include md {
         padding: rem(20 0);
@@ -18,26 +19,26 @@
 
         .profileImage {
             background-color: rgba(41, 45, 54, 0.12);
-            width: rem(50);
-            height: rem(50);
+            width: rem(40);
+            height: rem(40);
             display: flex;
             align-items: center;
             border-radius: 50%;
             cursor: pointer;
             justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Added box-shadow */
 
             .userLogo {
-                width: rem(50);
-                height: rem(50);
+                width: rem(40);
+                height: rem(40);
                 border-radius: 50%;
 
                 img {
-                    width: rem(50);
-                    height: rem(50);
+                    width: rem(40);
+                    height: rem(40);
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
+                    border: 1px solid #e0e0e0;
                     justify-content: center;
                 }
             }

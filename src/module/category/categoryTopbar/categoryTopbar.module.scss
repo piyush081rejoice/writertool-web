@@ -8,7 +8,6 @@
         font-size: rem(32);
         @include heading-font;
         text-align: center;
-        margin: rem(0 0 12 0);
         color: getColorHex('black');
     }
 

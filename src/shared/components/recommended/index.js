@@ -19,6 +19,14 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
   const [blogData, setBlogData] = useState([]);
   const [blogDataCount, setBlogDataCount] = useState(0);
   const [limit, setLimit] = useState(5);
+  const [userDetails, setUserDetails] = useState({});
+  useEffect(() => {
+    const localStorageUserData = localStorage.getItem("userData");
+    if (localStorageUserData) {
+      setUserDetails(JSON.parse(localStorageUserData));
+    }
+  }, []);
+
   const [isUserSignOut, setIsUserSignOut] = useState(true);
   useEffect(() => {
     const userTokenFromCookie = getCookie("userToken");
@@ -26,9 +34,9 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
       setIsUserSignOut(false);
     }
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
     setLimit(5)
-  },[slugId,isSavedBlogs])
+  }, [slugId, isSavedBlogs])
 
   const router = useRouter();
 
@@ -57,10 +65,9 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
     try {
       setIsLoading(true);
       const response = await ApiGet(
-        `${
-          isSavedBlogs
-            ? `blog-services/blogs/get-saved-blogs?limit=${limit}`
-            : slugId
+        `${isSavedBlogs
+          ? `blog-services/blogs/get-saved-blogs?limit=${limit}`
+          : slugId
             ? slugId == "for-you"
               ? `blog-services/blogs/get-editor-blogs?isActive=true&limit=${limit}`
               : `blog-services/blogs/get?blogCategorySlugIds[0]=${slugId}&isActive=true&limit=${limit}`
@@ -86,7 +93,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
       <div className={styles.subBoxDesign}>
         <div className={styles.allCardDesign}>
           {isLoading ? (
-            Array(blogData?.length ?blogData?.length :4)
+            Array(blogData?.length ? blogData?.length : 4)
               .fill(0)
               .map((_, index) => (
                 <div className={styles.SkeletonCard} key={index}>
@@ -122,6 +129,9 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
                       <button>Trending</button>
                     </div>
                   ) : null}
+                  <div className={styles.boookMarkIcon}>
+                    <BookmarkIcon />
+                  </div>
                 </div>
                 <div>
                   <div className={styles.firstColumn}>
@@ -139,12 +149,9 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
                     <ul>
                       <li>{DateConvert(data?.createdAt)}</li>
                     </ul>
-                    <div className={styles.iconAlignment}>
+                    {userDetails?._id != data?.uid ? <div className={styles.iconAlignment}>
                       <div onClick={() => handleShowBlog(data?._id)}>{isUserSignOut ? <UnBookmarkIcon /> : isSavedBlogs ? <BookmarkIcon /> : data?.isSaved ? <BookmarkIcon /> : <UnBookmarkIcon />}</div>
-                      {/* <Image onClick={()=>handleShowBlog(data?._id)} src={isSavedBlogs ?unBookmarkIcon :  data?.isSaved ?  unBookmarkIcon : BookmarkIcon  } alt="BookmarkIcon" width={23} height={25} /> */}
-                      {/* <img src={MinusIcon} alt="MinusIcon" width="100%" height="100%" />
-                      <img src={MenuIcon} alt="MenuIcon" width="100%" height="100%" /> */}
-                    </div>
+                    </div> :null}
                   </div>
                   <h3 onClick={() => router.push(`/blog/${data?.slugId}`)}>{data?.title}</h3>
                   <p className="texttruncatefourlines">{data?.sortDescription ? data?.sortDescription : ""}</p>

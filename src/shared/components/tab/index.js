@@ -48,7 +48,7 @@ export default function Tab({ getBlogCategoryData }) {
   const router = useRouter();
   const currentSlugId = router.query.slugId;
   const totalSlides = getBlogCategoryData ? getBlogCategoryData?.length : 0;
-  const slidesToShow = 4;
+  const slidesToShow = 3;
   const slidesToScroll = 3;
 
   const NavSlider = {

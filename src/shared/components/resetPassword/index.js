@@ -45,7 +45,7 @@ export default function ResetPassword({ toggle }) {
           <p>Enter your email below to receive password reset instructions.</p>
         </div>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <Input onChange={handleChange} name={"email"} label="Email ID" placeholder="Enter your email ID" required value={inputValue?.email || ""} />
+          <Input pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" onChange={handleChange} name={"email"} label="Email ID" placeholder="Enter your email ID" required value={inputValue?.email || ""} />
           <div className={styles.button}>
             <button disabled={isLoading}>Continue {isLoading ? <Loader /> :null}</button>
           </div>

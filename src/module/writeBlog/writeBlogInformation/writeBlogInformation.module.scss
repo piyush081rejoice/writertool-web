@@ -180,23 +180,33 @@
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
+    padding: rem(5 0 0 0);
 
     button {
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
       border-radius: 30px;
       border: none;
       background-color: #000;
       color: #fff;
-      padding: 10px;
-      margin: 0 0 5px 0;
+      padding: 5px 12px;
+      font-size: 13px;
+      line-height: rem(20);
+      @include body-medium;
+      transition: .3s ease-in-out;
+      
+      span {
+        display: block;
+        position: relative;
+        top: 0px;
+      }
 
       svg {
-        width: 15px;
-        height: 15px;
+        width: 10px;
+        height: 10px;
 
         path {
           fill: #fff;

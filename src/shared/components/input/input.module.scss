@@ -50,8 +50,13 @@
                 border: none;
                 background-color: #000;
                 color: #fff;
-                padding: 10px;
-                margin: 0 0 5px 0;
+                font-size: 12px;
+                line-height: 14px;
+                border: none;
+                cursor: pointer;
+                @include body-medium; 
+                padding: 8px 12px;
+                transition: .3s ease-in-out;
 
                 &:hover {
                     color: #000;

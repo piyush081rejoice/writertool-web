@@ -382,4 +382,13 @@
         margin-top: 20px;
         width: 50%;
       }
+      .editButtonDisable{
+        cursor: not-allowed;
+      }
+}
+
+.selectGrid {
+  display: grid;
+  gap: rem(30);
+  grid-template-columns: repeat(2, 1fr);
 }
