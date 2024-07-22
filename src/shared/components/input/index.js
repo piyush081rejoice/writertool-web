@@ -1,26 +1,8 @@
-// import styles from './input.module.scss';
-// export default function Input({ label,  placeholder, type, value ,onChange, name,required , icon,onIconClick}) {
-//     return (
-//         <div className={styles.input}>
-//             <label>{label}</label>
-//             <div className={styles.relative}>
-//                 <input type={type} placeholder={placeholder} value={value} onChange={onChange} name={name} required={required}/>
-//                 {
-//                     icon && (
-//                         <div className={styles.icon}  onClick={onIconClick ? onIconClick : null}>
-//                             <img src={icon} alt='icon' />
-//                         </div>
-//                     )
-//                 }
-//             </div>
-//         </div>
-//     )
-// }
 import { handleEmailKeyPress, handleSpaceKeyPress } from "@/hooks/usehandleSpaceKeyPress";
 import styles from "./input.module.scss";
 import ShowError from "@/common/ShowError";
 
-export default function Input({inputClassName, readonly, label, placeholder, type, value, onChange, name, required, icon, onIconClick, options, pattern, className, children,labelClassName,errorMessage ,onButtonClick,button }) {
+export default function Input({onKeyDown,inputClassName, readonly, label, placeholder, type, value, onChange, name, required, icon, onIconClick, options, pattern, className, children,labelClassName,errorMessage ,onButtonClick,button }) {
   return (
     <div className={styles.input}>
       <div style={{display: "flex",alignItems: "start", justifyContent: "start", gap: "10px"}} className={labelClassName?labelClassName:""}>
@@ -39,7 +21,10 @@ export default function Input({inputClassName, readonly, label, placeholder, typ
           </select>
         ) : type == "email" ? (
           <input className={inputClassName}  onKeyDown={handleEmailKeyPress}  type={type} pattern={pattern} placeholder={placeholder} value={value} onChange={onChange} name={name} required={required} readOnly={readonly} />
-        ): <input className={inputClassName} onKeyDown={handleSpaceKeyPress}  type={type} pattern={pattern} placeholder={placeholder} value={value} onChange={onChange} name={name} required={required} readOnly={readonly}  />
+        ): <input className={inputClassName}   onKeyDown={(e) => {
+          handleSpaceKeyPress(e);
+          if (onKeyDown) onKeyDown(e);
+        }}  type={type} pattern={pattern} placeholder={placeholder} value={value} onChange={onChange} name={name} required={required} readOnly={readonly}  />
       
       }
         {icon && (

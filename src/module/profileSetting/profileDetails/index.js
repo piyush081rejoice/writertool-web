@@ -203,7 +203,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
               </div>
               <div className={styles.allAlignment}>
                 <div className={styles.twoColGrid}>
-                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}  required={true} errorMessage={errors?.userName} name={"userName"} value={inputValue?.userName} onChange={handleChange} label="Name*" placeholder="Dolphine Devtra" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}  required={true} errorMessage={errors?.userName} name={"userName"} value={inputValue?.userName} onChange={handleChange} label="Name*" placeholder="Enter your name" />
                   <Input
                     readonly
                     inputClassName={styles.editButtonDisable}
@@ -215,7 +215,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                     label="Email"
                     placeholder="Writertools123@gmail.com"
                   />
-                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false} name={"productName"} value={inputValue?.productName} onChange={handleChange} label="Product Name" placeholder="Writer Tools" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false} name={"productName"} value={inputValue?.productName} onChange={handleChange} label="Product Name" placeholder="Enter your product name" />
                   <div className={styles.selectDropdownDesign}>
                     <label>Product Category</label>
                     <div ref={dropDownRef} className={styles.relative}>
@@ -239,10 +239,10 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                       </div>
                     </div>
                   </div>
-                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}  icon={LinkIcon} name={"productURL"} value={inputValue?.productURL} onChange={handleChange} errorMessage={errors?.productURL} label="Product URL" placeholder="UI/UX Designing" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}  icon={LinkIcon} name={"productURL"} value={inputValue?.productURL} onChange={handleChange} errorMessage={errors?.productURL} label="Product URL" placeholder="https://www.writertools.ai/" />
                   <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}  name={"shortBio"} value={inputValue?.shortBio} onChange={handleChange} label="Short Bio" placeholder="Enter your short bio" />
-                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false} icon={LinkIcon} errorMessage={errors?.youtubeLink} name={"youtubeLink"} value={inputValue?.youtubeLink} onChange={handleChange} label="Youtube Link" placeholder="Enter your Youtube Link" />
-                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false} icon={LinkIcon} errorMessage={errors?.twitterLink} name={"twitterLink"} value={inputValue?.twitterLink} onChange={handleChange} label="Twitter Link" placeholder="Enter your Twitter Link" />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false} icon={LinkIcon} errorMessage={errors?.youtubeLink} name={"youtubeLink"} value={inputValue?.youtubeLink} onChange={handleChange} label="Youtube Link" placeholder="https://www.youtube.com/ " />
+                  <Input inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false} icon={LinkIcon} errorMessage={errors?.twitterLink} name={"twitterLink"} value={inputValue?.twitterLink} onChange={handleChange} label="Twitter Link" placeholder="https://www.twitter.com/ " />
                   <Input
                    inputClassName={editButtonDisable? styles.editButtonDisable :""} readonly={editButtonDisable ? true :false}
                     icon={LinkIcon}
@@ -251,7 +251,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                     value={inputValue?.linkedinLink}
                     onChange={handleChange}
                     label="Linkedin Link"
-                    placeholder="Enter your Linkedin Link"
+                    placeholder="https://www.linkedin.com/ "
                   />
                   <Input
                    icon={LinkIcon}
@@ -261,7 +261,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                     value={inputValue?.instagramLink}
                     onChange={handleChange}
                     label="Instagram Link"
-                    placeholder="Enter your Instagram Link"
+                    placeholder="https://www.instagram.com/"
                   />
                   <Input
                     icon={LinkIcon}
@@ -271,7 +271,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                     value={inputValue?.facebookLink}
                     onChange={handleChange}
                     label="Facebook Link"
-                    placeholder="Enter your Facebook Link"
+                    placeholder="https://www.facebook.com/"
                   />
                 </div>
               </div>

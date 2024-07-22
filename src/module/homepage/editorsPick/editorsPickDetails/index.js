@@ -78,8 +78,8 @@ export default function EditorsPickDetails({ getBlogsData }) {
           </div>
         ) : null}
         {userDetails?._id != singleBlog?.uid ? (
-          <div className={styles.boookMarkIcon}>
-            <div onClick={() => handleShowBlog(singleBlog?._id)}>{bookMarkIcon ? <BookmarkIcon /> : <UnBookmarkIcon />}</div>
+          <div  onClick={() => handleShowBlog(singleBlog?._id)} className={styles.boookMarkIcon}>
+            {bookMarkIcon ? <BookmarkIcon /> : <UnBookmarkIcon />}
           </div>
         ) : null}
       </div>

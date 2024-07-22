@@ -24,8 +24,8 @@ import "suneditor/dist/css/suneditor.min.css";
 import styles from "./writeBlogInformation.module.scss";
 import Link from "next/link";
 const SunEditor = dynamic(() => import("suneditor-react"), { ssr: false });
-const LinkIcon = '/assets/icons/link.svg';
-export default function WriteBlogInformation({ getBlogCategoryData, updateId, updateBlogData  }) {
+const LinkIcon = "/assets/icons/link.svg";
+export default function WriteBlogInformation({ getBlogCategoryData, updateId, updateBlogData }) {
   const { inputValue, handleChange, setInputValue, errors, setErrors } = useOnChange({ youtubeLink: "", twitterLink: "", linkedinLink: "", facebookLink: "", instagramLink: "", websiteLink: "" });
   const [showDropdown, setShowDropdown] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
@@ -104,7 +104,7 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
 
   const handlePreviewModal = () => {
     setPreviewModal(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleSubmitBlog = async (status) => {
@@ -174,7 +174,7 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
 
   useEffect(() => {
     if (updateId) {
-      setInputValue(updateBlogData)
+      setInputValue(updateBlogData);
       setCoverPhotoPreview(updateBlogData?.coverPhoto ? updateBlogData?.coverPhoto : null);
       setKeyWords(updateBlogData?.keyWords ? updateBlogData?.keyWords : null);
       setSelectedBlogs(getBlogCategoryData?.filter((data) => updateBlogData?.blogCategoryId?.some((categoryObj) => categoryObj?._id === data?._id)));
@@ -213,11 +213,18 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
     setErrors((prevErrors) => ({ ...prevErrors, slugId: "" }));
   };
 
+  const handleKeyDown = (e) => {
+    if (e?.key === "Enter" && inputValue?.Keywords) {
+      handleOnKeyWordChange();
+      e?.preventDefault();
+    }
+  };
+
   return (
     <>
       {previewModal ? (
         <div className="container">
-          <BlogPreviewModal  coverPhotoPreview={coverPhotoPreview} editorValue={editorValue} singleBlog={inputValue}  setPreviewModal={setPreviewModal} />
+          <BlogPreviewModal coverPhotoPreview={coverPhotoPreview} editorValue={editorValue} singleBlog={inputValue} setPreviewModal={setPreviewModal} />
         </div>
       ) : (
         <div className={styles.writeBlogInformationAlignment}>
@@ -265,7 +272,15 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                     {errors?.blogCategory ? <ShowError errorMessage={errors?.blogCategory} /> : null}
                   </div>
                   <div className={styles.spacer}>
-                    <Input icon={LinkIcon} label="Website URL" placeholder="Type your URL" onChange={handleChange} name="websiteLink" value={inputValue?.websiteLink} errorMessage={errors?.websiteLink} />
+                    <Input
+                      icon={LinkIcon}
+                      label="Website URL"
+                      placeholder="Type your URL"
+                      onChange={handleChange}
+                      name="websiteLink"
+                      value={inputValue?.websiteLink}
+                      errorMessage={errors?.websiteLink}
+                    />
                   </div>
                   <div className={styles.spacer}>
                     <Input icon={LinkIcon} label="Slug URL" placeholder="Type your slug URL" onChange={handleOnValueChange} name="slugId" value={inputValue?.slugId} errorMessage={errors?.slugId} />
@@ -281,15 +296,7 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                     />
                   </div>
                   <div className={styles.spacer}>
-                    <Input
-                      button={"Add Keyword"}
-                      label="Keywords"
-                      placeholder="Type your Keywords ..."
-                      onChange={handleChange}
-                      name="Keywords"
-                      value={inputValue?.Keywords}
-                      onButtonClick={inputValue?.Keywords && handleOnKeyWordChange}
-                    />
+                    <Input label="Keywords" placeholder="Type your Keywords ..." onChange={handleChange} name="Keywords" value={inputValue?.Keywords} onKeyDown={handleKeyDown} />
                     {keyWords.length > 0 ? (
                       <div style={{ marginTop: "5px" }}>
                         {" "}
@@ -309,19 +316,59 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                 </div>
                 <div className={styles.gridItems}>
                   <div className={styles.spacer}>
-                    <Input icon={LinkIcon} label="Instagram" placeholder="www.instagram.com" onChange={handleChange} errorMessage={errors?.instagramLink} name="instagramLink" value={inputValue?.instagramLink} />
+                    <Input
+                      icon={LinkIcon}
+                      label="Instagram"
+                      placeholder="https://www.instagram.com/"
+                      onChange={handleChange}
+                      errorMessage={errors?.instagramLink}
+                      name="instagramLink"
+                      value={inputValue?.instagramLink}
+                    />
                   </div>
                   <div className={styles.spacer}>
-                    <Input icon={LinkIcon} label="Facebook" placeholder="www.facebook.com" onChange={handleChange} name="facebookLink" errorMessage={errors?.facebookLink} value={inputValue?.facebookLink} />
+                    <Input
+                      icon={LinkIcon}
+                      label="Facebook"
+                      placeholder="https://www.facebook.com/"
+                      onChange={handleChange}
+                      name="facebookLink"
+                      errorMessage={errors?.facebookLink}
+                      value={inputValue?.facebookLink}
+                    />
                   </div>
                   <div className={styles.spacer}>
-                    <Input icon={LinkIcon} label="LinkedIn" placeholder="www.linkdin.com" onChange={handleChange} name="linkedinLink" errorMessage={errors?.linkedinLink} value={inputValue?.linkedinLink} />
+                    <Input
+                      icon={LinkIcon}
+                      label="LinkedIn"
+                      placeholder="https://www.linkedin.com/"
+                      onChange={handleChange}
+                      name="linkedinLink"
+                      errorMessage={errors?.linkedinLink}
+                      value={inputValue?.linkedinLink}
+                    />
                   </div>
                   <div className={styles.spacer}>
-                    <Input icon={LinkIcon} label="Twitter" placeholder="www.twitter.com" onChange={handleChange} name="twitterLink" errorMessage={errors?.twitterLink} value={inputValue?.twitterLink} />
+                    <Input
+                      icon={LinkIcon}
+                      label="Twitter"
+                      placeholder="https://www.twitter.com/"
+                      onChange={handleChange}
+                      name="twitterLink"
+                      errorMessage={errors?.twitterLink}
+                      value={inputValue?.twitterLink}
+                    />
                   </div>
                   <div className={styles.spacer}>
-                    <Input icon={LinkIcon} label="Youtube" placeholder="www.youtube.com" onChange={handleChange} name="youtubeLink" errorMessage={errors?.youtubeLink} value={inputValue?.youtubeLink} />
+                    <Input
+                      icon={LinkIcon}
+                      label="Youtube"
+                      placeholder="https://www.youtube.com/"
+                      onChange={handleChange}
+                      name="youtubeLink"
+                      errorMessage={errors?.youtubeLink}
+                      value={inputValue?.youtubeLink}
+                    />
                   </div>
                 </div>
                 {errors?.blogCategory ? <ShowError errorMessage={errors?.blogCategory} /> : null}

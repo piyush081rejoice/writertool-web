@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlogData, blogsTotalCount }) {
+  console.log("🚀 ~ file: index.js:11 ~ Home ~ getBlogsData:", getBlogsData)
   const [blogDataLoading, setBlogDataLoading] = useState(false);
   const [blogData, setBlogData] = useState(getBlogsData);
   const [limit, setLimit] = useState(10);
@@ -71,6 +72,7 @@ export async function getServerSideProps(context) {
           })
           .then((resp) => resp?.data?.payload)
       : await ApiGet("blog-services/blogs/get?isActive=true&skip=1&limit=10").then((resp) => resp?.data?.payload);
+      console.log(`blogsData`,blogsData)
     const trendingBlogData = await ApiGet(`blog-services/blogs/get?isTrending=true&skip=1&limit=3`).then((resp) => resp?.data?.payload);
 
     return {
