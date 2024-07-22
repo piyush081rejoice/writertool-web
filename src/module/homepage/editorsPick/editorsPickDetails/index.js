@@ -14,6 +14,8 @@ export default function EditorsPickDetails({ getBlogsData }) {
   const singleBlog = getBlogsData?.[0];
   const router = useRouter();
   const [userDetails, setUserDetails] = useState({});
+  const [bookMarkIcon, setBookMarkIcon] = useState()
+
   useEffect(() => {
     const localStorageUserData = localStorage.getItem("userData");
     if (localStorageUserData) {
@@ -28,9 +30,21 @@ export default function EditorsPickDetails({ getBlogsData }) {
       setIsUserSignOut(false);
     }
   }, []);
+    
+  useEffect(() => {
+    if (isUserSignOut) {
+      setBookMarkIcon(false);
+    } else {
+      if (singleBlog?.isSaved) {
+        setBookMarkIcon(true);
+      } else {
+        setBookMarkIcon(false);
+      }
+    }
+  }, [isUserSignOut, singleBlog]);
 
   const handleShowBlog = async (id) => {
-    console.log("hello123")
+    
     const userToken = getCookie("userToken");
     if (userToken == undefined) {
       toast.error("Please login to save to bookmark");
@@ -39,7 +53,7 @@ export default function EditorsPickDetails({ getBlogsData }) {
         const resp = await ApiPost(`blog-services/blogs/saved-blogs?blogId=${id}`);
         if (resp?.data?.success) {
           toast.success(resp?.data?.message);
-          //add condition here with state
+          setBookMarkIcon(!bookMarkIcon)
         }
       } catch (error) {
         toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
@@ -65,12 +79,9 @@ export default function EditorsPickDetails({ getBlogsData }) {
         ) : null}
         {userDetails?._id != singleBlog?.uid ? (
           <div className={styles.boookMarkIcon}>
-            <div onClick={() => handleShowBlog(singleBlog?._id)}>{isUserSignOut ? <UnBookmarkIcon /> : singleBlog?.isSaved ? <BookmarkIcon /> : <UnBookmarkIcon />}</div>
+            <div onClick={() => handleShowBlog(singleBlog?._id)}>{bookMarkIcon ? <BookmarkIcon /> : <UnBookmarkIcon />}</div>
           </div>
         ) : null}
-        <div className={styles.boookMarkIcon}>
-          <BookmarkIcon />
-        </div>
       </div>
       <div className={styles.cardDetails}>
         <div className={styles.firstColumn}>

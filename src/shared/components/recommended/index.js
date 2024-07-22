@@ -20,6 +20,10 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
   const [blogDataCount, setBlogDataCount] = useState(0);
   const [limit, setLimit] = useState(5);
   const [userDetails, setUserDetails] = useState({});
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [isUserSignOut, setIsUserSignOut] = useState(true);
+  const [isLoadMoreLoading, setIsLoadMoreLoading] = useState(false);
+
   useEffect(() => {
     const localStorageUserData = localStorage.getItem("userData");
     if (localStorageUserData) {
@@ -27,22 +31,20 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
     }
   }, []);
 
-  const [isUserSignOut, setIsUserSignOut] = useState(true);
   useEffect(() => {
     const userTokenFromCookie = getCookie("userToken");
     if (userTokenFromCookie !== undefined) {
       setIsUserSignOut(false);
     }
   }, []);
+
   useEffect(() => {
-    setLimit(5)
-  }, [slugId, isSavedBlogs])
+    setLimit(5);
+    setIsInitialLoad(true);
+    getBlogData(5);
+  }, [slugId, isSavedBlogs]);
 
   const router = useRouter();
-
-  useEffect(() => {
-    getBlogData();
-  }, [slugId, limit, isSavedBlogs]);
 
   const handleShowBlog = async (id) => {
     const userToken = getCookie("userToken");
@@ -53,7 +55,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
         const resp = await ApiPost(`blog-services/blogs/saved-blogs?blogId=${id}`);
         if (resp?.data?.success) {
           toast.success(resp?.data?.message);
-          getBlogData();
+          getBlogData(limit);
         }
       } catch (error) {
         toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
@@ -61,7 +63,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
     }
   };
 
-  const getBlogData = async () => {
+  const getBlogData = async (limit) => {
     try {
       setIsLoading(true);
       const response = await ApiGet(
@@ -78,12 +80,23 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
         setBlogData(response?.data?.payload?.blogs ? response?.data?.payload?.blogs : response?.data?.payload?.editor_blogs);
         setBlogDataCount(response?.data?.payload?.counts);
         setIsLoading(false);
+        setIsInitialLoad(false);
+        setIsLoadMoreLoading(false);
       }
     } catch (error) {
       toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
       setIsLoading(false);
+      setIsLoadMoreLoading(false);
     }
   };
+
+  const handleLoadMore = () => {
+    setIsLoadMoreLoading(true);
+    const newLimit = limit + 5;
+    setLimit(newLimit);
+    getBlogData(newLimit);
+  };
+
   return (
     <div className={styles.recommendedSectionDesign}>
       <div className={styles.latestpostsTitle}>
@@ -92,7 +105,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
       </div>
       <div className={styles.subBoxDesign}>
         <div className={styles.allCardDesign}>
-          {isLoading ? (
+          {isLoading && isInitialLoad ? (
             Array(blogData?.length ? blogData?.length : 4)
               .fill(0)
               .map((_, index) => (
@@ -129,9 +142,9 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
                       <button>Trending</button>
                     </div>
                   ) : null}
-                  <div className={styles.boookMarkIcon}>
-                    <BookmarkIcon />
-                  </div>
+                     {userDetails?._id != data?.uid ? <div className={styles.boookMarkIcon} onClick={() => handleShowBlog(data?._id)}>
+                       {isUserSignOut ? <UnBookmarkIcon /> : isSavedBlogs ? <BookmarkIcon /> : data?.isSaved ? <BookmarkIcon /> : <UnBookmarkIcon />}
+                    </div> : null} 
                 </div>
                 <div>
                   <div className={styles.firstColumn}>
@@ -139,19 +152,11 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
                       <div className={styles.profileImage}>
                         <LazyImage src={data?.Users?.profileImage ? data?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
                       </div>
-                      {/* <span style={{ fontSize: "10px" }}>{data?.Users?.userName}</span> */}
                       <span>{data?.Users?.userName}</span>
                     </div>
-                    {/* {data?.isTrending ? <ul>
-                        <li>Trending</li>
-                      </ul> : null} */}
-
                     <ul>
                       <li>{DateConvert(data?.createdAt)}</li>
                     </ul>
-                    {userDetails?._id != data?.uid ? <div className={styles.iconAlignment}>
-                      <div onClick={() => handleShowBlog(data?._id)}>{isUserSignOut ? <UnBookmarkIcon /> : isSavedBlogs ? <BookmarkIcon /> : data?.isSaved ? <BookmarkIcon /> : <UnBookmarkIcon />}</div>
-                    </div> :null}
                   </div>
                   <h3 onClick={() => router.push(`/blog/${data?.slugId}`)}>{data?.title}</h3>
                   <p className="texttruncatefourlines">{data?.sortDescription ? data?.sortDescription : ""}</p>
@@ -164,8 +169,13 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
         </div>
         {!(blogData?.length >= blogDataCount) ? (
           <div className={styles.loadMoreButton}>
-            <button type="button" aria-label="Load More" onClick={() => setLimit((prev) => prev + 5)}>
-              Load More
+            <button
+              type="button"
+              aria-label="Load More"
+              onClick={handleLoadMore}
+              disabled={isLoadMoreLoading}
+            >
+              {isLoadMoreLoading ? "Loading..." : "Load More"}
             </button>
           </div>
         ) : null}
