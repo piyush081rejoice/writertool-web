@@ -1,30 +1,55 @@
-import socketIOClient from "socket.io-client";
-const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjdmODI4NjdmYTE2NGM0ZTAxMmI2MTUiLCJpYXQiOjE3MjE2NDQxODh9.cZV-4xt6a3JUP0PHFTzjdpIIHm-t55R5sgmt1ufuAv8";
+// import socketIOClient from "socket.io-client";
 
-const SOCKET_URL = "https://api.writertools.ai";
+// const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjdmODI4NjdmYTE2NGM0ZTAxMmI2MTUiLCJpYXQiOjE3MjE5ODQxMDJ9.-DCuM5D0akc65GNwV1X-XwjdZKC6IS8LPK_oa1u39qI";
+
+
+// let socket = null;
+// if (token) {
+//   socket = socketIOClient(SOCKET_URL, {
+//     transports: ["websocket"],
+//     query: {
+//       token,
+//     },
+//   });
+// }
+
+// export const getSocket = () => {
+//   return socket;
+// };
+
+const SOCKET_URL = "https://jktcn0cj-80.inc1.devtunnels.ms";
+
+import socketIOClient from "socket.io-client";
+import { getCookie } from "./hooks/useCookie";
+
+let access_token = getCookie("userToken");
 let socket = null;
-if (token) {
+
+if (access_token) {
   socket = socketIOClient(SOCKET_URL, {
-    path: "/socket.io",
-    transports: ["websocket"],
+    transports: ["websocket", "htmlfile", "xhr-polling", "*"],
+    extraHeaders: {
+      "Bypass-Tunnel-Reminder": "true",
+    },
     query: {
-      token,
+      token: "Bearer " + access_token,
     },
   });
 }
 
-export const connectSocket = () => {
-  if (token) {
+export const connectSocket = (accessToken) => {
+  if (accessToken) {
     socket = socketIOClient(SOCKET_URL, {
-      path: "/socket.io",
-      transports: ["websocket"],
+      transports: ["websocket", "htmlfile", "xhr-polling", "*"],
+      extraHeaders: {
+        "Bypass-Tunnel-Reminder": "true",
+      },
       query: {
-        token,
+        token: "Bearer " + accessToken,
       },
     });
   }
 };
-
 export const getSocket = () => {
   return socket;
 };

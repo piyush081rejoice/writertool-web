@@ -4,16 +4,23 @@ import classNames from "classnames";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { getSocket } from "@/socket";
 const DangerIcon = "/assets/icons/danger.svg";
 export default function LogoutModal({ setIsDeleteModal, setSidebar }) {
   const router = useRouter();
+    const socket = getSocket();
   const handleSignOut = () => {
     localStorage.clear();
     const cookies = Cookies.get(); // Get all cookies
     for (let cookie in cookies) {
       Cookies.remove(cookie); // Remove each cookie
     }
+    const event = new CustomEvent("logout");
+    window.dispatchEvent(event);
     toast.success("You have succesfully signed out");
+    if (socket) {
+      socket.disconnect();
+    }
     router.push("/");
     setIsDeleteModal(false);
     setSidebar(false);

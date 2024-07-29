@@ -6,6 +6,7 @@ import { ApiPostNoAuth } from '@/helpers/API/ApiData';
 import toast from 'react-hot-toast';
 import { useOnChange } from '@/hooks/onChangeHook';
 import Loader from '@/common/Loader';
+import Link from 'next/link';
 export default function Newsletter() {
   const { inputValue, handleChange, setInputValue } = useOnChange();
   const [isLoading, setIsLoading] = useState(false)
@@ -45,7 +46,7 @@ export default function Newsletter() {
       </div>
       </form>
       <div className={styles.lastText}>
-        <p>By signing up, you agree to our <a href='#Privacy Policy'>Privacy Policy</a></p>
+        <p>By signing up, you agree to our <Link href='/privacy-policy'>Privacy Policy</Link></p>
       </div>
     </div>
   )

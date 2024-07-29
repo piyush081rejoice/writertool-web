@@ -1,0 +1,88 @@
+@import '../../../assets/scss/main.scss';
+
+.paginationAllContnetAlignment {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    padding: 16px 0 0 0;
+
+    @media (max-width: 834px) {
+        padding: 0;
+        gap: 10px;
+    }
+
+    div:first-child {
+        &:hover {
+            svg {
+                path {
+                    fill: #fff;
+                }
+            }
+        }
+
+        svg {
+            transform: rotate(90deg);
+
+            path {
+                fill: getColorHex('black');
+            }
+        }
+    }
+
+    div:last-child {
+        &:hover {
+            svg {
+                path {
+                    fill: #fff;
+                }
+            }
+        }
+
+        svg {
+            transform: rotate(-90deg);
+
+            path {
+                fill: getColorHex('black');
+                fill: getColorHex('black');
+            }
+        }
+    }
+
+    div {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 50%;
+        color: getColorHex('black');
+        border: 1px solid getColorHex('black');
+
+        @media (max-width: 834px) {
+            width: 25px;
+            height: 25px;
+            font-size: 12px;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+
+            @media (max-width: 834px) {
+                width: 10px;
+            }
+        }
+
+        &:hover {
+            background-color: getColorHex('black');
+            color: #fff;
+        }
+
+        &.active {
+            background-color: getColorHex('black');
+            color: #fff;
+        }
+    }
+}

@@ -8,6 +8,7 @@
     @include sm {
         padding: rem(14);
     }
+
     @include lg {
         padding: rem(30);
     }
@@ -17,10 +18,11 @@
         align-items: center;
         justify-content: space-between;
         padding: rem(20 0 0 0);
+
         button {
             border: none;
             color: getColorHex('white');
-            padding:  rem(10 20);
+            padding: rem(10 20);
             font-size: rem(14);
             @include body-bold;
             line-height: rem(22);
@@ -28,15 +30,17 @@
             cursor: pointer;
             background-color: getColorHex('black');
             letter-spacing: 0.48px;
+
             @include sm {
-            padding:  rem(10 20);
-            font-size: rem(14);
-            line-height: rem(22);
+                padding: rem(10 20);
+                font-size: rem(14);
+                line-height: rem(22);
             }
+
             @include lg {
-            padding:  rem(11 40);
-            font-size: rem(16);
-            line-height: rem(28);
+                padding: rem(11 40);
+                font-size: rem(16);
+                line-height: rem(28);
             }
         }
 
@@ -48,11 +52,13 @@
             line-height: normal;
             color: getColorHex('black');
             text-decoration-line: underline;
+
             @include sm {
-            font-size: rem(14);
+                font-size: rem(14);
             }
+
             @include lg {
-            font-size: rem(18);
+                font-size: rem(18);
             }
         }
     }
@@ -70,17 +76,28 @@
             line-height: normal;
             @include bottom-border-animation;
             cursor: pointer;
+
             @include sm {
                 font-size: rem(14);
             }
+
             @include lg {
-            font-size: rem(18);
+                font-size: rem(18);
             }
 
             &:hover {
                 color: getColorHex("black");
             }
         }
+    }
+
+    .notificationSkeleton {
+        padding: rem(24 0);
+        display: grid;
+        grid-template-columns: 47px 1fr;
+        align-items: center;
+        gap: rem(10);
+        
     }
 
     .allNotificationBoxAlignment {
@@ -100,11 +117,13 @@
                 font-size: rem(12);
                 @include body-medium;
                 color: getColorHex('gray');
+
                 @include sm {
-                font-size: rem(14);
+                    font-size: rem(14);
                 }
+
                 @include lg {
-                font-size: rem(14);
+                    font-size: rem(14);
                 }
             }
 
@@ -114,11 +133,13 @@
                 color: getColorHex('black');
                 @include body-medium;
                 margin: rem(0 0 5 0);
+
                 @include sm {
-                font-size: rem(14);
+                    font-size: rem(14);
                 }
+
                 @include lg {
-                font-size: rem(16);
+                    font-size: rem(16);
                 }
 
                 span {

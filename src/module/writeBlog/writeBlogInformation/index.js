@@ -275,7 +275,7 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                     <Input
                       icon={LinkIcon}
                       label="Website URL"
-                      placeholder="Type your URL"
+                      placeholder="https://writertools.ai/"
                       onChange={handleChange}
                       name="websiteLink"
                       value={inputValue?.websiteLink}

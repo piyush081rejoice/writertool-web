@@ -92,18 +92,18 @@
 
         .boookMarkIcon {
             cursor: pointer;
-            width: 32px !important;
-            height: 32px !important;
-            border-radius: 50% !important;
-            background-color: getColorHex('black') ;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: getColorHex('black');
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             position: absolute;
-            right: 0 !important;
-            top: 0 !important;
-            margin: rem(15) !important;
+            right: 0;
+            top: 0;
+            margin: rem(15);
         }
 
         .buttonDesign {

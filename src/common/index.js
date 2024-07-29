@@ -47,13 +47,16 @@ export const GenerateDescription = (htmlString) => {
   return paragraphs[0];
 };
 
-
-export const TransformString =(input) => {
+export const TransformString = (input) => {
   // Capitalize the first letter
   let result = input.charAt(0).toUpperCase() + input.slice(1);
-  
+
   // Replace dashes with spaces
-  result = result.replace(/-/g, ' ');
-  
+  result = result.replace(/-/g, " ");
+
   return result;
-}
+};
+
+export const replaceQuotedTextWithSpan = (inputString) => {
+  return inputString.replace(/"([^"]*)"/g, "<span>$1</span>");
+};

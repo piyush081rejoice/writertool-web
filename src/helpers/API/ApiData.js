@@ -413,7 +413,7 @@ export const getHttpOptions = (options = defaultHeaders) => {
     // let headers ={}
     let headers = {
         "ngrok-skip-browser-warning": true,
-        "User-Agent": true,
+        // "User-Agent": true,
       };
     let tokenData=getCookie("userToken")
     if (options.hasOwnProperty("isAuth") && options.isAuth) {

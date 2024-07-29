@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const protectedRoutes = ["/write-blog", "/your-stories", "/category/for-you", "/library", "/profile-setting"];
+const protectedRoutes = ["/write-blog", "/your-stories", "/category/for-you", "/library", "/profile-setting" ,"/notifications"];
 
 export default function middleware(req) {
   const isAuthenticated = req.cookies.has("userToken");
@@ -11,5 +11,5 @@ export default function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/write-blog", "/your-stories", "/category/for-you", "/library", "/profile-setting"],
+  matcher: ["/write-blog", "/your-stories", "/category/for-you", "/library", "/profile-setting","/notifications"],
 };

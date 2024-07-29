@@ -16,6 +16,7 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import ResetPassword from '../resetPassword';
 import Loader from '@/common/Loader';
 import LazyImage from '@/helpers/lazyImage';
+import { connectSocket } from '@/socket';
 const EyeIcon = '/assets/icons/eye.svg';
 const OpenEye = '/assets/icons/OpenEye.svg';
 
@@ -70,6 +71,7 @@ export default function SigninModal() {
       if (resp?.data?.payload?.user?.isActive) {
         if (resp?.data?.success) {
           let userToken = resp?.data?.payload?.tokens
+           connectSocket(userToken);
           setCookie("userToken",userToken)
           setCookie("isProfileCompleted",resp?.data?.payload?.user?.isProfileCompleted)
           const  redirectUrl =getCookie("redirectUrl")
