@@ -17,6 +17,7 @@ export default function NotificationsItems() {
 
   useEffect(() => {
     if (isLoading) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -34,7 +35,7 @@ export default function NotificationsItems() {
       if (data?.success) {
         setIsLoading(false);
         setNotifications(data?.payload?.data);
-        setNotificationsCounts(Math.ceil(data?.payload?.count / 10) || 0);
+        setNotificationsCounts(data?.payload?.count);
       }
     } catch (error) {
       toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
@@ -72,7 +73,9 @@ export default function NotificationsItems() {
                 </div>
               </div>
             ))}
-            <Pagination pages={notificationsCounts} current={pagination} onClick={setPagination} />
+            {
+              notificationsCounts > 10 ? <Pagination pages={Math.ceil(notificationsCounts /10)} current={pagination} onClick={setPagination} /> :null
+            }
           </>
         ) : (
           <NoNotification />

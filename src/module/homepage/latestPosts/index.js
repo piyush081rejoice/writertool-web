@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { BookmarkIcon, UnBookmarkIcon } from "@/assets/icons/Icons";
+import WaveIcon from "@/assets/icons/waveIcon";
+import { DateConvert } from "@/common";
+import { ApiPost } from "@/helpers/API/ApiData";
+import LazyImage from "@/helpers/lazyImage";
+import { getCookie } from "@/hooks/useCookie";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import styles from "./latestPosts.module.scss";
 import Newsletter from "./newsletter";
 import TagClouds from "./tagClouds";
-import WaveIcon from "@/assets/icons/waveIcon";
-import LazyImage from "@/helpers/lazyImage";
-import Image from "next/image";
-import { DateConvert } from "@/common";
-import { useRouter } from "next/router";
-import { getCookie } from "@/hooks/useCookie";
-import toast from "react-hot-toast";
-import { ApiPost } from "@/helpers/API/ApiData";
-import { BookmarkIcon, UnBookmarkIcon } from "@/assets/icons/Icons";
 const ProfileImage = "/assets/images/profile.png";
 
 export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabled, blogDataLoading, handleGetBlogsData, getBlogCategoryData }) {
@@ -25,12 +24,20 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
 
   const [userDetails, setUserDetails] = useState({});
   useEffect(() => {
-    const localStorageUserData = localStorage.getItem("userData");
-    if (localStorageUserData) {
-      setUserDetails(JSON.parse(localStorageUserData));
+    const handleUserLogout  = () =>{
+      const localStorageUserData = localStorage.getItem("userData");
+      if (localStorageUserData) {
+        setUserDetails(JSON.parse(localStorageUserData));
+      }else{
+        setUserDetails({});
+      }
     }
+    handleUserLogout()
+    window.addEventListener('logout', handleUserLogout);
+    return () => {
+      window.removeEventListener('logout', handleUserLogout);
+    };
   }, []);
-
   const handleShowBlog = async (id) => {
     const userToken = getCookie("userToken");
     if (userToken == undefined) {

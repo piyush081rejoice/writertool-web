@@ -184,9 +184,12 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                   <div className={styles.profile}>
                     <LazyImage src={coverPhotoPreview ? coverPhotoPreview : inputValue?.profileImage ? inputValue?.profileImage : ProfileImage} alt="ProfileImage" height={100} width={100} />
                     <input type="file" style={{ display: "none" }} onChange={handleImageChange} ref={fileInputRef} />
-                    <div className={styles.editIcon} onClick={handleImageUpload}>
+                    {
+                      !editButtonDisable ?<div className={styles.editIcon} onClick={handleImageUpload}>
                       <EditIcon />
-                    </div>
+                    </div> :null
+                    }
+                    
                   </div>
                   <div>
                     <p>{inputValue?.userName}</p>
@@ -291,9 +294,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                       )}
                     </button>
                   ))
-                ) : errors?.interestedCategoriesNames ? (
-                  <ShowError errorMessage={errors?.interestedCategoriesNames} />
-                ) : (
+                ) :  (
                   <div style={{ color: "red" }}> Please select one at least one category from below.</div>
                 )}
                 {/* </div> */}
@@ -328,7 +329,7 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
                 </button>
               </div>
               <div className={styles.button}>
-                <button onClick={() => setShowPasswordModal(true)} className={styles.outline}>
+                <button type="button" onClick={() => setShowPasswordModal(true)} className={styles.outline}>
                   Change Password
                 </button>
               </div>

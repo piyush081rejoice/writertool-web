@@ -104,8 +104,12 @@
 
                         h3 {
                             font-size: rem(14);
+                                                                                                             
                             @include body-bold;
                             color: getColorHex('black');
+                            &:hover{
+                                cursor: pointer;
+                            }
                             @include md {
                             font-size: rem(20);
                             }

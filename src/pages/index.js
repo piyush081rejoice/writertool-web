@@ -34,14 +34,19 @@ export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlo
   };
 
   useEffect(() => {
-    const handleLogout = () => {
+    const eventNames = ["logout", "onBoardingComplete"];
+    const handleMultipleEvents = () => {
       handleGetBlogsData();
     };
 
-    window.addEventListener("logout", handleLogout);
+    eventNames.forEach((event) => {
+      window.addEventListener(event, handleMultipleEvents);
+    });
 
     return () => {
-      window.removeEventListener("logout", handleLogout);
+      eventNames.forEach((event) => {
+        window.removeEventListener(event, handleMultipleEvents);
+      });
     };
   }, []);
   const handleLoadMore = () => {

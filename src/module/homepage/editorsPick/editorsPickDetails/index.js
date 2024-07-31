@@ -9,18 +9,28 @@ import { getCookie } from "@/hooks/useCookie";
 import toast from "react-hot-toast";
 import { ApiPost } from "@/helpers/API/ApiData";
 import { useEffect, useState } from "react";
+import SingleBlogSkeleton from "@/module/SingleBlogSkeleton";
 const ProfileImage = "/assets/images/profile.png";
 export default function EditorsPickDetails({ getBlogsData }) {
   const singleBlog = getBlogsData?.[0];
   const router = useRouter();
   const [userDetails, setUserDetails] = useState({});
-  const [bookMarkIcon, setBookMarkIcon] = useState()
+  const [bookMarkIcon, setBookMarkIcon] = useState();
 
   useEffect(() => {
-    const localStorageUserData = localStorage.getItem("userData");
-    if (localStorageUserData) {
-      setUserDetails(JSON.parse(localStorageUserData));
+    const handleUserLogout  = () =>{
+      const localStorageUserData = localStorage.getItem("userData");
+      if (localStorageUserData) {
+        setUserDetails(JSON.parse(localStorageUserData));
+      }else{
+        setUserDetails({});
+      }
     }
+    handleUserLogout()
+    window.addEventListener('logout', handleUserLogout);
+    return () => {
+      window.removeEventListener('logout', handleUserLogout);
+    };
   }, []);
 
   const [isUserSignOut, setIsUserSignOut] = useState(true);
@@ -30,7 +40,7 @@ export default function EditorsPickDetails({ getBlogsData }) {
       setIsUserSignOut(false);
     }
   }, []);
-    
+
   useEffect(() => {
     if (isUserSignOut) {
       setBookMarkIcon(false);
@@ -44,7 +54,6 @@ export default function EditorsPickDetails({ getBlogsData }) {
   }, [isUserSignOut, singleBlog]);
 
   const handleShowBlog = async (id) => {
-    
     const userToken = getCookie("userToken");
     if (userToken == undefined) {
       toast.error("Please login to save to bookmark");
@@ -53,23 +62,22 @@ export default function EditorsPickDetails({ getBlogsData }) {
         const resp = await ApiPost(`blog-services/blogs/saved-blogs?blogId=${id}`);
         if (resp?.data?.success) {
           toast.success(resp?.data?.message);
-          setBookMarkIcon(!bookMarkIcon)
+          setBookMarkIcon(!bookMarkIcon);
         }
       } catch (error) {
         toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
       }
     }
   };
-  return (
+  return singleBlog ? (
     <div className={styles.editorsPickDetails}>
       <div className={styles.imageStyle}>
-        <Image
+        <LazyImage
           style={{ cursor: "pointer" }}
           onClick={() => router.push(`/blog/${singleBlog?.slugId}`)}
           src={singleBlog?.thumbnail}
           alt="CardImage"
-          height={250}
-          width={320}
+     
           className={styles.cardImage}
         />
         {singleBlog?.isTrending ? (
@@ -78,7 +86,7 @@ export default function EditorsPickDetails({ getBlogsData }) {
           </div>
         ) : null}
         {userDetails?._id != singleBlog?.uid ? (
-          <div  onClick={() => handleShowBlog(singleBlog?._id)} className={styles.boookMarkIcon}>
+          <div onClick={() => handleShowBlog(singleBlog?._id)} className={styles.boookMarkIcon}>
             {bookMarkIcon ? <BookmarkIcon /> : <UnBookmarkIcon />}
           </div>
         ) : null}
@@ -101,5 +109,7 @@ export default function EditorsPickDetails({ getBlogsData }) {
         <p className={"texttruncatesixlines"}>{singleBlog?.sortDescription ? singleBlog?.sortDescription : ""}</p>
       </div>
     </div>
+  ) : (
+    <SingleBlogSkeleton />
   );
 }

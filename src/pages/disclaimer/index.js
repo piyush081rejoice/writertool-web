@@ -5,17 +5,17 @@ import React from "react";
 export default function index({ getPrivacyAndPolicyData }) {
   return (
     <div>
-      <PrivacyPolicy displayData={"Disclaimer"} getPrivacyAndPolicyData={getPrivacyAndPolicyData} />
+      <PrivacyPolicy displayData={"Disclaimer"} displaySingleData={getPrivacyAndPolicyData} />
     </div>
   );
 }
 export async function getServerSideProps() {
   try {
-    const privacyAndPolicyData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy`).then((resp) => resp?.data?.payload?.privacy_policy);
+    const privacyAndPolicyData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=disclaimer`).then((resp) => resp?.data?.payload?.privacy_policy);
 
     return {
       props: {
-        getPrivacyAndPolicyData: privacyAndPolicyData || [],
+        getPrivacyAndPolicyData: privacyAndPolicyData[0] || [],
       },
     };
   } catch (error) {

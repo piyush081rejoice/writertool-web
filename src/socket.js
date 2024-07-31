@@ -17,7 +17,7 @@
 //   return socket;
 // };
 
-const SOCKET_URL = "https://jktcn0cj-80.inc1.devtunnels.ms";
+const SOCKET_URL = "https://api.writertools.ai/";
 
 import socketIOClient from "socket.io-client";
 import { getCookie } from "./hooks/useCookie";

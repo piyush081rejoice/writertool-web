@@ -1,11 +1,11 @@
 @import '../../../assets/scss/main.scss';
 
 .writeBlogInformationAlignment {
-    padding: rem(40 0);
+  padding: rem(40 0);
 
-    @include sm {
-        padding: rem(40 0 100 0);
-    }
+  @include sm {
+    padding: rem(40 0 100 0);
+  }
 
   .title {
     padding: rem(0 0 10 0);
@@ -95,8 +95,10 @@
         }
       }
     }
-    .removeIcon{
+
+    .removeIcon {
       margin: 10px 0px;
+
       button {
         cursor: pointer;
         display: flex;
@@ -143,37 +145,38 @@
       gap: rem(20);
 
       @include sm {
-          gap: rem(20);
-          grid-template-columns: repeat(2, 1fr);
+        gap: rem(20);
+        grid-template-columns: repeat(2, 1fr);
       }
 
       @include lg {
-          gap: rem(40);
+        gap: rem(40);
       }
 
       .spacer:last-child {
-          padding: 0;
+        padding: 0;
       }
 
       .spacer {
-          padding: rem(0 0 25 0);
+        padding: rem(0 0 25 0);
       }
 
       .gridItems:first-child {
-          padding-right: 0;
+        padding-right: 0;
 
-          @include sm {
-              padding-right: 20px;
-              border-right: 1px solid getColorHex("border-color-2");
-          }
+        @include sm {
+          padding-right: 20px;
+          border-right: 1px solid getColorHex("border-color-2");
+        }
 
-          @include lg {
-              padding-right: 20px;
-          }
+        @include lg {
+          padding-right: 20px;
+        }
 
       }
+    }
   }
-  }
+
   .buttonclsmain {
     display: flex;
     justify-content: start;
@@ -181,6 +184,7 @@
     gap: 10px;
     flex-wrap: wrap;
     padding: rem(5 0 0 0);
+    margin-bottom: 10px;
 
     button {
       cursor: pointer;
@@ -197,7 +201,7 @@
       line-height: rem(20);
       @include body-medium;
       transition: .3s ease-in-out;
-      
+
       span {
         display: block;
         position: relative;
@@ -229,6 +233,7 @@
       }
     }
   }
+
   .selectDropdownDesign {
     .dropdownDesign {
       position: absolute;
@@ -341,92 +346,131 @@
       color: getColorHex('gray-870');
     }
   }
-  .submitButtons{
+
+  .submitButtons {
     gap: 20px;
-    margin:20px 0px ;
+    margin: 20px 0px;
     display: flex;
-    
-    
-      .PublishButtons {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        width: 147px;
-        height: 50px;
-        border-radius: 30px;
-        border: none;
-        background-color: #000;
-        color: #fff;
-        padding: 10px;
-        margin: 0 0 5px 0;
 
-        svg {
-          width: 15px;
-          height: 15px;
 
-          path {
-            fill: #fff;
-            stroke: #fff;
-          }
-        }
+    .PublishButtons {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 147px;
+      height: 50px;
+      border-radius: 30px;
+      border: none;
+      background-color: #000;
+      color: #fff;
+      padding: 10px;
+      margin: 0 0 5px 0;
+      transition: .4s ease-in-out;
 
-        &:hover {
-          color: #000;
-          background-color: #fff;
-          outline: 1px solid #000;
+      svg {
+        transition: .4s ease-in-out;
+        width: 15px;
+        height: 15px;
 
-          svg {
-
-            path {
-              fill: #000;
-              stroke: #000;
-            }
-          }
+        path {
+          transition: .4s ease-in-out;
+          fill: #fff;
+          stroke: #fff;
         }
       }
-      .WhiteButtons {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        width: 147px;
-        height: 50px;
-        border-radius: 30px;
-        border: none;
-        background-color: #fff;
+
+      &:hover {
+        transition: .4s ease-in-out;
         color: #000;
-        padding: 10px;
-        margin: 0 0 5px 0;
+        background-color: #fff;
         outline: 1px solid #000;
 
-
         svg {
-          width: 15px;
-          height: 15px;
+          transition: .4s ease-in-out;
 
           path {
+            transition: .4s ease-in-out;
             fill: #000;
             stroke: #000;
           }
         }
 
-        &:hover {
-          color: #fff;
-          background-color: #000;
-          svg {
-
-            path {
-              fill: #fff;
-              stroke: #fff;
-            }
-          }
+        span {
+          transition: .4s ease-in-out;
+          width: 15px;
+          height: 15px;
+          border: 2px solid #000;
+          border-bottom-color: transparent;
+          border-radius: 50%;
+          display: inline-block;
+          box-sizing: border-box;
+          margin-left: 7px;
         }
       }
+    }
 
-    
-            
+    .WhiteButtons {
+      transition: .4s ease-in-out;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 147px;
+      height: 50px;
+      border-radius: 30px;
+      border: none;
+      background-color: #fff;
+      color: #000;
+      padding: 10px;
+      margin: 0 0 5px 0;
+      outline: 1px solid #000;
+      
+      
+      svg {
+        transition: .4s ease-in-out;
+        width: 15px;
+        height: 15px;
+        
+        path {
+          transition: .4s ease-in-out;
+          fill: #000;
+          stroke: #000;
+        }
+      }
+      
+      &:hover {
+        transition: .4s ease-in-out;
+        color: #fff;
+        background-color: #000;
+        
+        svg {
+          transition: .4s ease-in-out;
+          
+          path {
+            transition: .4s ease-in-out;
+            fill: #fff;
+            stroke: #fff;
+          }
+        }
+        
+        span {
+          transition: .4s ease-in-out;
+          width: 15px;
+          height: 15px;
+          border: 2px solid #fff;
+          border-bottom-color: transparent;
+          border-radius: 50%;
+          display: inline-block;
+          box-sizing: border-box;
+          margin-left: 7px;
+        }
+      }
+    }
+
+
+
   }
 }

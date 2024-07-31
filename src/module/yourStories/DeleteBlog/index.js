@@ -37,7 +37,7 @@ const DeleteBlog = ({deleteId,handleToggle ,handleBlogCategoryData}) => {
             <p>Are You sure want to delete this blog? This action cannot be undone</p>
             <div className={styles.modalbuttonmain}>
               <button disabled={showDeleteBlogLoader} onClick={handleToggle}>Cancel</button>
-              <button disabled={showDeleteBlogLoader} onClick={handleDelete} className={styles.deletebutton}>Delete {showDeleteBlogLoader? <Loader/> :null }</button>
+              <button disabled={showDeleteBlogLoader} onClick={handleDelete} className={styles.deletebutton}>Delete {showDeleteBlogLoader? <span><Loader/></span> :null }</button>
             </div>
           </div>
         </div>

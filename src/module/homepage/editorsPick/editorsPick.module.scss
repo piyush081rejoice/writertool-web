@@ -125,8 +125,10 @@
                                 height: 90px;
                                 border-radius: rem(8);
                                 min-height: rem(90);
-
+                                object-fit: cover;
+                                
                                 img {
+                                    height: 90px;
                                     border-radius: rem(8);
                                     display: block;
                                 }

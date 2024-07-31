@@ -159,7 +159,7 @@ export default function SignupModal() {
             <div className={styles.checkboxText}>
               <input type="checkbox" name="privacyAccepted" value={inputValue?.privacyAccepted} onChange={handleChange}  />
               <span>
-                I have read and agree to the website <b>Privacy Policy and Terms & Conditions.</b>
+                I have read and agree to the website <b><Link target="_blank" href={"/privacy-policy"}> Privacy Policy </Link> and <Link target="_blank" href={"/terms-and-conditions"}> Terms & Conditions</Link>.</b>
               </span>
             </div>
             <div className={styles.signinButton}>

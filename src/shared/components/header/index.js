@@ -64,11 +64,14 @@ const Header = () => {
   const socket = getSocket();
 
   const updateNotificationNumber = () => {
-    socket.emit("update-notification", {});
+    if (socket) {
+      socket.emit("update-notification", {});
+    }
     setNotification(!notification);
   };
-const handleMoreNotifications = () =>{
-  router.push("/notifications")
+  const handleMoreNotifications = () =>{
+    router.push("/notifications")
+    setNotification(!notification);
 }
   useEffect(() => {
     if (socket) {

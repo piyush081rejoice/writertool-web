@@ -128,10 +128,13 @@
         font-size: rem(14);
         line-height: normal;
         color: getColorHex('black');
-
+        
         b {
           @include body-bold;
           text-decoration-line: underline;
+          a{
+            color: getColorHex('black');
+          }
         }
       }
 

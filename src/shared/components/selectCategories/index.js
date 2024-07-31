@@ -62,6 +62,8 @@ export default function SelectCategories({ inputValue, setIsOnBoardingComplete,p
           setIsLoading(false)
           setCookie("isProfileCompleted", true);
           setIsOnBoardingComplete(false);
+          const event = new CustomEvent("onBoardingComplete");
+          window.dispatchEvent(event);
         }
       } catch (error) {
         toast.error(error?.response?.data?.payload?.message  ?error?.response?.data?.payload?.message :error?.response?.data?.message ||"Something went wrong")
@@ -88,7 +90,7 @@ export default function SelectCategories({ inputValue, setIsOnBoardingComplete,p
         </div>
         {getBlogCategoryDataLoading ? (
           <div className={styles.categoriesbuttonwrapper}>
-            {[...Array(12)]?.map((_, index) => <div><Skeleton style={{height:"33px",borderRadius:"99px"}}  key={index} /> </div>)}
+            {[...Array(12)]?.map((_, index) => <div key={index}><Skeleton style={{height:"33px",borderRadius:"99px"}}  key={index} /> </div>)}
           </div>
         ) : (
           <div className={styles.categoriesbutton}>

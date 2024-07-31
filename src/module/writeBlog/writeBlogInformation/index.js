@@ -371,7 +371,7 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                     />
                   </div>
                 </div>
-                {errors?.blogCategory ? <ShowError errorMessage={errors?.blogCategory} /> : null}
+                
               </div>
               <div className={styles.coverPhoto}>
                 <label>Add Cover Photo*</label>

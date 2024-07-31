@@ -95,11 +95,18 @@
                         font-weight: 600;
                         line-height: 28px;
                         cursor: pointer;
+                        position: relative;
                         transition: .5s ease-in-out;
 
                         &:hover {
                             background: #ECECEC;
                             color: #292D36;
+                        }
+
+                        span {
+                            position: absolute;
+                            top: 8px;
+                            right: 13px;
                         }
                     }
                 }

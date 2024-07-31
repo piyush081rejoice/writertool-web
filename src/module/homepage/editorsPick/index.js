@@ -32,7 +32,7 @@ export default function EditorsPick({ getBlogsData ,getTrendingBlogData }) {
                       return (
                         <div className={styles.editorsCard} key={i}>
                           <div className={styles.editorsCardImage}>
-                            <Image style={{cursor:"pointer"}} onClick={()=>router.push(`/blog/${item?.slugId}`)} src={item?.thumbnail} alt="CardImage" height={90} width={125} className={styles.imageStyle} />
+                            <LazyImage style={{cursor:"pointer"}} onClick={()=>router.push(`/blog/${item?.slugId}`)} src={item?.thumbnail} alt="CardImage"  className={styles.imageStyle} />
                           </div>
                           <div className={styles.editorsCardItems}>
                             <Link href={`/blog/${item?.slugId}`}>

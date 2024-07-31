@@ -16,7 +16,7 @@ const LazyImage = ({ src, className, onClick }) => {
         src={src}
         alt="Image Alt"
         placeholderSrc={CardImages}
-        afterLoad={() => setIsLoaded(true)}
+        onLoad={() => setIsLoaded(true)}
         threshold={500}
         className={isLoaded ? "image-loaded" : "image-loading"}
       />
