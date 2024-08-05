@@ -6,6 +6,7 @@ import TwitterIcon from '@/assets/icons/twitterIcon';
 import YouTubeIcon from '@/assets/icons/YoutubeIcon';
 import LazyImage from '@/helpers/lazyImage';
 import styles from './shareProfile.module.scss';
+import { formatTitleCase } from '@/common';
 const ProfileLg = '/assets/images/userWhite.png';
 export default function ShareProfile({singleBlog}) {
     const handleLinkClick = (link) => {
@@ -40,7 +41,7 @@ export default function ShareProfile({singleBlog}) {
                 <LazyImage src={singleBlog?.uid?.profileImage ? singleBlog?.uid?.profileImage : ProfileLg} alt="ProfileImage" height={90} width={90} className={styles.profileImage} />
                 </div>
                 <div>
-                    <h3>{singleBlog?.uid?.userName}</h3>
+                    <h3>{formatTitleCase(singleBlog?.uid?.userName)}</h3>
                     {
                         singleBlog?.uid?.shortBio ? <p>{singleBlog?.uid?.shortBio} </p> : null
                     }

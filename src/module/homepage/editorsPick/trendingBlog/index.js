@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/router";
+import { formatTitleCase } from "@/common";
 const ArrowIcon = "/assets/icons/arrow.svg";
 const ProfileImage = "/assets/images/profile-sm.png";
 export default function TrendingBlog({ getTrendingBlogData }) {
@@ -28,7 +29,7 @@ export default function TrendingBlog({ getTrendingBlogData }) {
                       <LazyImage src={item?.Users?.profileImage ? item?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
                     </div>
                     <div>
-                      <p>{item?.Users?.userName}</p>
+                      <p>{formatTitleCase(item?.Users?.userName)}</p>
                     </div>
                   </div>
                 </div>

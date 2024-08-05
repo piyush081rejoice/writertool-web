@@ -2,7 +2,7 @@ import { ApiGet } from "@/helpers/API/ApiData";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./PublishedStories.module.scss";
-import { DateConvert } from "@/common";
+import { DateConvert, formatTitleCase } from "@/common";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import DeleteBlog from "../DeleteBlog";
@@ -11,6 +11,7 @@ import DeleteIcon from "../../../../public/assets/images/Delete.png";
 import PencilEdit from "../../../../public/assets/images/Edit.png";
 import NoBlogPublished from "@/shared/components/NoBlogFound/NoBlogPublished";
 import Pagination from "@/shared/components/pagination/pagination";
+import LazyImage from "@/helpers/lazyImage";
 const ProfileImage = "/assets/images/profile.png";
 
 const statusClasses = {
@@ -95,15 +96,15 @@ const PublishedStories = ({ status }) => {
               {blogsData?.map((data, key) => (
                 <div className={styles.card} key={key}>
                   <div className={styles.cardImage}>
-                    <Image height={216} width={301} src={data?.thumbnail} alt="CardImage" className={styles.cardImageStyle} />
+                    <LazyImage src={data?.thumbnail} alt="CardImage" className={styles.cardImageStyle} />
                   </div>
                   <div>
                     <div className={styles.firstColumn}>
                       <div className={styles.leftContent}>
                         <div className={styles.profileImage}>
-                          <Image src={data?.Users?.profileImage ? data?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
+                          <LazyImage src={data?.Users?.profileImage ? data?.Users?.profileImage : ProfileImage} alt="ProfileImage"  className={styles.profileImageStyle} />
                         </div>
-                        <span>{data?.Users?.userName}</span>
+                        <span>{formatTitleCase(data?.Users?.userName)}</span>
                       </div>
                       <ul>
                         <li>{DateConvert(data?.createdAt)}</li>

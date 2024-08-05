@@ -1,4 +1,4 @@
-import { DateConvert } from "@/common";
+import { DateConvert, formatTitleCase } from "@/common";
 
 import Recommended from "@/shared/components/recommended";
 import { marked } from "marked";
@@ -35,7 +35,7 @@ export default function BlogInsideInformation({ singleBlog }) {
               <div className={styles.img}>
                 <LazyImage src={singleBlog?.uid?.profileImage ? singleBlog?.uid?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImage} />
               </div>
-              <span>{singleBlog?.uid?.userName}</span>
+              <span>{formatTitleCase(singleBlog?.uid?.userName)}</span>
             </div>
             {singleBlog?.isTrending ? (
               <ul>

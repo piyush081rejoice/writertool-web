@@ -29,9 +29,15 @@
   }
 
   .box {
-    padding: rem(40);
+    padding: rem(16);
     border: 1px solid getColorHex("border-color-2");
     border-radius: 12px;
+    @include sm {
+    padding: rem(40);
+    }
+    @include md {
+    padding: rem(40);
+    }
 
     .editorStyle {
       margin: 20px 0;

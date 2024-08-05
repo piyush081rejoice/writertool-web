@@ -133,6 +133,9 @@
                             img {
                                 display: block;
                                 border-radius: 50%;
+                                width: rem(34);
+                                height: rem(34);
+                                min-height: rem(34);
                             }
                         }
                     }
@@ -145,12 +148,13 @@
 
                 .cardImageStyle {
                     width: 100%;
-                    height: rem(216);
-                    min-height: rem(216);
+                    
                     border-radius: rem(10);
                     object-fit: cover;
 
                     img {
+                        height: rem(216);
+                        min-height: rem(216);
                         border-radius: rem(10);
                         display: block;
                     }

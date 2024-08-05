@@ -1,9 +1,14 @@
 @import '../../../assets/scss/main.scss';
 
 .yourStoriesDetailsAlignment {
-    padding: rem(0 0 100 0);
+    padding: rem(0 0 60 0);
     margin-top: 40px;
-
+    @include sm {
+    padding: rem(0 0 80 0);
+    }
+    @include md {
+    padding: rem(0 0 100 0);
+    }
     .allCardDesign {
      
 
@@ -158,13 +163,22 @@
     }
     .grid {
         display: grid;
-        grid-template-columns: 1fr rem(440);
+        grid-template-columns: 1fr;
         gap: rem(25);
+        @include md {
+        grid-template-columns: 1fr rem(440);
+        }
 
         .yourStoriesAlignment {
             border: 1px solid getColorHex('border-color-2');
-            padding: rem(30);
+            padding: rem(16);
             border-radius: rem(12);
+            @include sm {
+            padding: rem(30);
+            }
+            @include md {
+            padding: rem(30);
+            }
 
           .twoButtonalignment {
             display: flex;

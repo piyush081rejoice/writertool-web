@@ -44,6 +44,160 @@
             }
         }
 
+        .relativeDiv {
+            position: relative;
+
+            ::-webkit-scrollbar {
+                width: 0px;
+            }
+
+            .dropdownNotification {
+                width: 300px;
+                box-shadow: (0px 1px 30px rgba(0, 0, 0, 0.12));
+                position: absolute;
+                right: 0;
+                border-radius: 6px;
+                background-color: #fff;
+                z-index: 99999;
+                top: 45px;
+                @include sm {
+                top: 60px;
+                width: 500px;
+                }
+
+
+                &.hide {
+                    max-height: 0px;
+                    overflow: hidden;
+                    transition: .5s ease-in-out;
+                }
+
+                &.show {
+                    max-height: 550px;
+                    overflow: auto;
+                    transition: .5s ease-in-out;
+                }
+
+                .spacer {
+                    padding: 14px;
+                    @include sm {
+                    padding: 30px;
+                    }
+                }
+
+               
+
+                .allnotificationAlignment {
+                    .nofiticationGrid {
+                        display: grid;
+                        grid-template-columns: 47px 1fr;
+                        gap: 10px;
+                        padding: rem(14 0);
+                        border-bottom: 1px solid getColorHex('border-color-3');
+                        @include sm {
+                        grid-template-columns: 47px 1fr;
+                        padding: rem(24 0);
+
+                        }
+
+                        h6 {
+                            font-size: rem(12);
+                            @include body-medium;
+                            font-weight: 500;
+                            color: getColorHex('gray-800');
+                            @include sm {
+                            font-size: rem(14);
+                            }
+                        }
+
+                        p {
+                            font-size: rem(12);
+                            color: getColorHex('gray');
+                            @include body-regular;
+                            line-height: normal;
+                            margin: rem(0 0 5 0);
+                            @include sm {
+                            font-size: rem(16);
+                            }
+
+                            span {
+                                color: getColorHex('black');
+                                @include body-bold;
+                            }
+                        }
+
+                        img {
+                            width: 47px;
+                            height: 47px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+                    }
+                }
+
+                h2 {
+                    font-size: rem(18);
+                    line-height: rem(24);
+                    color: getColorHex('black');
+                    margin: rem(0 0 0 0);
+                    @include heading-font;
+                    @include sm {
+                        font-size: rem(24);
+                        line-height: rem(32);
+                    margin: rem(0 0 20 0);
+                    }
+                }
+            }
+        }
+
+        .Marknotificationbuttonsmain {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin: 10px 0 0 0;
+
+            button {
+                width: 100%;
+                justify-content: center;
+                padding: 7px;
+            }
+            @include sm {
+                gap: 20px;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+            }
+        }
+
+        .notificationBadge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 5px;
+            font-size: 12px;
+            height: 19px;
+            width: 19px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .notificationIcon {
+            width: rem(25);
+            position: relative;
+            cursor: pointer;
+
+            @include md {
+                width: rem(35);
+            }
+
+            img {
+                cursor: pointer;
+            }
+        }
         .logo {
             height: 100%;
 
@@ -56,138 +210,33 @@
                 }
             }
         }
-
-        .rightAllContent {
+        .menuIcon {
             display: flex;
             align-items: center;
-            gap: rem(10);
+            gap: 20px;
+            svg {
+                width: 20px;
+            }
+            @include sm {
+                display: none;
+            }
+        }
+        .rightAllContent {
+           
+            display: none;
+        
+            @include sm {
+                display: flex;
+                align-items: center;
+                gap: rem(10);
+            }
 
             @include md {
                 gap: rem(30);
             }
 
-            .relativeDiv {
-                position: relative;
 
-                ::-webkit-scrollbar {
-                    width: 0px;
-                }
-
-                .dropdownNotification {
-                    width: 500px;
-                    box-shadow: (0px 1px 30px rgba(0, 0, 0, 0.12));
-                    position: absolute;
-                    right: 0;
-                    border-radius: 6px;
-                    background-color: #fff;
-                    z-index: 99999;
-                    top: 60px;
-
-
-                    &.hide {
-                        max-height: 0px;
-                        overflow: hidden;
-                        transition: .5s ease-in-out;
-                    }
-
-                    &.show {
-                        max-height: 550px;
-                        overflow: auto;
-                        transition: .5s ease-in-out;
-                    }
-
-                    .spacer {
-                        padding: 30px;
-                    }
-
-                    .allnotificationAlignment {
-                        .nofiticationGrid {
-                            display: grid;
-                            grid-template-columns: 47px 1fr;
-                            gap: 10px;
-                            padding: rem(24 0);
-                            border-bottom: 1px solid getColorHex('border-color-3');
-                            align-items: center;
-
-                            h6 {
-                                font-size: rem(14);
-                                @include body-medium;
-                                font-weight: 500;
-                                color: getColorHex('gray-800');
-                            }
-
-                            p {
-                                font-size: rem(16);
-                                color: getColorHex('gray');
-                                @include body-regular;
-                                line-height: normal;
-                                margin: rem(0 0 5 0);
-
-                                span {
-                                    color: getColorHex('black');
-                                    @include body-bold;
-                                }
-                            }
-
-                            img {
-                                width: 47px;
-                                height: 47px;
-                                border-radius: 50%;
-                                object-fit: cover;
-                            }
-                        }
-                    }
-
-                    h2 {
-                        font-size: rem(24);
-                        line-height: rem(32);
-                        color: getColorHex('black');
-                        margin: rem(0 0 20 0);
-                        @include heading-font;
-                    }
-                }
-            }
-
-            .notificationBadge {
-                position: absolute;
-                top: -5px;
-                right: -5px;
-                background-color: red;
-                color: white;
-                border-radius: 50%;
-                padding: 2px 5px;
-                font-size: 12px;
-                height: 19px;
-                width: 19px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .notificationIcon {
-                width: rem(20);
-                position: relative;
-                cursor: pointer;
-
-
-
-
-                @include md {
-                    width: rem(35);
-                }
-
-                img {
-                    cursor: pointer;
-                }
-            }
-
-            .Marknotificationbuttonsmain {
-                display: flex;
-                justify-content: start;
-                align-items: center;
-                gap: 20px;
-                margin: 10px 0 0 0;
-            }
+          
 
             button {
                 border: none;
@@ -201,6 +250,7 @@
                 align-items: center;
                 gap: rem(4);
                 @include body-bold;
+                height: rem(30);
 
                 &.fill {
                     color: getColorHex('white');
@@ -222,11 +272,164 @@
                 }
 
                 svg {
-                    width: rem(14);
+                    width: rem(20);
+                    height: rem(20);
 
                     @include md {
                         width: auto;
                     }
+                }
+            }
+        }
+    }
+}
+
+.mobileSidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    &.hide {
+        max-height: 0px;
+        overflow: hidden;
+        transition: .7s ease-in-out;
+    }
+    
+    &.show {
+        max-height: 100vh;
+        overflow: hidden;
+        transition: .7s ease-in-out;
+    }
+    .relativeDiv {
+        position: relative;
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .dropdownNotification {
+            width: 500px;
+            box-shadow: (0px 1px 30px rgba(0, 0, 0, 0.12));
+            position: absolute;
+            right: 0;
+            border-radius: 6px;
+            background-color: #fff;
+            z-index: 99999;
+            top: 60px;
+
+
+            &.hide {
+                max-height: 0px;
+                overflow: hidden;
+                transition: .5s ease-in-out;
+            }
+
+            &.show {
+                max-height: 550px;
+                overflow: auto;
+                transition: .5s ease-in-out;
+            }
+
+            .spacer {
+                padding: 30px;
+            }
+
+            .allnotificationAlignment {
+                .nofiticationGrid {
+                    display: grid;
+                    grid-template-columns: 47px 1fr;
+                    gap: 10px;
+                    padding: rem(24 0);
+                    border-bottom: 1px solid getColorHex('border-color-3');
+                    align-items: center;
+
+                    h6 {
+                        font-size: rem(14);
+                        @include body-medium;
+                        font-weight: 500;
+                        color: getColorHex('gray-800');
+                    }
+
+                    p {
+                        font-size: rem(16);
+                        color: getColorHex('gray');
+                        @include body-regular;
+                        line-height: normal;
+                        margin: rem(0 0 5 0);
+
+                        span {
+                            color: getColorHex('black');
+                            @include body-bold;
+                        }
+                    }
+
+                    img {
+                        width: 47px;
+                        height: 47px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+                }
+            }
+
+            h2 {
+                font-size: rem(24);
+                line-height: rem(32);
+                color: getColorHex('black');
+                margin: rem(0 0 20 0);
+                @include heading-font;
+            }
+        }
+    }
+
+    .mobileSidebarbody {
+        padding: rem(40 20);
+
+        div {
+            cursor: pointer;
+            display: block;
+            font-size: rem(22);
+            margin: rem(0 0 40 0);
+            color: getColorHex('black-400');
+            @include body-bold;
+
+        }
+        .sidebarMenu{
+            display: flex;
+            align-items: center;
+            // justify-content: center;
+            gap: 10px;
+
+        }
+    }
+
+    .mobileSidebarHeader {
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: getColorHex('white');
+        border-bottom: 1px solid getColorHex('border-color');
+
+        .closeIcon {
+            display: flex;
+            align-items: center;
+            svg {
+                width: rem(16);
+            }
+        }
+        .logo {
+            height: 100%;
+
+            img {
+                max-width: 100px;
+                cursor: pointer;
+
+                @include md {
+                    max-width: 130px;
                 }
             }
         }

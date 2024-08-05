@@ -21,6 +21,11 @@
     visibility: visible;
   }
 
+  .errorMessage {
+    color: red;
+    margin-top: 10PX;
+  }
+
   .modal {
     box-shadow: 0px 1px 30px 0px rgba(0, 0, 0, 0.12);
     background-color: getColorHex('white');
@@ -96,10 +101,7 @@
       }
 
 
-      .errorMessage {
-        color: red;
-        margin-top: 10PX;
-      }
+
 
       @media (max-width:1500px) {
         padding: 0 0 20px 0;
@@ -117,12 +119,13 @@
         font-size: rem(22);
       }
     }
-
+    .checkboxMain{
+      padding: rem(0 0 20 0);
+    }
     .checkboxText {
       display: grid;
       grid-template-columns: 16px 1fr;
       gap: 10px;
-      padding: rem(0 0 20 0);
 
       span {
         font-size: rem(14);

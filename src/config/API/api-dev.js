@@ -3,7 +3,7 @@ const protocol = "https";
 // const host = "192.168.0.109:8000/api";
 
 // const host = "api.barbera.io/api";
-const host = "jktcn0cj-80.inc1.devtunnels.ms/api/v1";
+const host = "api.writertools.ai/api/v1";
 const port = "";
 const trailUrl = "";
 

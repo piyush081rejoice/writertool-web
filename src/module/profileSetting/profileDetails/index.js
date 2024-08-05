@@ -324,7 +324,9 @@ export default function ProfileDetails({ userProfileData, getProductCategoryData
             </div>
             <div className={classNames(styles.twoColGrid, styles.gap ,styles.saveButton)}>
               <div className={styles.button}>
-                <button style={{ cursor: editButtonDisable ? "not-allowed" : "pointer" }} disabled={editButtonDisable || isLoading} type="submit"  className={styles.fill}>
+                <button style={{ cursor: editButtonDisable ? "not-allowed" : "pointer",
+                  color:editButtonDisable ? "#E0E0E0" : "#FFF",
+                  backgroundColor:editButtonDisable?"#9E9E9E":"#292D36" }} disabled={editButtonDisable || isLoading} type="submit"  className={styles.fill}>
                   Save Changes {isLoading ? <Loader /> : null}
                 </button>
               </div>

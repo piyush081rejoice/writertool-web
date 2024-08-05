@@ -1,4 +1,4 @@
-import { DateConvert } from "@/common";
+import { DateConvert, formatTitleCase, TransformString } from "@/common";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./editorsPickDetails.module.scss";
@@ -97,7 +97,7 @@ export default function EditorsPickDetails({ getBlogsData }) {
             <div className={styles.profileImage}>
               <LazyImage src={singleBlog?.Users?.profileImage ? singleBlog?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
             </div>
-            <span style={{ fontSize: "12px" }}>{singleBlog?.Users?.userName}</span>
+            <span style={{ fontSize: "12px" }}>{formatTitleCase(singleBlog?.Users?.userName)}</span>
           </div>
           <ul>
             <li>{DateConvert(singleBlog?.createdAt)}</li>

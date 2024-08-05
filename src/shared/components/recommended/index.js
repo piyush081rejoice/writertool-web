@@ -1,10 +1,9 @@
 import { BookmarkIcon, UnBookmarkIcon } from "@/assets/icons/Icons";
 import WaveIcon from "@/assets/icons/waveIcon";
-import { DateConvert } from "@/common";
+import { DateConvert, formatTitleCase } from "@/common";
 import { ApiGet, ApiPost } from "@/helpers/API/ApiData";
 import LazyImage from "@/helpers/lazyImage";
 import { getCookie } from "@/hooks/useCookie";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -128,11 +127,9 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
             blogData?.map((data, i) => (
               <div className={styles.card} key={i}>
                 <div className={styles.cardImage}>
-                  <Image
+                  <LazyImage
                     style={{ cursor: "pointer" }}
                     onClick={() => router.push(`/blog/${data?.slugId}`)}
-                    height={216}
-                    width={301}
                     src={data?.thumbnail}
                     alt="CardImage"
                     className={styles.cardImageStyle}
@@ -152,7 +149,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
                       <div className={styles.profileImage}>
                         <LazyImage src={data?.Users?.profileImage ? data?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
                       </div>
-                      <span>{data?.Users?.userName}</span>
+                      <span>{formatTitleCase(data?.Users?.userName)}</span>
                     </div>
                     <ul>
                       <li>{DateConvert(data?.createdAt)}</li>

@@ -56,14 +56,18 @@
             }
 
             .card {
-                padding: rem(35 0);
+                padding: rem(16 0);
                 border-bottom: 1px solid getColorHex('border-color-2');
                 display: grid;
                 grid-template-columns: 1fr;
-                gap: rem(25);
+                gap: rem(14);
 
                 @include md {
                     grid-template-columns: 301px 1fr;
+                    gap: rem(25);
+                    padding: rem(35 0);
+
+
                 }
 
                 .iconAlignment {
@@ -80,22 +84,32 @@
                 }
 
                 p {
-                    font-size: rem(16);
+                    font-size: rem(14);
                     @include body-medium;
                     color: getColorHex('gray');
                     opacity: 0.9;
                     margin: rem(0 0 12 0);
-                    line-height: rem(28);
+                    line-height: rem(24);
+
+                    @include sm {
+                        font-size: rem(16);
+                        line-height: rem(28);
+                    }
                 }
 
                 h3 {
-                    font-size: rem(20);
+                    font-size: rem(18);
                     line-height: rem(26);
                     @include heading-font;
                     cursor: pointer;
                     margin: rem(0 0 12 0);
                     color: getColorHex('black');
                     @include transition-3s;
+
+                    @include sm {
+                        font-size: rem(20);
+                        line-height: rem(26);
+                    }
 
                     &:hover {
                         text-decoration-line: underline;
@@ -142,12 +156,12 @@
                                 border-radius: 50%;
 
                                 img {
-                                  border: 1px solid #e0e0e0;
+                                    border: 1px solid #e0e0e0;
                                     display: block;
                                     border-radius: 50%;
                                     width: rem(26);
-                                height: rem(26);
-                                min-height: rem(26);
+                                    height: rem(26);
+                                    min-height: rem(26);
                                 }
                             }
                         }
@@ -155,6 +169,7 @@
                 }
 
                 .cardImage {
+                    cursor: pointer;
                     width: 100%;
                     height: 100%;
                     position: relative;
@@ -174,7 +189,7 @@
                         top: 0;
                         margin: rem(15);
                     }
-            
+
 
 
                     .buttonDesign {
@@ -204,6 +219,7 @@
                         img {
                             border-radius: rem(10);
                             display: block;
+                            height: rem(216);
                         }
                     }
                 }
@@ -215,13 +231,27 @@
 
     .SkeletonCard {
         display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
+        flex-direction: column;
+        gap: rem(10);
+        margin-bottom: rem(10);
+        align-items: center;
+        /* Center items horizontally */
 
         .alignImage {
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+            gap: rem(10);
+            width: 100%;
+        }
+
+        @media (min-width: 575px) {
+            flex-direction: row;
+
+            .alignImage {
+                flex-direction: row;
+            }
         }
     }
 }

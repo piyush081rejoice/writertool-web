@@ -18,16 +18,17 @@ import Loader from "@/common/Loader";
 import Image from "next/image";
 import tooltip from "../../../../public/assets/images/tooltip.jpg";
 import { handleSpaceKeyPress } from "@/hooks/usehandleSpaceKeyPress";
+import { PASSWORD_PATTERN } from "@/helpers/Constant";
 const EyeIcon = "/assets/icons/eye.svg";
 const OpenEye = "/assets/icons/OpenEye.svg";
 
 export default function SignupModal() {
-  const { inputValue, handleChange, setInputValue } = useOnChange();
+  const { inputValue, handleChange, setInputValue ,errors,setErrors } = useOnChange();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [otpVerify, setOtpVerify] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
+  
 
   const togglePassword = () => setShowPassword(!showPassword);
   const googleAuth = new GoogleAuthProvider();
@@ -64,17 +65,14 @@ export default function SignupModal() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setPasswordError("");
-    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d\W_]{8,}$/;
 
-    if (!passwordPattern.test(inputValue?.password)) {
-      setPasswordError(
-        "Password must be at least 8 characters long, contain at least 1 uppercase letter, 1 lowercase letter, and 1 number."
-      );
+
+    if (!PASSWORD_PATTERN.test(inputValue?.password)) {
+      setErrors((prevErrors) => ({ ...prevErrors, password: "Password must be at least 8 characters long, contain at least 1 uppercase letter, 1 lowercase letter, and 1 number." }));
       return;
     }
-    if (!inputValue?.privacyAccepted) {
-      toast.error("Please accept the Privacy Policy and Terms & Conditions.");
+    if (!inputValue?.privacyAccepted) {      
+      setErrors((prevErrors) => ({ ...prevErrors, privacyAccepted: "Please accept the Privacy Policy and Terms & Conditions." }));
       return;
     }
 
@@ -154,14 +152,17 @@ export default function SignupModal() {
                   </div>
                 </div>
               </Input>
-              {passwordError && <p className={styles.errorMessage}>{passwordError}</p>}
+              {errors?.password && <p className={styles.errorMessage}>{errors?.password}</p>}
             </div>
-            <div className={styles.checkboxText}>
-              <input type="checkbox" name="privacyAccepted" value={inputValue?.privacyAccepted} onChange={handleChange}  />
-              <span>
-                I have read and agree to the website <b><Link target="_blank" href={"/privacy-policy"}> Privacy Policy </Link> and <Link target="_blank" href={"/terms-and-conditions"}> Terms & Conditions</Link>.</b>
-              </span>
-            </div>
+            <div className={styles.checkboxMain} >
+                <div className={styles.checkboxText}>
+                  <input type="checkbox" name="privacyAccepted" value={inputValue?.privacyAccepted} onChange={handleChange}  />
+                  <span>
+                    I have read and agree to the website <b><Link target="_blank" href={"/privacy-policy"}> Privacy Policy </Link> and <Link target="_blank" href={"/terms-and-conditions"}> Terms & Conditions</Link>.</b>
+                  </span>
+                </div>
+                {errors?.privacyAccepted && <div className={styles.errorMessage}>{errors?.privacyAccepted}</div>}
+                  </div>
             <div className={styles.signinButton}>
               <button disabled={isLoading}>Sign Up {isLoading ? <Loader /> : null}</button>
             </div>

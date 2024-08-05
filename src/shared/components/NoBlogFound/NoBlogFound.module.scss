@@ -1,12 +1,22 @@
 @import '../../../assets/scss/main.scss';
 
 .mainDiv {
-    width: 775px;
-    height: 976px;
+    width: 100%;
+    height: auto;
+    padding: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    @include sm {
+        width: 775px;
+        height: 976px;
+    }
+
+    p {
+        text-align: center;
+    }
 
     button {
         padding: rem(4 20);
@@ -53,4 +63,6 @@
     .NoNotificationHeading {
         margin-bottom: 10px;
     }
+
+
 }

@@ -1,4 +1,4 @@
-import { getCurrentFormattedDate } from "@/common";
+import { formatTitleCase, getCurrentFormattedDate } from "@/common";
 import LazyImage from "@/helpers/lazyImage";
 import { marked } from "marked";
 import { useEffect, useState } from "react";
@@ -68,7 +68,7 @@ export default function BlogPreviewModal({ singleBlog, setPreviewModal ,editorVa
               <div className={styles.img}>
                 <LazyImage src={userData?.profileImage ? userData?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImage} />
               </div>
-              <span>{userData?.userName}</span>
+              <span>{formatTitleCase(userData?.userName)}</span>
             </div>
             {singleBlog?.isTrending ? (
               <ul>
@@ -115,7 +115,7 @@ export default function BlogPreviewModal({ singleBlog, setPreviewModal ,editorVa
                 <LazyImage src={userData?.profileImage ? userData?.profileImage : ProfileLg} alt="ProfileImage" height={90} width={90} className={styles.profileImage} />
                 </div>
                 <div>
-                    <h3>{userData?.userName}</h3>
+                    <h3>{formatTitleCase(userData?.userName)}</h3>
                     {
                         userData?.shortBio ? <p>{userData?.shortBio} </p> : null
                     }

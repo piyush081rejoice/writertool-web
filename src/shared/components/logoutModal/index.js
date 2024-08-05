@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { getSocket } from "@/socket";
 const DangerIcon = "/assets/icons/danger.svg";
-export default function LogoutModal({ setIsDeleteModal, setSidebar }) {
+export default function LogoutModal({ setIsDeleteModal, setSidebar ,setHeaderOpen }) {
   const router = useRouter();
     const socket = getSocket();
   const handleSignOut = () => {
@@ -24,6 +24,7 @@ export default function LogoutModal({ setIsDeleteModal, setSidebar }) {
     router.push("/");
     setIsDeleteModal(false);
     setSidebar(false);
+    setHeaderOpen(false)
   };
   return (
     <div className={classNames(styles.openModalWrapper, styles.logoutWrapper)}>

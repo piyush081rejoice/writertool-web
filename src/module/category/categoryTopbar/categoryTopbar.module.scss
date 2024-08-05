@@ -5,10 +5,13 @@
     padding: rem(20 0);
 
     h1 {
-        font-size: rem(32);
+        font-size: rem(22);
         @include heading-font;
         text-align: center;
         color: getColorHex('black');
+        @include sm {
+        font-size: rem(32);
+        }
     }
 
     .line {

@@ -9,7 +9,19 @@
             padding-left: 0;
         }
     }
+    &.hideTab {
+        display: none;
 
+        @include sm {
+            display: block;
+        }
+    }
+
+    &.mobileShow {
+        @include sm {
+            display: none;
+        }
+    }
     ::-webkit-scrollbar {
         display: none;
     }
@@ -22,6 +34,15 @@
     :global(.slick-list) {
         margin: 0 auto;
         max-width: 96%;
+    }
+
+    .mobileAlignment {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        white-space: nowrap;
+        overflow: auto;
+        scrollbar-width: none;
     }
 
     .disabled {

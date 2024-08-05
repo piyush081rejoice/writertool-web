@@ -7,11 +7,13 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { ApiPutNoAuth } from '@/helpers/API/ApiData';
 import Loader from '@/common/Loader';
+import { PASSWORD_PATTERN } from '@/helpers/Constant';
+import ShowError from '@/common/ShowError';
 const Logo = '/assets/logo/logo.svg';
 const EyeIcon = '/assets/icons/eye.svg';
 const OpenEye = '/assets/icons/OpenEye.svg';
 export default function SetNewPassword() {
-  const { inputValue, handleChange } = useOnChange()
+  const { inputValue, handleChange ,setErrors ,errors } = useOnChange()
   const [showPassword,setShowPassword]=useState(false)
   const [isLoading,setIsLoading]= useState(false)
   const togglePassword = () => setShowPassword(!showPassword)
@@ -20,8 +22,12 @@ export default function SetNewPassword() {
   const router = useRouter()
   const { query } = router
   const handleSubmit = async  (e) => {
+    e?.preventDefault()
+if (!PASSWORD_PATTERN.test(inputValue?.password)) {
+  setErrors((prevErrors) => ({ ...prevErrors, password: "Password must be at least 8 characters long, contain at least 1 uppercase letter, 1 lowercase letter, and 1 number." }));        
+}
+  else{
     setIsLoading(true)
-    e.preventDefault()
     if (inputValue?.password.trim() == inputValue?.ConfirmPassword.trim() && (query?.forgotPassToken) ) {
       try {
         const resp  = await ApiPutNoAuth("user-services/user/forgot-password",{forgotPassToken:query?.forgotPassToken, newPassword:inputValue?.password ,confirmNewPassword:inputValue?.ConfirmPassword  })
@@ -41,6 +47,7 @@ export default function SetNewPassword() {
       setIsLoading(false)
     }
   }
+  }
   return (
     <>
     <div className={classNames(styles.setNewPasswordWrapper , styles.openModalWrapper)  }>
@@ -55,7 +62,8 @@ export default function SetNewPassword() {
         </div>
         <form onSubmit={(e)=>handleSubmit(e)}>
         <div className={styles.inputSpacer}>
-            <Input onIconClick={togglePassword} icon={`${showPassword ? EyeIcon : OpenEye}`} type={showPassword ?"text" : "password"}  label='Password' placeholder='Enter your password'  name={"password"} value={inputValue?.password || ""} onChange={handleChange} required={true} />
+            <Input  onIconClick={togglePassword} icon={`${showPassword ? EyeIcon : OpenEye}`} type={showPassword ?"text" : "password"}  label='Password' placeholder='Enter your password'  name={"password"} value={inputValue?.password || ""} onChange={handleChange} required={true} />
+            {errors?.password ?  <ShowError errorMessage={errors?.password}/> :null}
         </div>
         <div className={styles.inputSpacer}>
             <Input onIconClick={togglePassword2} icon={`${showPassword2 ? EyeIcon : OpenEye}`} type={showPassword2 ?"text" : "password"}  label='Confirm Password' placeholder='Enter your confirm password'  name={"ConfirmPassword"} value={inputValue?.ConfirmPassword || ""} onChange={handleChange} required={true} />

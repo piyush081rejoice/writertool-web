@@ -7,6 +7,8 @@ import { useOnChange } from "@/hooks/onChangeHook";
 import { ApiPut } from "@/helpers/API/ApiData";
 import toast from "react-hot-toast";
 import Loader from "@/common/Loader";
+import { PASSWORD_PATTERN } from "@/helpers/Constant";
+import ShowError from "@/common/ShowError";
 const Logo = "/assets/logo/logo.svg";
 const EyeIcon = "/assets/icons/eye.svg";
 const OpenEye = "/assets/icons/OpenEye.svg";
@@ -14,7 +16,7 @@ const OpenEye = "/assets/icons/OpenEye.svg";
 export default function ChangePassword({ setShowPasswordModal }) {
   const [showPassword, setShowPassword] = useState({ currentPassword: false, newPassword: false, confirmPassword: false });
   const [isLoading, setIsLoading] = useState(false);
-  const { inputValue, handleChange } = useOnChange();
+  const { inputValue, handleChange ,setErrors ,errors } = useOnChange();
 
   const togglePassword = (value) => {
     setShowPassword({ ...showPassword, [value]: !showPassword[value] });
@@ -22,11 +24,14 @@ export default function ChangePassword({ setShowPasswordModal }) {
 
   const validateForm = () => {
     let formIsValid = true;
+    if (!PASSWORD_PATTERN.test(inputValue?.newPassword)) {
+      setErrors((prevErrors) => ({ ...prevErrors, newPassword: "Password must be at least 8 characters long, contain at least 1 uppercase letter, 1 lowercase letter, and 1 number." }));        
+      return false
+    }
     if (!(inputValue?.newPassword.trim() === inputValue?.confirmPassword.trim())) {
       formIsValid = false;
       toast.error("Password and Confirm Password do not match. Please ensure both fields contain the same password.");
     }
-
     return formIsValid;
   };
   const handleSubmit = async (e) => {
@@ -91,6 +96,7 @@ export default function ChangePassword({ setShowPasswordModal }) {
                 onChange={handleChange}
                 required={true}
               />
+              {errors?.newPassword ?  <ShowError errorMessage={errors?.newPassword}/> :null}
             </div>
             <div className={styles.spacer}>
               <Input

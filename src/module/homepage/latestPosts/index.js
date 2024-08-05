@@ -1,6 +1,6 @@
 import { BookmarkIcon, UnBookmarkIcon } from "@/assets/icons/Icons";
 import WaveIcon from "@/assets/icons/waveIcon";
-import { DateConvert } from "@/common";
+import { DateConvert, formatTitleCase } from "@/common";
 import { ApiPost } from "@/helpers/API/ApiData";
 import LazyImage from "@/helpers/lazyImage";
 import { getCookie } from "@/hooks/useCookie";
@@ -88,7 +88,7 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
                             <div className={styles.profileImage}>
                               <LazyImage src={item?.Users?.profileImage ? item?.Users?.profileImage : ProfileImage} alt="ProfileImage" height={34} width={34} className={styles.profileImageStyle} />
                             </div>
-                            <span>{item?.Users?.userName}</span>
+                            <span>{formatTitleCase(item?.Users?.userName)}</span>
                           </div>
                           {/* {item?.isTrending ? (
                             <ul>

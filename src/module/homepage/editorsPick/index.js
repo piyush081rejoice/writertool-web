@@ -1,16 +1,14 @@
-import React from "react";
-import styles from "./editorsPick.module.scss";
 import WaveIcon from "@/assets/icons/waveIcon";
+import { DateConvert } from "@/common";
 import LazyImage from "@/helpers/lazyImage";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import Skeleton from "react-loading-skeleton";
+import styles from "./editorsPick.module.scss";
 import EditorsPickDetails from "./editorsPickDetails";
 import TrendingBlog from "./trendingBlog";
-import Link from "next/link";
-import Skeleton from "react-loading-skeleton";
-import Image from "next/image";
-import { DateConvert } from "@/common";
-import { useRouter } from "next/router";
 
-const CardImage = "/assets/images/editors-pick.png";
+
 export default function EditorsPick({ getBlogsData ,getTrendingBlogData }) {
   const  router = useRouter()  
   return (

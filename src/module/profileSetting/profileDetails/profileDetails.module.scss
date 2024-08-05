@@ -15,8 +15,11 @@
 
     .box {
         border: 1px solid getColorHex('border-color-2');
-        padding: rem(40);
+        padding: rem(16);
         border-radius: rem(12);
+        @include sm {
+        padding: rem(40);
+        }
 
         .blogInfo {
           .buttonclsmain {
@@ -64,7 +67,10 @@
               }
             }
           }
+          padding: rem(20 0 0 0);
+          @include sm {
             padding: rem(35 0 0 0);
+          }
 
             h2 {
                 font-size: rem(18);
@@ -80,9 +86,9 @@
                 flex-wrap: wrap;
                 button {
                   border-radius: 9999px;
-                  padding: 0.6875rem 2.125rem;
+                  padding: 6px 20px;
                   border: 1px solid #6C6F75;
-                  font-size: 1rem;
+                  font-size: 14px;
                   cursor: pointer;
                   letter-spacing: 0.48px;
                   line-height: 1.75rem;
@@ -94,6 +100,10 @@
                   justify-content: space-between;
                   align-items: center;
                   gap: 15px;
+                  @include sm {
+                  padding: 0.6875rem 2.125rem;
+                  font-size: 1rem;
+                  }
                     
                     svg {
                       
@@ -134,9 +144,14 @@
 
         .twoColGrid {
             display: grid;
-            grid-template-columns: repeat(2 , 1fr);
+            grid-template-columns: repeat(1 , 1fr);
             align-items: flex-end;
+            gap: rem(15);
+            @include sm {
+            grid-template-columns: repeat(2 , 1fr);
             gap: rem(30);
+
+            }
 
             &.gap {
                 gap: rem(15);
@@ -146,14 +161,18 @@
 
         .button {
             button {
-                padding: rem(14);
-                font-size: rem(16);
+                padding: rem(12);
+                font-size: rem(12);
                 @include body-bold;
                 width: 100%;
                 letter-spacing: 0.48px;
                 border-radius: 999px;
                 cursor: pointer;
-
+                @include sm {
+                  padding: rem(14);
+                  font-size: rem(16);
+                }
+              
                 &.outline {
                     border: 1px solid getColorHex('gray');
                     color: getColorHex('gray');
@@ -169,25 +188,31 @@
         }
 
         .profileHeaderalignment {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: rem(0 0 35 0);
+            display: grid;
+            grid-template-columns: 1fr;
+          gap: 16px;
+            padding: rem(0 0 16 0);
+            @include sm {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: rem(0 0 35 0);
+            }
 
             .button {
                 button {
                     border: none;
-                    padding: rem(2 10);
+                    padding: rem(6 10);
                     cursor: pointer;
                     border-radius: 99px;
-                    font-size: rem(12);
+                    font-size: rem(16);
                     line-height: rem(20);
                     letter-spacing: 0.48px;
                     display: flex;
                     align-items: center;
                     gap: rem(4);
                     @include body-bold;
-
+                  justify-content: center;
                     &.fill {
                         color: getColorHex('white');
                         background-color: getColorHex('black');
@@ -208,7 +233,7 @@
                     }
 
                     svg {
-                        width: rem(14);
+                        width: rem(18);
 
                         @include md {
                             width: auto;
@@ -218,10 +243,15 @@
             }
 
             .leftContent {
+                display: grid;
+                gap: rem(14);
+                grid-template-columns: 1fr;
+                align-items: center;
+              @include sm {
                 display: flex;
                 gap: rem(30);
                 align-items: center;
-
+              }
                 p {
                     font-size: rem(24);
                     @include heading-font;
@@ -380,7 +410,10 @@
       }
       .saveButton{
         margin-top: 20px;
-        width: 50%;
+        width: 100%;
+        @include sm {
+          width: 50%;
+        }
       }
       .editButtonDisable{
         cursor: not-allowed;

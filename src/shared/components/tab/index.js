@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import Explore from "@/assets/icons/Explore";
 import { useRouter } from "next/router";
 import { getCookie } from "@/hooks/useCookie";
+import classNames from "classnames";
 
 function SampleNextArrow(props) {
   const { onClick, disabled } = props;
@@ -48,7 +49,7 @@ export default function Tab({ getBlogCategoryData }) {
   const router = useRouter();
   const currentSlugId = router.query.slugId;
   const totalSlides = getBlogCategoryData ? getBlogCategoryData?.length : 0;
-  const slidesToShow = 3;
+  const slidesToShow = 4;
   const slidesToScroll = 3;
 
   const NavSlider = {
@@ -57,7 +58,7 @@ export default function Tab({ getBlogCategoryData }) {
     speed: 500,
     slidesToShow,
     slidesToScroll,
-    variableWidth: false,
+    variableWidth: true,
     nextArrow: <SampleNextArrow disabled={isNextDisabled} />,
     prevArrow: <SamplePrevArrow disabled={isPrevDisabled} />,
     adaptiveHeight: false,
@@ -94,7 +95,8 @@ export default function Tab({ getBlogCategoryData }) {
   }, [slider, currentSlugId, getBlogCategoryData]);
 
   return (
-    <div className={styles.sliderTabDesign}>
+    <>
+    <div className={ classNames(styles.sliderTabDesign , styles.hideTab) }>
       <div className="container">
         <div className="tab">
           <Slider ref={(c) => setSlider(c)} {...NavSlider}>
@@ -116,5 +118,26 @@ export default function Tab({ getBlogCategoryData }) {
         </div>
       </div>
     </div>
+    <div className={ classNames(styles.mobileShow , styles.sliderTabDesign) }>
+      <div className="container">
+        <div className={styles.mobileAlignment} >
+          <button  onClick={() => router.push("/category")} className={`${router.pathname === "/category" ? styles.active : ""}`}>
+              <Explore /> Explore Topics
+            </button>
+            {userIsLoggedIn ? (
+              <button className={`${currentSlugId === "for-you" ? styles.active : ""}`} style={{ color: "white" }} onClick={() => router.push("/category/for-you")}>
+                For You
+              </button>
+            ) : null}
+
+            {getBlogCategoryData?.map?.((data, index) => (
+              <button key={index} onClick={() => router.push(`/category/${data?.slugId}`)} className={currentSlugId === data?.slugId ? styles.active : ""}>
+                {data?.title}
+              </button>
+            ))}
+        </div>
+      </div>
+    </div>
+    </>
   );
 }
