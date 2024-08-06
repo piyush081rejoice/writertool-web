@@ -9,7 +9,7 @@ export default function PrivacyPolicy({ displaySingleData, displayData }) {
       <Breadcrumb dynamicList={displayData} />
       <div className={styles.privacyPolicyAlignment}>
         <div className="container">
-          {/* <h1>{displayData}</h1> */}
+          <h1>{displayData}</h1>
           <div style={styles.PrivacyAndPolicyModalModalWrapper}>
             {displaySingleData ? (
               <div >

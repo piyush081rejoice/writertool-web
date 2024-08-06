@@ -1,13 +1,12 @@
 import { DateConvert, formatTitleCase } from "@/common";
 
+import LazyImage from "@/helpers/lazyImage";
 import Recommended from "@/shared/components/recommended";
 import { marked } from "marked";
+import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import ShareProfile from "../../shareProfile";
 import styles from "./blogInsideInformation.module.scss";
-import { useEffect } from "react";
-import LazyImage from "@/helpers/lazyImage";
-import CommonSection from "@/shared/components/commonSection";
 const ProfileImage = "/assets/images/profile.png";
 export default function BlogInsideInformation({ singleBlog }) {
   useEffect(() => {
@@ -28,7 +27,7 @@ export default function BlogInsideInformation({ singleBlog }) {
       ) : (
         <div className={styles.blogInsideInformation}>
           <div className={styles.title}>
-            <h2>{singleBlog?.title}</h2>
+            <h1>{singleBlog?.title}</h1>
           </div>
           <div className={styles.personalInformation}>
             <div className={styles.profileInformation}>

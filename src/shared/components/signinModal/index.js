@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import dynamic from 'next/dynamic';
 import styles from './signinModal.module.scss';
 import classNames from 'classnames';
 import CloseIcon from '@/assets/icons/closeIcon';
@@ -13,7 +14,7 @@ import { useRouter } from 'next/router';
 import toast, { Toaster } from 'react-hot-toast';
 import { auth } from '@/shared/loginWithGoogle/firebase';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import ResetPassword from '../resetPassword';
+const ResetPassword = dynamic(() => import("../resetPassword"));
 import Loader from '@/common/Loader';
 import LazyImage from '@/helpers/lazyImage';
 import { connectSocket } from '@/socket';

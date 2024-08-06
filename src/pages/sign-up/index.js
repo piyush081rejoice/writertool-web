@@ -1,10 +1,32 @@
-import SignupModal from '@/shared/components/signupModal'
-import React from 'react'
+import dynamic from "next/dynamic";
+const SignupModal = dynamic(() => import("@/shared/components/signupModal"));
+const NextSEO = dynamic(() => import("@/common/NextSeo"));
 
-export default function index() {
+export default function index({ seoData }) {
   return (
     <>
-      <SignupModal/>
+      <NextSEO seo={seoData} />
+      <SignupModal />
     </>
-  )
+  );
+}
+export async function getServerSideProps() {
+  try {
+    const seoData = {
+      Title: "SignUp | WriterTools",
+      Description: "Create your WriterTools account to start enjoying personalized writing tools and resources.",
+    };
+
+    return {
+      props: {
+        seoData: seoData || null,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        error: "Facing error",
+      },
+    };
+  }
 }

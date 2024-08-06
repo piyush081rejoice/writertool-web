@@ -4,7 +4,7 @@ import PrivacyPolicy from "@/module/privacyPolicy";
 export default function index({ getPrivacyAndPolicyData }) {
   return (
     <div>
-      <PrivacyPolicy displayData={"Terms And Conditon"} displaySingleData={getPrivacyAndPolicyData} />
+      <PrivacyPolicy displayData={"Terms And Condition"} displaySingleData={getPrivacyAndPolicyData} />
     </div>
   );
 }
