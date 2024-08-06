@@ -28,7 +28,7 @@ const Footer = () => {
               <Link href="/privacy-policy">Privacy Policy</Link>
               <Link href="/terms-and-conditions">Terms & Conditions</Link>
               <Link href="/disclaimer">Disclaimer</Link>
-              
+              <Link target="_blank" href="/sitemap/blog.xml">Blog Sitemap</Link>
               {/* <a>Contact Us</a> */}
             </div>
           </div>
