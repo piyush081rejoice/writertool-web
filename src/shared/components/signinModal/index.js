@@ -112,7 +112,7 @@ export default function SigninModal() {
             <Input onIconClick={togglePassword} icon={`${showPassword ? EyeIcon : OpenEye}`} type={showPassword ?"text" : "password"} label='Password' placeholder='Password' name="password" value={inputValue?.password || ""} onChange={handleChange} required={true} />
           </div>
           <div onClick={toggle} className={`${styles.spacerAlignment}`} style={{textAlign:"end"}}>
-            <a style={{cursor:"pointer"}}>Forgot Password?</a>
+            <span>Forgot Password?</span>
           </div>
           <div className={styles.signinButton}>
             <button disabled={isLoading}> Sign in {isLoading ? <Loader /> :null}</button>

@@ -3,7 +3,7 @@ import styles from "./resetPassword.module.scss";
 import classNames from "classnames";
 import CloseIcon from "@/assets/icons/closeIcon";
 import Input from "../input";
-import { ApiPostNoAuth, ApiPutNoAuth } from "@/helpers/API/ApiData";
+import { ApiPostNoAuth } from "@/helpers/API/ApiData";
 import { useOnChange } from "@/hooks/onChangeHook";
 import toast from "react-hot-toast";
 import Loader from "@/common/Loader";
@@ -53,7 +53,7 @@ export default function ResetPassword({ toggle }) {
         <div className={styles.backButton}>
           <span onClick={toggle}>
             <img src={Leftarrow} alt="Leftarrow" width="100%" height="100%" />
-            Back to <a>Sign In</a>
+            Back to <span>Sign In</span>
           </span>
         </div>
       </div>

@@ -33,6 +33,9 @@
 
     .spacerAlignment {
       padding: 0 0 24px 0;
+      span{
+        cursor: pointer;
+      }
       @media (max-width:1500px) {
         padding: rem(0 0 20 0);
       }

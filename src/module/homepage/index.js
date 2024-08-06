@@ -1,10 +1,11 @@
 import { getCookie } from "@/hooks/useCookie";
-import CustomizeyourOrganization from "@/shared/components/customizeyourOrganization";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import EditorsPick from "./editorsPick";
-import FrequentlyAskedQuestions from "./frequentlyAskedQuestions";
-import HeroBanner from "./heroBanner";
-import LatestPosts from "./latestPosts";
+const CustomizeyourOrganization = dynamic(() => import("@/shared/components/customizeyourOrganization"));
+const EditorsPick = dynamic(() => import("./editorsPick"));
+const FrequentlyAskedQuestions = dynamic(() => import("./frequentlyAskedQuestions"));
+const HeroBanner = dynamic(() => import("./heroBanner"));
+const LatestPosts = dynamic(() => import("./latestPosts"));
 import { ApiGet } from "@/helpers/API/ApiData";
 import toast from "react-hot-toast";
 import useDebounce from "@/helpers/useDebounce";
@@ -66,9 +67,6 @@ const HomePage = ({ getBlogCategoryData, getBlogsData, getTrendingBlogData, onLo
       
       <FrequentlyAskedQuestions />
       {isOnBoardingComplete && <CustomizeyourOrganization setIsOnBoardingComplete={setIsOnBoardingComplete} />}
-      {/* <ChangePassword/> */}
-      {/* <DeleteBlog/> */}
-      {/* <LogoutModal/> */}
     </div>
   );
 };

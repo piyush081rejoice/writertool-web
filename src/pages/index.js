@@ -1,13 +1,15 @@
-import { ApiGet, ApiGetNoAuth, BaseURL, getHttpOptions } from "@/helpers/API/ApiData";
+import { ApiGet, BaseURL, getHttpOptions } from "@/helpers/API/ApiData";
 import { getCookie } from "@/hooks/useCookie";
-import HomePage from "@/module/homepage";
-import ProfileDetails from "@/module/profileSetting/profileDetails";
+import dynamic from "next/dynamic";
+const HomePage = dynamic(() => import("@/module/homepage"));
+const NextSEO = dynamic(() => import("@/common/NextSeo"));
+
 import axios from "axios";
 import { parse } from "cookie";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlogData, blogsTotalCount }) {
+export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlogData, blogsTotalCount, seoData }) {
   const [blogDataLoading, setBlogDataLoading] = useState(false);
   const [blogData, setBlogData] = useState(getBlogsData);
   const [limit, setLimit] = useState(10);
@@ -57,6 +59,7 @@ export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlo
 
   return (
     <>
+      <NextSEO seo={seoData} />
       <HomePage
         handleGetBlogsData={handleGetBlogsData}
         onLoadMore={handleLoadMore}
@@ -88,6 +91,11 @@ export async function getServerSideProps(context) {
           .then((resp) => resp?.data?.payload)
       : await ApiGet("blog-services/blogs/get?isActive=true&skip=1&limit=10").then((resp) => resp?.data?.payload);
     const trendingBlogData = await ApiGet(`blog-services/blogs/get?isTrending=true&skip=1&limit=3`).then((resp) => resp?.data?.payload);
+    const seoData = {
+      Title: "Shine with WriterTools",
+      Description:
+        "Welcome to the WriterTools Blog, your ultimate resource for maximizing your writing potential. Discover powerful tools that make writing effortless, enhance your reading experience, and create content that shines brighter than ever. Whether you're a seasoned writer or just starting, our blog will help you reach new heights in your writing journey.",
+    };
 
     return {
       props: {
@@ -95,6 +103,7 @@ export async function getServerSideProps(context) {
         blogsTotalCount: blogsData?.counts || 0,
         getBlogCategoryData: blogCategoryData?.blog_category || [],
         getTrendingBlogData: trendingBlogData?.blogs || [],
+        seoData: seoData || null,
       },
     };
   } catch (error) {
