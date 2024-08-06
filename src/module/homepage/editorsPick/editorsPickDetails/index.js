@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { ApiPost } from "@/helpers/API/ApiData";
 import { useEffect, useState } from "react";
 import SingleBlogSkeleton from "@/module/SingleBlogSkeleton";
+import Skeleton from "react-loading-skeleton";
 const ProfileImage = "/assets/images/profile.png";
 export default function EditorsPickDetails({ getBlogsData }) {
   const singleBlog = getBlogsData?.[0];
@@ -72,14 +73,16 @@ export default function EditorsPickDetails({ getBlogsData }) {
   return singleBlog ? (
     <div className={styles.editorsPickDetails}>
       <div className={styles.imageStyle}>
-        <LazyImage
+        { singleBlog?.thumbnail ?<LazyImage
           style={{ cursor: "pointer" }}
           onClick={() => router.push(`/blog/${singleBlog?.slugId}`)}
           src={singleBlog?.thumbnail}
           alt="CardImage"
      
           className={styles.cardImage}
-        />
+        /> :<div className={styles.singleBlogSkeletonWrapper}>
+          <Skeleton className={styles.singleBlogSkeletonImage} />
+          </div>}
         {singleBlog?.isTrending ? (
           <div className={styles.buttonDesign}>
             <button>Trending</button>

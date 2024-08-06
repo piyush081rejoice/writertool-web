@@ -96,7 +96,9 @@ const PublishedStories = ({ status }) => {
               {blogsData?.map((data, key) => (
                 <div className={styles.card} key={key}>
                   <div className={styles.cardImage}>
-                    <LazyImage src={data?.thumbnail} alt="CardImage" className={styles.cardImageStyle} />
+                    {
+                      data?.thumbnail ? <LazyImage src={data?.thumbnail} alt="CardImage" className={styles.cardImageStyle} /> :<Skeleton height={216} />
+                    }
                   </div>
                   <div>
                     <div className={styles.firstColumn}>

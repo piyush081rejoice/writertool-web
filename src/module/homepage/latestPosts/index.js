@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import styles from "./latestPosts.module.scss";
 import Newsletter from "./newsletter";
 import TagClouds from "./tagClouds";
+import Skeleton from "react-loading-skeleton";
 const ProfileImage = "/assets/images/profile.png";
 
 export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabled, blogDataLoading, handleGetBlogsData, getBlogCategoryData }) {
@@ -69,7 +70,9 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
                   return (
                     <div className={styles.card} key={key}>
                       <div className={styles.cardImage}>
-                        <LazyImage src={item?.thumbnail} className={styles.cardImageStyle} onClick={() => router.push(`/blog/${item?.slugId}`)} alt="ProfileImage" />
+                        {
+                          item?.thumbnail ?<LazyImage src={item?.thumbnail} className={styles.cardImageStyle} onClick={() => router.push(`/blog/${item?.slugId}`)} alt="ProfileImage" /> :<Skeleton height={216} />
+                        }
 
                         {item?.isTrending ? (
                           <div className={styles.buttonDesign}>

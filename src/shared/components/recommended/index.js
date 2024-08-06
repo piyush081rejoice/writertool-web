@@ -66,9 +66,10 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
     try {
       setIsLoading(true);
       const response = await ApiGet(
-        `${isSavedBlogs
-          ? `blog-services/blogs/get-saved-blogs?limit=${limit}`
-          : slugId
+        `${
+          isSavedBlogs
+            ? `blog-services/blogs/get-saved-blogs?limit=${limit}`
+            : slugId
             ? slugId == "for-you"
               ? `blog-services/blogs/get-editor-blogs?isActive=true&limit=${limit}`
               : `blog-services/blogs/get?blogCategorySlugIds[0]=${slugId}&isActive=true&limit=${limit}`
@@ -127,21 +128,22 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
             blogData?.map((data, i) => (
               <div className={styles.card} key={i}>
                 <div className={styles.cardImage}>
-                  <LazyImage
-                    style={{ cursor: "pointer" }}
-                    onClick={() => router.push(`/blog/${data?.slugId}`)}
-                    src={data?.thumbnail}
-                    alt="CardImage"
-                    className={styles.cardImageStyle}
-                  />
+                  {data?.thumbnail ? (
+                    <LazyImage style={{ cursor: "pointer" }} onClick={() => router.push(`/blog/${data?.slugId}`)} src={data?.thumbnail} alt="CardImage" className={styles.cardImageStyle} />
+                  ) : (
+                    <Skeleton height={216} />
+                  )}
+
                   {data?.isTrending ? (
                     <div className={styles.buttonDesign}>
                       <button>Trending</button>
                     </div>
                   ) : null}
-                     {userDetails?._id != data?.uid ? <div className={styles.boookMarkIcon} onClick={() => handleShowBlog(data?._id)}>
-                       {isUserSignOut ? <UnBookmarkIcon /> : isSavedBlogs ? <BookmarkIcon /> : data?.isSaved ? <BookmarkIcon /> : <UnBookmarkIcon />}
-                    </div> : null} 
+                  {userDetails?._id != data?.uid ? (
+                    <div className={styles.boookMarkIcon} onClick={() => handleShowBlog(data?._id)}>
+                      {isUserSignOut ? <UnBookmarkIcon /> : isSavedBlogs ? <BookmarkIcon /> : data?.isSaved ? <BookmarkIcon /> : <UnBookmarkIcon />}
+                    </div>
+                  ) : null}
                 </div>
                 <div>
                   <div className={styles.firstColumn}>
@@ -166,12 +168,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
         </div>
         {!(blogData?.length >= blogDataCount) ? (
           <div className={styles.loadMoreButton}>
-            <button
-              type="button"
-              aria-label="Load More"
-              onClick={handleLoadMore}
-              disabled={isLoadMoreLoading}
-            >
+            <button type="button" aria-label="Load More" onClick={handleLoadMore} disabled={isLoadMoreLoading}>
               {isLoadMoreLoading ? "Loading..." : "Load More"}
             </button>
           </div>

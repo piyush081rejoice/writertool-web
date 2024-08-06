@@ -125,7 +125,7 @@ export default function Tab({ getBlogCategoryData }) {
               <Explore /> Explore Topics
             </button>
             {userIsLoggedIn ? (
-              <button className={`${currentSlugId === "for-you" ? styles.active : ""}`} style={{ color: "white" }} onClick={() => router.push("/category/for-you")}>
+              <button className={`${currentSlugId === "for-you" ? styles.active : ""}`}  onClick={() => router.push("/category/for-you")}>
                 For You
               </button>
             ) : null}
