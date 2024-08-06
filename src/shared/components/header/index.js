@@ -280,7 +280,7 @@ const Header = () => {
       <div className={classNames(styles.mobileSidebar, headerOpen ? styles.show : styles.hide)}>
         <div className={styles.mobileSidebarHeader}>
           <div className={styles.logo}>
-            <Link href="/">
+            <Link aria-label="Redirect to Home page" href="/">
               <LazyImage src={WriterTools} alt="WriterTools" width="100%" height="100%" />
             </Link>
           </div>
