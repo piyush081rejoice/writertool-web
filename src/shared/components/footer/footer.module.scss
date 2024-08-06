@@ -3,121 +3,138 @@
 .footer {
     padding: rem(50 0 0 0);
     background-color: getColorHex('black');
-
+  
     .copyRight {
-        padding: rem(26 0);
-
-        p {
-            font-size: rem(14);
-            line-height: rem(20);
-            @include body-medium;
-            text-align: center;
-            color: getColorHex('white');
-
-            @include md {
-                font-size: rem(16);
-                line-height: rem(20);
-            }
+      padding: rem(26 0);
+  
+      p {
+        font-size: rem(14);
+        line-height: rem(20);
+        @include body-medium;
+        text-align: center;
+        color: getColorHex('white');
+        @include md {
+          font-size: rem(16);
+          line-height: rem(20);
         }
+      }
     }
-
+  
     .footerAlignment {
-
-        padding: rem(0 0 40 0);
-        border-bottom: 1px solid rgb(255, 255, 255, 0.15);
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: rem(40);
-
-        @include lg {
-            display: flex;
-            justify-content: space-between;
+      padding: rem(0 0 40 0);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: rem(40);
+      @include lg {
+        display: flex;
+        justify-content: space-between;
+      }
+  
+      .iconTextAlignment:last-child {
+        padding: rem(0);
+      }
+  
+      .iconTextAlignment {
+        display: flex;
+        gap: rem(12);
+        align-items: flex-start;
+        padding: rem(0 0 20 0);
+  
+        div {
+          position: relative;
+  
+          &::before {
+            content: "";
+            position: absolute;
+            top: -rem(16); // Adjust for top padding
+            bottom: -rem(16); // Adjust for bottom padding
+            left: -rem(16); // Adjust for left padding
+            right: -rem(16); // Adjust for right padding
+          }
         }
-
-        .iconTextAlignment:last-child {
-            padding: rem(0);
+  
+        svg {
+          cursor: pointer;
+          position: relative;
+          top: rem(2);
+          width: rem(24); // Keep original size
+          height: rem(24); // Keep original size
         }
-
-        .iconTextAlignment {
-            display: flex;
-            gap: rem(16);
-            align-items: flex-start;
-            padding: rem(0 0 20 0);
-
-            svg {
-                cursor: pointer;
-                position: relative;
-                top: rem(2);
-                width: rem(44); // Ensuring minimum touch target size
-                height: rem(44); // Ensuring minimum touch target size
-            }
-
-            div {
-                padding: rem(8); // Added padding for better touch target
-            }
-
-            a {
-                display: block;
-                color: getColorHex('white');
-                max-width: rem(276);
-                font-size: rem(16);
-                line-height: rem(24);
-            }
+  
+        a {
+          display: block;
+          color: getColorHex('white');
+          max-width: rem(276);
+          font-size: rem(16);
+          line-height: rem(24);
         }
-
-        .menu {
-            a {
-                display: block;
-                padding: rem(12 0); // Increased padding for better touch target
-                font-size: rem(14);
-                @include body-medium;
-                color: getColorHex('white');
-                cursor: pointer;
-
+      }
+  
+      .menu {
+        a {
+          position: relative;
+          display: block;
+          padding: rem(6 0); // Original padding
+  
+          &::before {
+            content: "";
+            position: absolute;
+            top: -rem(8); // Adjust for additional top padding
+            bottom: -rem(8); // Adjust for additional bottom padding
+            left: -rem(8); // Adjust for additional left padding
+            right: -rem(8); // Adjust for additional right padding
+          }
+  
+          font-size: rem(14);
+          @include body-medium;
+          color: getColorHex('white');
+          cursor: pointer;
                 @include md {
                     font-size: rem(16);
                 }
             }
 
             a:last-child {
-                padding: rem(12 0 0 0);
-            }
+          padding: rem(6 0 0 0); // Original padding for last child
         }
-
-        h2 {
-            font-size: rem(20);
-            line-height: normal;
+      }
+  
+      h2 {
+        font-size: rem(20);
+        line-height: normal;
+        color: getColorHex('white');
+        margin: rem(0 0 30 0);
+        @include heading-font;
+      }
+  
+      .firstContnet {
+        .logo {
+          padding: 0 0 20px 0;
+  
+          img {
+            cursor: pointer;
+            max-width: 152px;
+            display: block;
+          }
+        }
+  
+        .text {
+          max-width: 450px;
+  
+          p {
             color: getColorHex('white');
-            margin: rem(0 0 30 0);
-            @include heading-font;
-        }
-
-        .firstContnet {
-            .logo {
-                padding: 0 0 20px 0;
-
-                img {
-                    cursor: pointer;
-                    max-width: 152px;
-                    display: block;
-                }
+            @include body-medium;
+            font-size: rem(14);
+            line-height: rem(24);
+            @include md {
+              font-size: rem(16);
+              line-height: rem(28);
             }
-
-            .text {
-                max-width: 450px;
-
-                p {
-                    color: getColorHex('white');
-                    @include body-medium;
-                    font-size: rem(14);
-                    line-height: rem(24);
-
-                    @include md {
-                        font-size: rem(16);
-                        line-height: rem(28);
-                    }
-                }
-            }
+          }
         }
+      }
     }
-}
+  }
+
+  
