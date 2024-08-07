@@ -101,6 +101,9 @@
                 @include md {
                     padding: rem(12 0 0 0);
                 }
+                @include sm {
+                    padding: rem(12 0 0 0);
+                }
 
                 p {
                     font-size: rem(13);
