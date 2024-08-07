@@ -26,8 +26,8 @@ export async function getServerSideProps(context) {
     const singleBlogData = await ApiGet(`blog-services/blogs/get?slugId=${slugId}`).then((resp) => resp?.data?.payload);
     const isTrendingBlogsData = await ApiGet("blog-services/blogs/get?isTrending=true&skip=1&limit=3").then((resp) => resp?.data?.payload?.blogs);
     const seoData = {
-      Title: `${singleBlogData?.title} | WriterTools`,
-      Description: singleBlogData?.sortDescription || "Read this insightful blog post on WriterTools.",
+      Title: `${singleBlogData?.blogs?.title} | WriterTools`,
+      Description: singleBlogData?.blogs?.sortDescription || "Read this insightful blog post on WriterTools.",
     };
     return {
       props: {
