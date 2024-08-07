@@ -1,12 +1,10 @@
-import React from "react";
-import styles from "./trendingBlog.module.scss";
-import LazyImage from "@/helpers/lazyImage";
 import Arrow from "@/assets/icons/arrow";
-import Link from "next/link";
-import Image from "next/image";
-import Skeleton from "react-loading-skeleton";
-import { useRouter } from "next/router";
 import { formatTitleCase } from "@/common";
+import LazyImage from "@/helpers/lazyImage";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import Skeleton from "react-loading-skeleton";
+import styles from "./trendingBlog.module.scss";
 const ArrowIcon = "/assets/icons/arrow.svg";
 const ProfileImage = "/assets/images/profile-sm.png";
 export default function TrendingBlog({ getTrendingBlogData }) {
