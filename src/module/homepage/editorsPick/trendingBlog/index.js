@@ -20,7 +20,7 @@ export default function TrendingBlog({ getTrendingBlogData }) {
           ? getTrendingBlogData?.map((item, i) => {
               return (
                 <div className={styles.blogCard} key={i}>
-                  <h3 onClick={()=>router.push(`/blog/${item?.slugId}`)} style={{cursor:"pointer"}}>{item?.title}</h3>
+                  <h3 onClick={()=>router.push(`/blog/${item?.slugId}`)} >{item?.title}</h3>
                   <span>{item?.sortDescription ? item?.sortDescription : ""}</span>
                   <div className={styles.profileGrid}>
                     <div className={styles.profileImage}>
