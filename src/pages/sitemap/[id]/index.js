@@ -12,6 +12,15 @@ async function fetchBlogs() {
   let data = await response.json();
   return data?.payload?.blogs;
 }
+async function fetchCategory() {
+  let response = await fetch(`${BaseURL}blog-services/blog-categories/get?isActive=true&skip=1&limit=100`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  let data = await response.json();
+  return data?.payload?.blog_category;
+}
 
 async function generateBlogSitemap(ctx) {
   const blogData = await fetchBlogs();
@@ -19,6 +28,19 @@ async function generateBlogSitemap(ctx) {
   // Fetch other data similarly...
   const sitemapPromises = chunks.map(async (chunk, index) => {
     const filename = `blogs-${index + 1}.xml`;
+    return filename;
+  });
+
+  const sitemapFiles = await Promise.all(sitemapPromises);
+
+  return getServerSideSitemap(ctx, generateUrls(sitemapFiles));
+}
+async function generateCategorySitemap(ctx) {
+  const categoryData = await fetchCategory();
+  const chunks = chunkArray(categoryData, TOOLS_PER_SITEMAP);
+  // Fetch other data similarly...
+  const sitemapPromises = chunks.map(async (chunk, index) => {
+    const filename = `category-${index + 1}.xml`;
     return filename;
   });
 
@@ -35,12 +57,20 @@ async function generateBlogsChunksSitemap(ctx) {
 
   return getServerSideSitemap(ctx, generateBlogsChunksUrls(chunks[digit - 1]));
 }
+async function generateCategoryChunksSitemap(ctx) {
+  const categoryData = await fetchCategory();
+  const digit = ctx.req.url.match(/category-(\d+)\.xml/)[1];
 
-const TOOLS_PER_SITEMAP = 5;
+  const chunks = chunkArray(categoryData, TOOLS_PER_SITEMAP);
+
+  return getServerSideSitemap(ctx,generateCategoryChunksUrls(chunks[digit - 1]));
+}
+
+const TOOLS_PER_SITEMAP = 100;
 
 function generateUrls(data, url = "") {
   const dat = data?.map((item) => ({
-    loc: `${EXTERNAL_DATA_URL}sitemap/${item}`,
+    loc: `${EXTERNAL_DATA_URL}/sitemap/${item}`,
     lastmod: new Date().toISOString(),
   }));
 
@@ -49,7 +79,18 @@ function generateUrls(data, url = "") {
 
 function generateBlogsChunksUrls(data, url = "") {
   const dat = data?.map((item) => ({
-    loc: `${EXTERNAL_DATA_URL}blog/${item?.slugId}`,
+    loc: `${EXTERNAL_DATA_URL}/blog/${item?.slugId}`,
+    lastmod: new Date(item?.updatedAt).toISOString(),
+    changefreq: "daily",
+    priority: 1,
+  }));
+
+  return dat;
+}
+
+function generateCategoryChunksUrls(data, url = "") {
+  const dat = data?.map((item) => ({
+    loc: `${EXTERNAL_DATA_URL}/category/${item?.slugId}`,
     lastmod: new Date(item?.updatedAt).toISOString(),
     changefreq: "daily",
     priority: 1,
@@ -73,11 +114,17 @@ export async function getServerSideProps(ctx) {
   const blogsChunks = chunkArray(blogData, TOOLS_PER_SITEMAP);
 
   switch (true) {
-    case ctx.req.url.includes("blog.xml"):
+    case ctx?.req?.url?.includes("blog.xml"):
       return await generateBlogSitemap(ctx);
 
-    case ctx.req.url.includes("blogs-") && ctx.req.url.match(/blogs-(\d+)\.xml/)[1] <= blogsChunks?.length:
+    case ctx?.req?.url?.includes("category.xml"):
+      return await generateCategorySitemap(ctx);
+
+    case ctx?.req?.url?.includes("blogs-") && ctx?.req?.url?.match(/blogs-(\d+)\.xml/)[1] <= blogsChunks?.length:
       return await generateBlogsChunksSitemap(ctx);
+    
+    case ctx?.req?.url.includes("category-") && ctx?.req?.url?.match(/category-(\d+)\.xml/)[1] <= blogsChunks?.length:
+      return await generateCategoryChunksSitemap(ctx);
 
     default:
       ctx.res.setHeader("Location", "/");

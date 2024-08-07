@@ -15,6 +15,16 @@ async function fetchBlogs() {
   return data?.data?.payload?.blogs;
 }
 
+async function fetchCategory() {
+  let response = await fetch(`${BaseURL}blog-services/blog-categories/get?isActive=true&skip=1&limit=100`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  let data = await response.json();
+  return data?.payload?.blog_category;
+}
+
 function generateUrls(data, url = "") {
   return data
     .map(
@@ -40,9 +50,20 @@ async function generateBlogSitemap() {
 
   fs.writeFileSync(path.join(__dirname, "../public", "blog-sitemap.xml"), sitemapContent);
 }
+async function generateCategorySitemap() {
+  const CategoryData = await fetchCategory();
+  // Fetch other data similarly...
+  const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      ${generateUrls(CategoryData, "category")}
+    </urlset>`;
+
+  fs.writeFileSync(path.join(__dirname, "../public", "blog-sitemap.xml"), sitemapContent);
+}
 
 function generateSitemap() {
   generateBlogSitemap();
+  generateCategorySitemap();
 }
 
 generateSitemap();
