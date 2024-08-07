@@ -1,20 +1,28 @@
 import { ApiGet } from "@/helpers/API/ApiData";
-import PrivacyPolicy from "@/module/privacyPolicy";
-
+import dynamic from "next/dynamic";
+const PrivacyPolicy = dynamic(() => import("@/module/privacyPolicy"));
+const NextSEO = dynamic(() => import("@/common/NextSeo"));
 export default function index({ getPrivacyAndPolicyData }) {
   return (
-    <div>
-      <PrivacyPolicy displayData={"Terms And Condition"} displaySingleData={getPrivacyAndPolicyData} />
-    </div>
+    <>
+      <NextSEO seo={seoData} />
+      <div>
+        <PrivacyPolicy displayData={"Terms And Condition"} displaySingleData={getPrivacyAndPolicyData} />
+      </div>
+    </>
   );
 }
 export async function getServerSideProps() {
   try {
     const privacyAndPolicyData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=terms`).then((resp) => resp?.data?.payload?.privacy_policy);
-
+    const seoData = {
+      Title: "Terms and Conditions | WriterTools",
+      Description: "Review the Terms and Conditions for using WriterTools services and products.",
+    };
     return {
       props: {
         getPrivacyAndPolicyData: privacyAndPolicyData[0] || [],
+        seoData: seoData || null,
       },
     };
   } catch (error) {
