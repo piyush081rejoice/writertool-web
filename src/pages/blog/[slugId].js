@@ -20,7 +20,7 @@ const UpdateBlog = ({ getSingleBlogData, isTrendingBlogsData, seoData }) => {
 export default UpdateBlog;
 
 export async function getServerSideProps(context) {
-  const { slugId } = context.params;
+  const { slugId } = context?.params;
 
   try {
     const singleBlogData = await ApiGet(`blog-services/blogs/get?slugId=${slugId}`).then((resp) => resp?.data?.payload);

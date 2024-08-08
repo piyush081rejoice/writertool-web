@@ -109,18 +109,35 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
             Array(blogData?.length ? blogData?.length : 4)
               .fill(0)
               .map((_, index) => (
-                <div className={styles.SkeletonCard} key={index}>
-                  <div>
-                    <Skeleton height={216} width={301} />
+                <div className={styles.card} key={index}>
+                  <div className={styles.cardImage}>
+                    <Skeleton height={216} />
                   </div>
-                  <div style={{ marginLeft: "25px" }}>
-                    <div className={styles.alignImage}>
-                      <Skeleton circle={true} height={34} width={34} />
-                      <Skeleton style={{ marginLeft: "15px" }} width={275} />
+                  <div>
+                    <div className={styles.firstColumn}>
+                      <div className={styles.leftContent}>
+                        <div className={styles.profileImage}>
+                          <Skeleton circle={true} height={34} width={34} />
+                        </div>
+                        <span>
+                          <Skeleton width={140} height={18} />
+                        </span>
+                      </div>
+                      <ul style={{paddingBottom:"20px"}}>
+                        <li>
+                          <Skeleton width={105} height={18} />
+                        </li>
+                      </ul>
                     </div>
-                    <div style={{ marginTop: "25px" }}>
-                      <Skeleton count={4} width={325} height={20} className={styles.alignImage} />
-                    </div>
+                    <h3>
+                      <Skeleton />
+                    </h3>
+                    <p className="texttruncatefourlines">
+                      <Skeleton />
+                      <Skeleton />
+                      <Skeleton />
+                      <Skeleton />
+                    </p>
                   </div>
                 </div>
               ))
