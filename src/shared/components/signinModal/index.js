@@ -1,23 +1,23 @@
-import React, { useState } from 'react'
-import dynamic from 'next/dynamic';
-import styles from './signinModal.module.scss';
-import classNames from 'classnames';
 import CloseIcon from '@/assets/icons/closeIcon';
-import Input from '../input';
+import { ApiPost } from '@/helpers/API/ApiData';
+import { useOnChange } from '@/hooks/onChangeHook';
+import { getCookie, removeCookie, setCookie } from '@/hooks/useCookie';
+import { auth } from '@/shared/loginWithGoogle/firebase';
+import classNames from 'classnames';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import Input from '../input';
+import styles from './signinModal.module.scss';
 const Logo = '/assets/logo/logo.svg';
 const GoogleIcon = '/assets/icons/google.svg';
-import { useOnChange } from '@/hooks/onChangeHook';
-import { ApiPost } from '@/helpers/API/ApiData';
-import { getCookie, removeCookie, setCookie } from '@/hooks/useCookie';
-import { useRouter } from 'next/router';
-import toast, { Toaster } from 'react-hot-toast';
-import { auth } from '@/shared/loginWithGoogle/firebase';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-const ResetPassword = dynamic(() => import("../resetPassword"));
+
 import Loader from '@/common/Loader';
 import LazyImage from '@/helpers/lazyImage';
 import { connectSocket } from '@/socket';
+import ResetPassword from '../resetPassword';
 const EyeIcon = '/assets/icons/eye.svg';
 const OpenEye = '/assets/icons/OpenEye.svg';
 

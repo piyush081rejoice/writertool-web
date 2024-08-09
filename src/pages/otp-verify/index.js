@@ -1,6 +1,6 @@
-import dynamic from "next/dynamic";
-const OtpVerificationModal = dynamic(() => import("@/shared/components/otpVerificationModal"));
-const NextSEO = dynamic(() => import("@/common/NextSeo"));
+import NextSEO from "@/common/NextSeo";
+import OtpVerificationModal from "@/shared/components/otpVerificationModal";
+
 const otpVerify = ({ seoData }) => {
   return (
     <>

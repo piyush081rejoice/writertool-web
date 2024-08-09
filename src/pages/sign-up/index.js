@@ -1,6 +1,6 @@
-import dynamic from "next/dynamic";
-const SignupModal = dynamic(() => import("@/shared/components/signupModal"));
-const NextSEO = dynamic(() => import("@/common/NextSeo"));
+import NextSEO from "@/common/NextSeo";
+import SignupModal from "@/shared/components/signupModal";
+
 
 export default function index({ seoData }) {
   return (

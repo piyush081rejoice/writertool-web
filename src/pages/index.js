@@ -1,9 +1,7 @@
+import NextSEO from "@/common/NextSeo";
 import { ApiGet, BaseURL, getHttpOptions } from "@/helpers/API/ApiData";
 import { getCookie } from "@/hooks/useCookie";
-import dynamic from "next/dynamic";
-const HomePage = dynamic(() => import("@/module/homepage"));
-const NextSEO = dynamic(() => import("@/common/NextSeo"));
-
+import HomePage from "@/module/homepage";
 import axios from "axios";
 import { parse } from "cookie";
 import { useEffect, useState } from "react";

@@ -1,14 +1,13 @@
 import { getCookie } from "@/hooks/useCookie";
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-const CustomizeyourOrganization = dynamic(() => import("@/shared/components/customizeyourOrganization"));
-const EditorsPick = dynamic(() => import("./editorsPick"));
-const FrequentlyAskedQuestions = dynamic(() => import("./frequentlyAskedQuestions"));
-const HeroBanner = dynamic(() => import("./heroBanner"));
-const LatestPosts = dynamic(() => import("./latestPosts"));
 import { ApiGet } from "@/helpers/API/ApiData";
-import toast from "react-hot-toast";
 import useDebounce from "@/helpers/useDebounce";
+import CustomizeyourOrganization from "@/shared/components/customizeyourOrganization";
+import toast from "react-hot-toast";
+import EditorsPick from "./editorsPick";
+import FrequentlyAskedQuestions from "./frequentlyAskedQuestions";
+import HeroBanner from "./heroBanner";
+import LatestPosts from "./latestPosts";
 
 const HomePage = ({ getBlogCategoryData, getBlogsData, getTrendingBlogData, onLoadMore, isLoadMoreDisabled, blogDataLoading ,handleGetBlogsData }) => {
   const [isOnBoardingComplete, setIsOnBoardingComplete] = useState(false);

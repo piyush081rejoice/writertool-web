@@ -1,6 +1,6 @@
-import dynamic from "next/dynamic";
-const SetNewPassword = dynamic(() => import("@/shared/components/setNewPassword"));
-const NextSEO = dynamic(() => import("@/common/NextSeo"));
+import NextSEO from "@/common/NextSeo";
+import SetNewPassword from "@/shared/components/setNewPassword";
+
 
 const ResetPassword = ({ seoData }) => {
   return (

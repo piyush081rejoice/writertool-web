@@ -1,9 +1,9 @@
 import { formatTitleCase } from "@/common";
+import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
-import dynamic from "next/dynamic";
+import Category from "@/module/category";
 import { useRouter } from "next/router";
-const Category = dynamic(() => import("@/module/category"));
-const NextSEO = dynamic(() => import("@/common/NextSeo"));
+
 const UpdateBlog = ({ getBlogCategoryData, isTrendingBlogsData ,seoData }) => {
   const router = useRouter();
   const { slugId } = router.query;

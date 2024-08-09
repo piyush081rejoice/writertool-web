@@ -1,7 +1,6 @@
+import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
-import dynamic from "next/dynamic";
-const Category = dynamic(() => import("@/module/category"));
-const NextSEO = dynamic(() => import("@/common/NextSeo"));
+import Category from "@/module/category";
 
 export default function index({ getBlogCategoryData, isTrendingBlogsData ,seoData }) {
   return (

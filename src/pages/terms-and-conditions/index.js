@@ -1,7 +1,7 @@
+import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
-import dynamic from "next/dynamic";
-const PrivacyPolicy = dynamic(() => import("@/module/privacyPolicy"));
-const NextSEO = dynamic(() => import("@/common/NextSeo"));
+import PrivacyPolicy from "@/module/privacyPolicy";
+
 export default function index({ getPrivacyAndPolicyData ,seoData }) {
   return (
     <>

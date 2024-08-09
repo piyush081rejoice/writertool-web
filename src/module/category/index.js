@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
+import Tab from "@/shared/components/tab";
 import styles from "./category.module.scss";
-// const Tab = dynamic(() => import("@/shared/components/tab"));
-const CategoryTopbar = dynamic(() => import("./categoryTopbar"));
-const CategoryInformation = dynamic(() => import("./categoryInformation"));
+import CategoryInformation from "./categoryInformation";
+import CategoryTopbar from "./categoryTopbar";
+
 
 export default function Category({ isTrendingBlogsData, getBlogCategoryData, slugId }) {
   return (
     <div>
-      {/* <div className={styles.tabSpacer}>
+      <div className={styles.tabSpacer}>
         <Tab {...{ getBlogCategoryData }} />
-      </div> */}
+      </div>
       <CategoryTopbar {...{ slugId }} />
       <CategoryInformation {...{ slugId, isTrendingBlogsData }} />
     </div>

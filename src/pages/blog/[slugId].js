@@ -1,8 +1,8 @@
+import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
+import BlogInside from "@/module/blogInside";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-const BlogInside = dynamic(() => import("@/module/blogInside"));
-const NextSEO = dynamic(() => import("@/common/NextSeo"));
+
 const UpdateBlog = ({ getSingleBlogData, isTrendingBlogsData, seoData }) => {
   const router = useRouter();
   const { slugId } = router.query;

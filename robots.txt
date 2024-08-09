@@ -1,0 +1,8 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /category
+# Host
+Host: https://writertools.ai/
+# Sitemaps
+Sitemap: https://writertools.ai/sitemap.xml
