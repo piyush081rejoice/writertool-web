@@ -5,7 +5,7 @@ import { ApiGet, ApiPost } from "@/helpers/API/ApiData";
 import LazyImage from "@/helpers/lazyImage";
 import { getCookie } from "@/hooks/useCookie";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import NoBlogFound from "../NoBlogFound";
@@ -45,22 +45,27 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
 
   const router = useRouter();
 
-  const handleShowBlog = async (id) => {
+  const handleShowBlog = useCallback(async (id) => {
     const userToken = getCookie("userToken");
-    if (userToken == undefined) {
+    if (!userToken) {
       toast.error("Please login to save to bookmark");
-    } else {
-      try {
-        const resp = await ApiPost(`blog-services/blogs/saved-blogs?blogId=${id}`);
-        if (resp?.data?.success) {
-          toast.success(resp?.data?.message);
-          getBlogData(limit);
-        }
-      } catch (error) {
-        toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
-      }
+      return;
     }
-  };
+    try {
+      const resp = await ApiPost(`blog-services/blogs/saved-blogs?blogId=${id}`);
+      if (resp?.data?.success) {
+        toast.success(resp?.data?.message);
+        getBlogData(limit);
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.payload?.message ||
+        error?.response?.data?.message || 
+        "Something went wrong"
+      );
+    }
+  }, [limit]);
+  
 
   const getBlogData = async (limit) => {
     try {

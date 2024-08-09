@@ -22,9 +22,8 @@
         }
 
         .loadMoreButton {
-            display: flex;
+            @include vertical_align_center;
             padding: rem(20 0 0 0);
-            justify-content: center;
 
             button {
                 font-size: rem(16);
@@ -36,7 +35,7 @@
                 border-radius: 99px;
                 @include body-medium;
                 background-color: transparent;
-                cursor: pointer;
+                @include pointer;
                 @include transition-3s;
 
                 &:hover {
@@ -66,12 +65,10 @@
                     grid-template-columns: 301px 1fr;
                     gap: rem(25);
                     padding: rem(35 0);
-
-
                 }
 
                 .iconAlignment {
-                    cursor: pointer;
+                    @include pointer;
                     display: flex;
                     align-items: center;
                     gap: rem(12);
@@ -79,7 +76,6 @@
                     img {
                         max-width: rem(30);
                         display: block;
-                        cursor: pointer;
                     }
                 }
 
@@ -101,7 +97,7 @@
                     font-size: rem(18);
                     line-height: rem(26);
                     @include heading-font;
-                    cursor: pointer;
+                    @include pointer;
                     margin: rem(0 0 12 0);
                     color: getColorHex('black');
                     @include transition-3s;
@@ -169,18 +165,17 @@
                 }
 
                 .cardImage {
-                    cursor: pointer;
+                    @include pointer;
                     width: 100%;
                     height: 100%;
                     position: relative;
 
                     .boookMarkIcon {
-                        cursor: pointer;
+                        @include pointer;
                         width: 32px;
                         height: 32px;
                         border-radius: 50%;
                         background-color: getColorHex('black');
-                        border-radius: 50%;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -189,8 +184,6 @@
                         top: 0;
                         margin: rem(15);
                     }
-
-
 
                     .buttonDesign {
                         padding: rem(15);
@@ -209,7 +202,6 @@
                         }
                     }
 
-
                     .cardImageStyle {
                         width: 100%;
                         height: rem(216);
@@ -223,30 +215,24 @@
                         }
                     }
                 }
-
             }
         }
-
     }
 
     .SkeletonCard {
-        display: flex;
+        @include vertical_align_center;
         flex-direction: column;
         gap: rem(10);
         margin-bottom: rem(10);
-        align-items: center;
-        /* Center items horizontally */
 
         .alignImage {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            @include vertical_align_center;
             flex-direction: column;
             gap: rem(10);
             width: 100%;
         }
 
-        @media (min-width: 575px) {
+        @include sm-max {
             flex-direction: row;
 
             .alignImage {
