@@ -7,9 +7,9 @@ import CategoryTopbar from "./categoryTopbar";
 export default function Category({ isTrendingBlogsData, getBlogCategoryData, slugId }) {
   return (
     <div>
-      <div className={styles.tabSpacer}>
+      {/* <div className={styles.tabSpacer}>
         <Tab {...{ getBlogCategoryData }} />
-      </div>
+      </div> */}
       <CategoryTopbar {...{ slugId }} />
       <CategoryInformation {...{ slugId, isTrendingBlogsData }} />
     </div>

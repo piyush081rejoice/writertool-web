@@ -13,7 +13,6 @@ import { DateConvert, replaceQuotedTextWithSpan } from "@/common";
 import Button from "../button";
 import OnClickOutside from "@/hooks/useClickOutside";
 import { ExploreBlogs, ExploreTopic, WriteBlogs } from "@/assets/icons/Icons";
-import Explore from "@/assets/icons/Explore";
 import ProfileIcon from "@/assets/icons/profileIcon";
 import StoriesIcon from "@/assets/icons/storiesIcon";
 import LibraryIcon from "@/assets/icons/libraryIcon";
