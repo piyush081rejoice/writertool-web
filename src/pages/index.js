@@ -1,5 +1,6 @@
 import NextSEO from "@/common/NextSeo";
 import { ApiGet, BaseURL, getHttpOptions } from "@/helpers/API/ApiData";
+import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
 import { getCookie } from "@/hooks/useCookie";
 import HomePage from "@/module/homepage";
 import axios from "axios";
@@ -90,9 +91,10 @@ export async function getServerSideProps(context) {
       : await ApiGet("blog-services/blogs/get?isActive=true&skip=1&limit=10").then((resp) => resp?.data?.payload);
     const trendingBlogData = await ApiGet(`blog-services/blogs/get?isTrending=true&skip=1&limit=3`).then((resp) => resp?.data?.payload);
     const seoData = {
-      Title: "Shine with WriterTools",
+      Title: "WriterTools | Enhance Your Writing and Content Creation",
       Description:
-        "Welcome to the WriterTools Blog, your ultimate resource for maximizing your writing potential. Discover powerful tools that make writing effortless, enhance your reading experience, and create content that shines brighter than ever. Whether you're a seasoned writer or just starting, our blog will help you reach new heights in your writing journey.",
+        "Unlock your full writing potential with WriterTools. Discover powerful tools for effortless writing, impactful reading, and creating content that shines.",
+      url :EXTERNAL_DATA_URL
     };
 
     return {

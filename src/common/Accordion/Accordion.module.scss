@@ -1,0 +1,93 @@
+@import '../../assets/scss/main.scss';
+
+.box {
+    border: 1px solid getColorHex('border-color-2');
+    border-radius: rem(12);
+    padding: rem(14);
+
+    @include md {
+        padding: rem(30);
+    }
+
+    .faqBox:first-child {
+        padding-top: rem(0);
+    }
+
+    .faqBox:last-child {
+        border: none;
+        padding-bottom: rem(0);
+    }
+
+    .faqBox {
+        padding: 20px 0;
+        border-bottom: 1px solid getColorHex('border-color-2');
+
+        @include md {
+            padding: 30px 0;
+        }
+
+        .faqBoxBody {
+            &.hide {
+                max-height: 0px;
+                overflow: hidden;
+                @include transition-3s;
+            }
+
+            &.show {
+                max-height: 100vh;
+                overflow: hidden;
+                @include transition-3s;
+            }
+
+            .spacer {
+                padding: rem(30 0 0 0);
+
+                p {
+                    font-size: rem(16);
+                    line-height: rem(28);
+                    letter-spacing: 0.48px;
+                    color: getColorHex('gray');
+                    opacity: 0.9;
+                }
+            }
+        }
+
+        .faqBoxHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .animationTime {
+                @include transition-3s;
+            }
+
+            .rotate {
+                transform: rotate(45deg);
+            }
+
+            h3 {
+                font-size: rem(14);
+line-height: 30px;
+                @include body-bold;
+                color: getColorHex('black');
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                @include md {
+                    font-size: rem(18);
+                }
+            }
+
+            svg {
+                cursor: pointer;
+                width: rem(14);
+
+                @include md {
+                    width: auto;
+                }
+            }
+        }
+    }
+}

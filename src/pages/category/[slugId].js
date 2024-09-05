@@ -1,6 +1,7 @@
 import { formatTitleCase } from "@/common";
 import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
+import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
 import Category from "@/module/category";
 import { useRouter } from "next/router";
 
@@ -29,6 +30,7 @@ export async function getServerSideProps(context) {
     const seoData = {
       Title: `${formatTitleCase(slugId)} Category | WriterTools`,
       Description: `Explore insightful blogs in the ${slugId} category on WriterTools.`,
+      url:`${EXTERNAL_DATA_URL}/category/${slugId}`
     };
     return {
       props: {

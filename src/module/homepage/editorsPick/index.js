@@ -31,7 +31,7 @@ export default function EditorsPick({ getBlogsData ,getTrendingBlogData }) {
                         <div className={styles.editorsCard} key={i}>
                           <div className={styles.editorsCardImage}>
                             {
-                              item?.thumbnail ? <LazyImage style={{cursor:"pointer"}} onClick={()=>router.push(`/blog/${item?.slugId}`)} src={item?.thumbnail} alt="CardImage"  className={styles.imageStyle} /> :<div className={styles.SkeletonCard} >
+                              item?.thumbnail ? <LazyImage style={{cursor:"pointer"}} onClick={()=>router.push(`/${item?.slugId}`)} src={item?.thumbnail} alt={item?.coverPhotoAltTag}  className={styles.imageStyle} /> :<div className={styles.SkeletonCard} >
                               <div>
                                 <Skeleton height={90} width={125} />
                               </div>
@@ -40,7 +40,7 @@ export default function EditorsPick({ getBlogsData ,getTrendingBlogData }) {
                             
                           </div>
                           <div className={styles.editorsCardItems}>
-                            <Link href={`/blog/${item?.slugId}`}>
+                            <Link href={`/${item?.slugId}`}>
                               <h3>{item?.title}</h3>
                             </Link>
                             <span>{DateConvert(item?.createdAt)}</span>

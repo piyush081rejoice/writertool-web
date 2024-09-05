@@ -5,7 +5,7 @@ import { ApiGet, ApiPost } from "@/helpers/API/ApiData";
 import LazyImage from "@/helpers/lazyImage";
 import { getCookie } from "@/hooks/useCookie";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import NoBlogFound from "../NoBlogFound";
@@ -45,27 +45,22 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
 
   const router = useRouter();
 
-  const handleShowBlog = useCallback(async (id) => {
+  const handleShowBlog = async (id) => {
     const userToken = getCookie("userToken");
-    if (!userToken) {
+    if (userToken == undefined) {
       toast.error("Please login to save to bookmark");
-      return;
-    }
-    try {
-      const resp = await ApiPost(`blog-services/blogs/saved-blogs?blogId=${id}`);
-      if (resp?.data?.success) {
-        toast.success(resp?.data?.message);
-        getBlogData(limit);
+    } else {
+      try {
+        const resp = await ApiPost(`blog-services/blogs/saved-blogs?blogId=${id}`);
+        if (resp?.data?.success) {
+          toast.success(resp?.data?.message);
+          getBlogData(limit);
+        }
+      } catch (error) {
+        toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
       }
-    } catch (error) {
-      toast.error(
-        error?.response?.data?.payload?.message ||
-        error?.response?.data?.message || 
-        "Something went wrong"
-      );
     }
-  }, [limit]);
-  
+  };
 
   const getBlogData = async (limit) => {
     try {
@@ -151,7 +146,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
               <div className={styles.card} key={i}>
                 <div className={styles.cardImage}>
                   {data?.thumbnail ? (
-                    <LazyImage style={{ cursor: "pointer" }} onClick={() => router.push(`/blog/${data?.slugId}`)} src={data?.thumbnail} alt="CardImage" className={styles.cardImageStyle} />
+                    <LazyImage style={{ cursor: "pointer" }} onClick={() => router.push(`/${data?.slugId}`)} src={data?.thumbnail} alt={data?.coverPhotoAltTag} className={styles.cardImageStyle} />
                   ) : (
                     <Skeleton height={216} />
                   )}
@@ -179,7 +174,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
                       <li>{DateConvert(data?.createdAt)}</li>
                     </ul>
                   </div>
-                  <h3 onClick={() => router.push(`/blog/${data?.slugId}`)}>{data?.title}</h3>
+                  <h3 onClick={() => router.push(`/${data?.slugId}`)}>{data?.title}</h3>
                   <p className="texttruncatefourlines">{data?.sortDescription ? data?.sortDescription : ""}</p>
                 </div>
               </div>

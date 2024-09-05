@@ -16,7 +16,7 @@ function NextSEO({ seo }) {
           images: [
             {
               url: `${seo?.OG_Img}`,
-              alt: `${seo?.Title}`,
+              alt: `${seo?.OG_Img_alt_tag}`,
               width: 1024,
               height: 768,
             },

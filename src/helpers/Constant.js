@@ -1,3 +1,4 @@
+export const EXTERNAL_DATA_URL = process.env.NEXT_PUBLIC_SITEMAP_URL;
 export const WEBSITE_URL_REGEX = /^(ftp|http|https):\/\/[^ "]+$/;
 export const PASSWORD_PATTERN = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d\W_]{8,}$/;
 export const BUTTON_LIST = [

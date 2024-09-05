@@ -8,10 +8,6 @@ export default function middleware(req) {
     const absoluteURL = new URL("/sign-in", req.nextUrl.origin);
     return NextResponse.redirect(absoluteURL.toString());
   }
-  const res = NextResponse.next();
-  return res;
-
-
 }
 
 export const config = {

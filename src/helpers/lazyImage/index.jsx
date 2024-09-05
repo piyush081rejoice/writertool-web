@@ -5,7 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 //   return src?.length > 0 && src?.indexOf("?") === -1 ? "?t=w" : "&t=w";
 // };
 
-const LazyImage = ({ src, className, onClick }) => {
+const LazyImage = ({ src, className, onClick, alt }) => {
   // const { src } = image;
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -14,7 +14,7 @@ const LazyImage = ({ src, className, onClick }) => {
       <LazyLoadImage
         onClick={onClick ? onClick : null}
         src={src}
-        alt="Image Alt"
+        alt={alt ? alt : "image"}
         placeholderSrc={CardImages}
         onLoad={() => setIsLoaded(true)}
         threshold={500}

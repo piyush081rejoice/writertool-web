@@ -1,5 +1,6 @@
 import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
+import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
 import PrivacyPolicy from "@/module/privacyPolicy";
 
 
@@ -17,8 +18,9 @@ export async function getServerSideProps() {
   try {
     const privacyAndPolicyData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=policy`).then((resp) => resp?.data?.payload?.privacy_policy);
     const seoData = {
-      Title: "Privacy Policy | WriterTools",
-      Description: "Read the WriterTools Privacy Policy to understand how we protect your personal information.",
+      Title: "WriterTools | Privacy Policy",
+      Description: "Ensure your data's safety and transparency. Review our privacy practices to understand how your information is collected, protected, and your rights.",
+      url:`${EXTERNAL_DATA_URL}/privacy-policy`
     };
     return {
       props: {

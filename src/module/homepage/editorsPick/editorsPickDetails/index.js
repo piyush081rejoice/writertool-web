@@ -75,9 +75,9 @@ export default function EditorsPickDetails({ getBlogsData }) {
       <div className={styles.imageStyle}>
         { singleBlog?.thumbnail ?<LazyImage
           style={{ cursor: "pointer" }}
-          onClick={() => router.push(`/blog/${singleBlog?.slugId}`)}
+          onClick={() => router.push(`/${singleBlog?.slugId}`)}
           src={singleBlog?.thumbnail}
-          alt="CardImage"
+          alt={singleBlog?.coverPhotoAltTag}
      
           className={styles.cardImage}
         /> :<div className={styles.singleBlogSkeletonWrapper}>
@@ -106,7 +106,7 @@ export default function EditorsPickDetails({ getBlogsData }) {
             <li>{DateConvert(singleBlog?.createdAt)}</li>
           </ul>
         </div>
-        <Link href={`/blog/${singleBlog?.slugId}`}>
+        <Link href={`/${singleBlog?.slugId}`}>
           <h3>{singleBlog?.title}</h3>
         </Link>
         <p className={"texttruncatesixlines"}>{singleBlog?.sortDescription ? singleBlog?.sortDescription : ""}</p>

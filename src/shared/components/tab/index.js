@@ -61,7 +61,7 @@ export default function Tab({ getBlogCategoryData }) {
     variableWidth: true,
     nextArrow: <SampleNextArrow disabled={isNextDisabled} />,
     prevArrow: <SamplePrevArrow disabled={isPrevDisabled} />,
-    adaptiveHeight: true,
+    adaptiveHeight: false,
     afterChange: (current) => {
       const lastVisibleSlide = current + slidesToShow;
       setIsPrevDisabled(current === 0);

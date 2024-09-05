@@ -71,7 +71,7 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
                     <div className={styles.card} key={key}>
                       <div className={styles.cardImage}>
                         {
-                          item?.thumbnail ?<LazyImage src={item?.thumbnail} className={styles.cardImageStyle} onClick={() => router.push(`/blog/${item?.slugId}`)} alt="ProfileImage" /> :<Skeleton height={216} />
+                          item?.thumbnail ?<LazyImage src={item?.thumbnail} className={styles.cardImageStyle} onClick={() => router.push(`/${item?.slugId}`)} alt={item?.coverPhotoAltTag} /> :<Skeleton height={216} />
                         }
 
                         {item?.isTrending ? (
@@ -102,7 +102,7 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
                             <li>{DateConvert(item?.createdAt)}</li>
                           </ul>
                         </div>
-                        <h3 style={{ cursor: "pointer" }} onClick={() => router.push(`/blog/${item?.slugId}`)}>
+                        <h3 style={{ cursor: "pointer" }} onClick={() => router.push(`/${item?.slugId}`)}>
                           {item?.title}
                         </h3>
                         <p>{item?.sortDescription ? item?.sortDescription : ""}</p>

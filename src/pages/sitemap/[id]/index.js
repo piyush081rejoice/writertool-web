@@ -79,7 +79,7 @@ function generateUrls(data, url = "") {
 
 function generateBlogsChunksUrls(data, url = "") {
   const dat = data?.map((item) => ({
-    loc: `${EXTERNAL_DATA_URL}/blog/${item?.slugId}`,
+    loc: `${EXTERNAL_DATA_URL}/${item?.slugId}`,
     lastmod: new Date(item?.updatedAt).toISOString(),
     changefreq: "daily",
     priority: 1,

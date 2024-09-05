@@ -79,6 +79,19 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
       formIsValid = false;
       updatedError["title"] = "Please provide a blog title.";
     }
+    if (isEmpty(inputValue?.coverPhotoAltTag)) {
+      formIsValid = false;
+      updatedError["coverPhotoAltTag"] = "Please provide a cover image alt tag.";
+    }
+    if (isEmpty(inputValue?.metaDescription)) {
+      formIsValid = false;
+      updatedError["metaDescription"] = "Please provide a meta description.";
+    }
+    if (isEmpty(inputValue?.metaTitle)) {
+      formIsValid = false;
+      updatedError["metaTitle"] = "Please provide a meta title.";
+    }
+
     if (isEmpty(inputValue?.sortDescription)) {
       formIsValid = false;
       updatedError["sortDescription"] = "Please provide a short Description.";
@@ -116,6 +129,9 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
         formData.append("sortDescription", inputValue?.sortDescription);
         formData.append("description", editorValue);
         formData.append("coverPhoto", inputValue?.coverPhoto);
+        formData.append("metaTitle", inputValue?.metaTitle);
+        formData.append("metaDescription", inputValue?.metaDescription);
+        formData.append("coverPhotoAltTag", inputValue?.coverPhotoAltTag);
         selectedBlogs.forEach((category, index) => {
           formData.append(`blogCategoryId[${index}]`, category?._id);
         });
@@ -157,7 +173,7 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
           } else {
             toast.success(res?.data?.payload?.message || "Your blog has been submitted for approval.");
           }
-          setInputValue({ youtubeLink: "", twitterLink: "", linkedinLink: "", facebookLink: "", instagramLink: "", slugId: "", websiteLink: "", title: "", coverPhoto: "" });
+          setInputValue({});
           setKeyWords([]);
           setSelectedBlogs([]);
           setCoverPhotoPreview(null);
@@ -287,7 +303,7 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                   </div>
                   <div className={styles.spacer}>
                     <Input
-                      label="Short Description"
+                      label="Short Description*"
                       placeholder="Type your Short Description"
                       onChange={handleChange}
                       name="sortDescription"
@@ -312,6 +328,16 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                         </div>
                       </div>
                     ) : null}
+                  </div>
+                  <div className={styles.spacer}>
+                    <Input
+                      label="Cover Photo Alt Tag*"
+                      placeholder="Type your cover-Photo alt tag"
+                      onChange={handleChange}
+                      name="coverPhotoAltTag"
+                      value={inputValue?.coverPhotoAltTag}
+                      errorMessage={errors?.coverPhotoAltTag}
+                    />
                   </div>
                 </div>
                 <div className={styles.gridItems}>
@@ -370,8 +396,27 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                       value={inputValue?.youtubeLink}
                     />
                   </div>
+                  <div className={styles.spacer}>
+                    <Input
+                      label="Meta Title*"
+                      placeholder="Type your MetaTitle"
+                      onChange={handleChange}
+                      name="metaTitle"
+                      value={inputValue?.metaTitle}
+                      errorMessage={errors?.metaTitle}
+                    />
+                  </div>
+                  <div className={styles.spacer}>
+                    <Input
+                      label="Meta Description*"
+                      placeholder="Type your MetaDescription"
+                      onChange={handleChange}
+                      name="metaDescription"
+                      value={inputValue?.metaDescription}
+                      errorMessage={errors?.metaDescription}
+                    />
+                  </div>
                 </div>
-                
               </div>
               <div className={styles.coverPhoto}>
                 <label>Add Cover Photo*</label>

@@ -1,5 +1,6 @@
 import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
+import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
 import Category from "@/module/category";
 
 export default function index({ getBlogCategoryData, isTrendingBlogsData ,seoData }) {
@@ -18,8 +19,9 @@ export async function getServerSideProps() {
     const blogCategoryData = await ApiGet("blog-services/blog-categories/get?isActive=true&skip=1&limit=50").then((resp) => resp?.data?.payload);
     const isTrendingBlogsData = await ApiGet("blog-services/blogs/get?isTrending=true&skip=1&limit=3").then((resp) => resp?.data?.payload?.blogs);
     const seoData = {
-      Title: `Category | WriterTools`,
-      Description: `Explore insightful blogs category on WriterTools.`,
+      Title: `WriterTools Categories | Explore Diverse Writing Resources`,
+      Description: `Browse various tools and resources tailored to enhance different aspects of your writing process.`,
+      url:`${EXTERNAL_DATA_URL}/category`
     };
     return {
       props: {

@@ -16,8 +16,9 @@ export async function getServerSideProps() {
   try {
     const privacyAndPolicyData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=terms`).then((resp) => resp?.data?.payload?.privacy_policy);
     const seoData = {
-      Title: "Terms and Conditions | WriterTools",
-      Description: "Review the Terms and Conditions for using WriterTools services and products.",
+      Title: "WriterTools AI | Terms & Conditions Overview",
+      Description: "Understand the guidelines for using WriterTools.ai services and your responsibilities as a user of the platform.",
+      url:`${EXTERNAL_DATA_URL}/terms-and-conditions`
     };
     return {
       props: {

@@ -22,61 +22,6 @@ async function generateStaticSitemap(ctx) {
       show_in_sitemap: true,
     },
     {
-      route: "sign-in",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "sign-up",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "otp-verify",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "reset-password",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "write-blog",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "sitemap/blog.xml",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "category",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "sitemap/category.xml",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "your-stories",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "library",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
-      route: "notifications",
-      updatedAt: new Date().toISOString(),
-      show_in_sitemap: true,
-    },
-    {
       route: "disclaimer",
       updatedAt: new Date().toISOString(),
       show_in_sitemap: true,

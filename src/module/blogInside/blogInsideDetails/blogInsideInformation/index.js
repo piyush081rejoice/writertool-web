@@ -1,5 +1,5 @@
 import { DateConvert, formatTitleCase } from "@/common";
-
+import Accordion from "@/common/Accordion";
 import LazyImage from "@/helpers/lazyImage";
 import Recommended from "@/shared/components/recommended";
 import { marked } from "marked";
@@ -50,13 +50,18 @@ export default function BlogInsideInformation({ singleBlog }) {
         </div> */}
           </div>
           <div className={styles.blogImage}>
-            <LazyImage  src={singleBlog?.coverPhoto} alt="BlogImage"  />
+            <LazyImage src={singleBlog?.coverPhoto} alt={singleBlog?.coverPhotoAltTag ?? "Blog Cover Image"} />
           </div>
           <div className={styles.details}>
             <p>{singleBlog?.sortDescription}</p>
-            <div  dangerouslySetInnerHTML={{__html: marked(singleBlog?.description || "-"),}} />
-            </div>
-
+            <div dangerouslySetInnerHTML={{ __html: marked(singleBlog?.description || "-") }} />
+          </div>
+          {singleBlog?.FAQs?.length > 0 ? (
+            <>
+              <h2 className={styles.title}>Frequently Asked Questions</h2>
+              <Accordion FAQs={singleBlog?.FAQs.map((item) => ({ ...item, isOpen: false }))} />
+            </>
+          ) : null}
           <div className={styles.line}></div>
           <ShareProfile {...{ singleBlog }} />
           {/* <CommonSection /> */}

@@ -97,7 +97,7 @@ const PublishedStories = ({ status }) => {
                 <div className={styles.card} key={key}>
                   <div className={styles.cardImage}>
                     {
-                      data?.thumbnail ? <LazyImage src={data?.thumbnail} alt="CardImage" className={styles.cardImageStyle} /> :<Skeleton height={216} />
+                      data?.thumbnail ? <LazyImage src={data?.thumbnail} alt={data?.coverPhotoAltTag} className={styles.cardImageStyle} /> :<Skeleton height={216} />
                     }
                   </div>
                   <div>
