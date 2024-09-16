@@ -5,6 +5,7 @@ import Explore from "@/assets/icons/Explore";
 import { useRouter } from "next/router";
 import { getCookie } from "@/hooks/useCookie";
 import classNames from "classnames";
+import { formatTitleCase } from "@/common";
 
 function SampleNextArrow(props) {
   const { onClick, disabled } = props;
@@ -111,7 +112,7 @@ export default function Tab({ getBlogCategoryData }) {
 
             {getBlogCategoryData?.map?.((data, index) => (
               <button key={index} onClick={() => router.push(`/category/${data?.slugId}`)} className={currentSlugId === data?.slugId ? styles.active : ""}>
-                {data?.title}
+                {formatTitleCase(data?.slugId)}
               </button>
             ))}
           </Slider>

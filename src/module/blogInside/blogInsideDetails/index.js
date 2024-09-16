@@ -3,10 +3,12 @@ import Newsletter from "@/module/homepage/latestPosts/newsletter";
 import Breadcrumb from "@/module/writeBlog/breadcrumb";
 import styles from "./blogInsideDetails.module.scss";
 import BlogInsideInformation from "./blogInsideInformation";
-export default function BlogInsideDetails({ slugId, isTrendingBlogsData, getSingleBlogData }) {
+import { useRouter } from "next/router";
+export default function BlogInsideDetails({ isTrendingBlogsData, getSingleBlogData }) {
+  const router = useRouter();
   return (
     <>
-      <Breadcrumb dynamicList={slugId} />
+      <Breadcrumb dynamicList={router.query?.slugId} />
       <div className={styles.blogInsideDetails}>
         <div className="container">
           <div style={{ marginTop: "40px" }} className={styles.grid}>
