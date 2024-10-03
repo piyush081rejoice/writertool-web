@@ -3,7 +3,6 @@ import { ApiGet } from "@/helpers/API/ApiData";
 import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
 import PrivacyPolicy from "@/module/privacyPolicy";
 
-
 export default function index({ getPrivacyAndPolicyData, seoData }) {
   return (
     <>
@@ -18,9 +17,10 @@ export async function getServerSideProps() {
   try {
     const privacyAndPolicyData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=policy`).then((resp) => resp?.data?.payload?.privacy_policy);
     const seoData = {
-      Title: "WriterTools | Privacy Policy",
-      Description: "Ensure your data's safety and transparency. Review our privacy practices to understand how your information is collected, protected, and your rights.",
-      url:`${EXTERNAL_DATA_URL}/privacy-policy`
+      Title: privacyAndPolicyData[0]?.metaTitle || "",
+      Description: privacyAndPolicyData[0]?.metaDescription || "",
+      KeyWords: privacyAndPolicyData[0]?.metaKeyWords?.join(", ") || "",
+      url: `${EXTERNAL_DATA_URL}/privacy-policy`,
     };
     return {
       props: {

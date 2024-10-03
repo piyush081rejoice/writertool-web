@@ -8,7 +8,7 @@
         padding: rem(0 0 10 0);
 
         h3 {
-            font-size: rem(18);
+            font-size: rem(24);
             text-transform: capitalize;
             color: getColorHex('black');
             line-height: normal;
@@ -78,7 +78,7 @@
             }
 
             h3 {
-                font-size: rem(16);
+                font-size: rem(19.2);
                 cursor: pointer;
                 @include heading-font;
                 color: getColorHex('black');

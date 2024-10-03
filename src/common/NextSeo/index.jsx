@@ -3,12 +3,16 @@ import Head from "next/head";
 
 function NextSEO({ seo }) {
   return (
-    <>
+    <React.Fragment>
       <Head>
         {/* Basic SEO */}
         <title>{seo?.Title || "WriterTools"}</title>
         <meta name="description" content={seo?.Description || ""} />
         <link rel="canonical" href={seo?.url || ""} />
+
+        {/* Robots meta tag */}
+        <meta name="robots" content={seo?.robots || "index, follow"} />
+        <meta name="googlebot" content={seo?.googlebot || "index, follow"} />
 
         {/* Open Graph / Facebook */}
         <meta property="og:url" content={seo?.url || ""} />
@@ -35,15 +39,9 @@ function NextSEO({ seo }) {
         <meta property="og:image:secure_url" content={seo?.OG_Img || ""} />
 
         {/* Structured Data Schema */}
-        {seo?.PageViewSchema && (
-          <script
-            id="PageViewSchema"
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(seo?.PageViewSchema) }}
-          />
-        )}
+        {seo?.PageViewSchema && <script id="PageViewSchema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(seo?.PageViewSchema) }} />}
       </Head>
-    </>
+    </React.Fragment>
   );
 }
 

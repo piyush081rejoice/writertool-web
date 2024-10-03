@@ -21,7 +21,8 @@ export async function getServerSideProps() {
     const seoData = {
       Title: `WriterTools Categories | Explore Diverse Writing Resources`,
       Description: `Browse various tools and resources tailored to enhance different aspects of your writing process.`,
-      url:`${EXTERNAL_DATA_URL}/category`
+      url:`${EXTERNAL_DATA_URL}/category`,
+      KeyWords:"Categories,Diverse Writing Resources"
     };
     return {
       props: {

@@ -1,13 +1,9 @@
+import moment from "moment";
+
 export const DateConvert = (isoDateString) => {
-  const date = new Date(isoDateString);
-
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = date.toLocaleDateString("en-US", options);
-
-  formattedDate;
-
-  return formattedDate;
+  return moment(isoDateString).format("DD MMM YYYY");
 };
+
 export const getCurrentFormattedDate = () => {
   const currentDate = new Date();
 
@@ -48,7 +44,6 @@ export const GenerateDescription = (htmlString) => {
 };
 
 export const formatTitleCase = (input) => {
-
   let result = input
     .replace(/-/g, " ")
     .split(" ")

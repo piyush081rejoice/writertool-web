@@ -90,11 +90,12 @@ export async function getServerSideProps(context) {
           .then((resp) => resp?.data?.payload)
       : await ApiGet("blog-services/blogs/get?isActive=true&skip=1&limit=10").then((resp) => resp?.data?.payload);
     const trendingBlogData = await ApiGet(`blog-services/blogs/get?isTrending=true&skip=1&limit=3`).then((resp) => resp?.data?.payload);
+    const homePageSeoData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=home`).then((resp) => resp?.data?.payload?.privacy_policy);
     const seoData = {
-      Title: "WriterTools | Enhance Your Writing and Content Creation",
-      Description:
-        "Unlock your full writing potential with WriterTools. Discover powerful tools for effortless writing, impactful reading, and creating content that shines.",
-      url :EXTERNAL_DATA_URL
+      Title: homePageSeoData[0]?.metaTitle || "",
+      Description: homePageSeoData[0]?.metaDescription || "",
+      KeyWords: homePageSeoData[0]?.metaKeyWords?.join(", ") || "",
+      url: `${EXTERNAL_DATA_URL}`,
     };
 
     return {

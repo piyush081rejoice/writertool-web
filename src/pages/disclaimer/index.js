@@ -16,15 +16,16 @@ export default function index({ getPrivacyAndPolicyData ,seoData }) {
 }
 export async function getServerSideProps() {
   try {
-    const privacyAndPolicyData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=disclaimer`).then((resp) => resp?.data?.payload?.privacy_policy);
+    const disclaimerData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=disclaimer`).then((resp) => resp?.data?.payload?.privacy_policy);
     const seoData = {
-      Title: "WriterTools AI | Disclaimer Policy",
-      Description: "Read WriterTools AI limitations of liability and disclaimers for information use to be aware of our legal obligations and your responsibilities.",
-      url:`${EXTERNAL_DATA_URL}/disclaimer`
+      Title: disclaimerData[0]?.metaTitle || "",
+      Description: disclaimerData[0]?.metaDescription || "",
+      KeyWords: disclaimerData[0]?.metaKeyWords?.join(", ") || "",
+      url: `${EXTERNAL_DATA_URL}/disclaimer`,
     };
     return {
       props: {
-        getPrivacyAndPolicyData: privacyAndPolicyData[0] || [],
+        getPrivacyAndPolicyData: disclaimerData[0] || [],
         seoData: seoData || null,
       },
     };

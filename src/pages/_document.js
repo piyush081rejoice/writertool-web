@@ -14,6 +14,7 @@ export default function Document() {
                      gtag('config', 'G-HNP2GPB9RT');`,
           }}
         ></script>
+        <meta name="google-site-verification" content="TzrvNnnMxbg6PY_lwqfE6Jkyi-3oaqSiWj5S8ksn1vc" />
       </Head>
       <body>
         <Main />

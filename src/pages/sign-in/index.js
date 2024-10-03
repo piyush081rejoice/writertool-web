@@ -14,6 +14,8 @@ export async function getServerSideProps() {
     const seoData = {
       Title: "SignIn  | WriterTools",
       Description: "Access your WriterTools account to unlock powerful writing features and tools.",
+      robots: "noindex, nofollow",
+      googlebot: "noindex, nofollow",
     };
 
     return {

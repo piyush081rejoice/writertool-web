@@ -1,8 +1,9 @@
 import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
+import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
 import PrivacyPolicy from "@/module/privacyPolicy";
 
-export default function index({ getPrivacyAndPolicyData ,seoData }) {
+export default function index({ getPrivacyAndPolicyData, seoData }) {
   return (
     <>
       <NextSEO seo={seoData} />
@@ -14,15 +15,16 @@ export default function index({ getPrivacyAndPolicyData ,seoData }) {
 }
 export async function getServerSideProps() {
   try {
-    const privacyAndPolicyData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=terms`).then((resp) => resp?.data?.payload?.privacy_policy);
+    const termsAndConditionsData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=terms`).then((resp) => resp?.data?.payload?.privacy_policy);
     const seoData = {
-      Title: "WriterTools AI | Terms & Conditions Overview",
-      Description: "Understand the guidelines for using WriterTools.ai services and your responsibilities as a user of the platform.",
-      url:`${EXTERNAL_DATA_URL}/terms-and-conditions`
+      Title: termsAndConditionsData[0]?.metaTitle || "",
+      Description: termsAndConditionsData[0]?.metaDescription || "",
+      KeyWords: termsAndConditionsData[0]?.metaKeyWords?.join(", ") || "",
+      url: `${EXTERNAL_DATA_URL}/terms-and-conditions`,
     };
     return {
       props: {
-        getPrivacyAndPolicyData: privacyAndPolicyData[0] || [],
+        getPrivacyAndPolicyData: termsAndConditionsData[0] || [],
         seoData: seoData || null,
       },
     };
