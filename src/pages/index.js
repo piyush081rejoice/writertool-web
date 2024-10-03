@@ -1,43 +1,76 @@
-import NextSEO from "@/common/NextSeo";
 import { ApiGet, BaseURL, getHttpOptions } from "@/helpers/API/ApiData";
 import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
 import { getCookie } from "@/hooks/useCookie";
-import HomePage from "@/module/homepage";
 import axios from "axios";
-import { parse } from "cookie";
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { Suspense, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+const NextSEO = dynamic(() => import("@/common/NextSeo"), { ssr: false });
+const HomePage = dynamic(() => import("@/module/homepage"), { ssr: false });
 
-export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlogData, blogsTotalCount, seoData }) {
+export default function Home() {
   const [blogDataLoading, setBlogDataLoading] = useState(false);
-  const [blogData, setBlogData] = useState(getBlogsData);
+  const [blogData, setBlogData] = useState([]);
+  const [blogCategoryData, setBlogCategoryData] = useState([]);
+  const [trendingBlogData, setTrendingBlogData] = useState([]);
+  const [blogsTotalCount, setBlogsTotalCount] = useState(0);
+  const [seoData, setSeoData] = useState({});
   const [limit, setLimit] = useState(10);
 
+  // Fetch data on component mount
   useEffect(() => {
-    if (limit > 10) {
-      handleGetBlogsData();
-    }
+    fetchData();
   }, [limit]);
 
-  const handleGetBlogsData = async () => {
+  const fetchData = async () => {
     const userToken = getCookie("userToken");
     setBlogDataLoading(true);
+
     try {
-      const response =
-        userToken != undefined ? await ApiGet(`blog-services/blogs/get-editor-blogs?isActive=true&limit=${limit}`) : await ApiGet(`blog-services/blogs/get?isActive=true&limit=${limit}`);
-      const data = userToken != undefined ? response?.data?.payload?.editor_blogs : response?.data?.payload?.blogs;
-      setBlogData(data);
+      const [blogCategoryResp, blogsResp, trendingBlogResp, seoResp] = await Promise.all([
+        ApiGet("blog-services/blog-categories/get?isActive=true&skip=1&limit=10"),
+        userToken
+          ? axios.get(`${BaseURL}blog-services/blogs/get-editor-blogs?isActive=true&limit=${limit}`, {
+              ...getHttpOptions(),
+              headers: { "x-auth-token": userToken },
+            })
+          : ApiGet(`blog-services/blogs/get?isActive=true&limit=${limit}`),
+        ApiGet(`blog-services/blogs/get?isTrending=true&skip=1&limit=3`),
+        ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=home`),
+      ]);
+
+      const blogsData = userToken ? blogsResp.data?.payload?.editor_blogs : blogsResp.data?.payload?.blogs;
+      console.log(`blogCategoryResp.data?.payload?.blog_category`, blogCategoryResp?.data.payload.blog_category);
+      setBlogData(blogsData || []);
+      setBlogsTotalCount(blogsResp.data?.payload?.counts || 0);
+      setBlogCategoryData(blogCategoryResp?.data?.payload?.blog_category);
+      setTrendingBlogData(trendingBlogResp.data?.payload?.blogs || []);
+
+      const homePageSeoData = seoResp.data?.payload?.privacy_policy;
+      const seoData = {
+        Title: homePageSeoData[0]?.metaTitle || "",
+        Description: homePageSeoData[0]?.metaDescription || "",
+        KeyWords: homePageSeoData[0]?.metaKeyWords?.join(", ") || "",
+        url: `${EXTERNAL_DATA_URL}`,
+      };
+      setSeoData(seoData);
     } catch (error) {
-      toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
+      toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setBlogDataLoading(false);
+    }
+  };
+
+  const handleLoadMore = () => {
+    if (blogData?.length < blogsTotalCount) {
+      setLimit((prevLimit) => prevLimit + 5);
     }
   };
 
   useEffect(() => {
     const eventNames = ["logout", "onBoardingComplete"];
     const handleMultipleEvents = () => {
-      handleGetBlogsData();
+      fetchData();
     };
 
     eventNames.forEach((event) => {
@@ -50,68 +83,21 @@ export default function Home({ getBlogCategoryData, getBlogsData, getTrendingBlo
       });
     };
   }, []);
-  const handleLoadMore = () => {
-    if (blogData?.length < blogsTotalCount) {
-      setLimit((prevLimit) => prevLimit + 5);
-    }
-  };
 
   return (
     <>
       <NextSEO seo={seoData} />
-      <HomePage
-        handleGetBlogsData={handleGetBlogsData}
-        onLoadMore={handleLoadMore}
-        isLoadMoreDisabled={blogData?.length >= blogsTotalCount}
-        blogDataLoading={blogDataLoading}
-        getBlogsData={blogData}
-        getBlogCategoryData={getBlogCategoryData}
-        getTrendingBlogData={getTrendingBlogData}
-      />
+      <Suspense fallback={<p>loading...</p>}>
+        <HomePage
+          handleGetBlogsData={fetchData}
+          onLoadMore={handleLoadMore}
+          isLoadMoreDisabled={blogData?.length >= blogsTotalCount}
+          blogDataLoading={blogDataLoading}
+          getBlogsData={blogData}
+          getBlogCategoryData={blogCategoryData}
+          getTrendingBlogData={trendingBlogData}
+        />
+      </Suspense>
     </>
   );
-}
-
-export async function getServerSideProps(context) {
-  const { req } = context;
-  const cookies = parse(req?.headers?.cookie || "");
-  const userToken = cookies?.userToken;
-  let headers = {};
-  headers["x-auth-token"] = `${userToken}`;
-
-  try {
-    const blogCategoryData = await ApiGet("blog-services/blog-categories/get?isActive=true&skip=1&limit=10").then((resp) => resp?.data?.payload);
-    const blogsData = userToken
-      ? await axios
-          .get(BaseURL + "blog-services/blogs/get-editor-blogs?isActive=true&limit=10", {
-            ...getHttpOptions(),
-            headers: headers,
-          })
-          .then((resp) => resp?.data?.payload)
-      : await ApiGet("blog-services/blogs/get?isActive=true&skip=1&limit=10").then((resp) => resp?.data?.payload);
-    const trendingBlogData = await ApiGet(`blog-services/blogs/get?isTrending=true&skip=1&limit=3`).then((resp) => resp?.data?.payload);
-    const homePageSeoData = await ApiGet(`admin-services/dashboard/get-all-privacy-policy?title=home`).then((resp) => resp?.data?.payload?.privacy_policy);
-    const seoData = {
-      Title: homePageSeoData[0]?.metaTitle || "",
-      Description: homePageSeoData[0]?.metaDescription || "",
-      KeyWords: homePageSeoData[0]?.metaKeyWords?.join(", ") || "",
-      url: `${EXTERNAL_DATA_URL}`,
-    };
-
-    return {
-      props: {
-        getBlogsData: userToken ? blogsData?.editor_blogs : blogsData?.blogs || [],
-        blogsTotalCount: blogsData?.counts || 0,
-        getBlogCategoryData: blogCategoryData?.blog_category || [],
-        getTrendingBlogData: trendingBlogData?.blogs || [],
-        seoData: seoData || null,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        error: "Facing error",
-      },
-    };
-  }
 }
