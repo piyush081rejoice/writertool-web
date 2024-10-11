@@ -4,16 +4,14 @@ import { DateConvert, formatTitleCase } from "@/common";
 import { ApiPost } from "@/helpers/API/ApiData";
 import LazyImage from "@/helpers/lazyImage";
 import { getCookie } from "@/hooks/useCookie";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import Skeleton from "react-loading-skeleton";
 import styles from "./latestPosts.module.scss";
+import Newsletter from "./newsletter";
+import TagClouds from "./tagClouds";
+import Skeleton from "react-loading-skeleton";
 const ProfileImage = "/assets/images/profile.png";
-
-const TagClouds = dynamic(() => import("./tagClouds"), { ssr: false });
-const Newsletter = dynamic(() => import("./newsletter"), { ssr: false });
 
 export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabled, blogDataLoading, handleGetBlogsData, getBlogCategoryData }) {
   const router = useRouter();

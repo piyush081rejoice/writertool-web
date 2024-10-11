@@ -1,8 +1,7 @@
 import WaveIcon from "@/assets/icons/waveIcon";
-import { FAQ_DATA } from "@/helpers/Constant";
-import dynamic from "next/dynamic";
 import styles from "./frequentlyAskedQuestions.module.scss";
-const Accordion = dynamic(() => import("@/common/Accordion"), { ssr: false });
+import Accordion from "@/common/Accordion";
+import { FAQ_DATA } from "@/helpers/Constant";
 export default function FrequentlyAskedQuestions() {
   return (
     <div className={styles.frequentlyAskedQuestions}>

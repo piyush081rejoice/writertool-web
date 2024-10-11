@@ -1,16 +1,14 @@
-import { useOnChange } from "@/hooks/onChangeHook";
-import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
-import Input from "../input";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./customizeyourOrganization.module.scss";
-const SelectCategories = dynamic(() => import("../selectCategories"), { ssr: false });
-
-import DownArrow from "@/assets/icons/downArrow";
+import classNames from "classnames";
+import Input from "../input";
+import { useOnChange } from "@/hooks/onChangeHook";
+import SelectCategories from "../selectCategories";
+import toast from "react-hot-toast";
 import { ApiGet } from "@/helpers/API/ApiData";
+import DownArrow from "@/assets/icons/downArrow";
 import { WEBSITE_URL_REGEX } from "@/helpers/Constant";
 import OnClickOutside from "@/hooks/useClickOutside";
-import dynamic from "next/dynamic";
-import toast from "react-hot-toast";
 const Logo = "/assets/logo/logo.svg";
 
 export default function CustomizeyourOrganization({ setIsOnBoardingComplete }) {

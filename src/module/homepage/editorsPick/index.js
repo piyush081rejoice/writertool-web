@@ -5,12 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 import styles from "./editorsPick.module.scss";
-import dynamic from "next/dynamic";
-const EditorsPickDetails = dynamic(() => import("./editorsPickDetails"), { ssr: false });
-const TrendingBlog = dynamic(() => import("./trendingBlog"), { ssr: false });
+import EditorsPickDetails from "./editorsPickDetails";
+import TrendingBlog from "./trendingBlog";
 
-export default function EditorsPick({ getBlogsData, getTrendingBlogData }) {
-  const router = useRouter();
+
+export default function EditorsPick({ getBlogsData ,getTrendingBlogData }) {
+  const  router = useRouter()  
   return (
     <div className={styles.editorsPickSection}>
       <div className="container">
@@ -22,36 +22,29 @@ export default function EditorsPick({ getBlogsData, getTrendingBlogData }) {
           <div className={styles.gridItems}>
             <div className={styles.subGrid}>
               <div className={styles.subGridItems}>
-                <EditorsPickDetails {...{ getBlogsData }} />
+                <EditorsPickDetails {...{getBlogsData}} />
               </div>
               <div className={styles.subGridItems}>
                 {getBlogsData?.length > 0
-                  ? getBlogsData?.slice(1, 5)?.map((item, i) => {
+                  ? getBlogsData?.slice(1, 5)?.map((item,i) => {
                       return (
                         <div className={styles.editorsCard} key={i}>
                           <div className={styles.editorsCardImage}>
-                            {item?.thumbnail ? (
-                              <LazyImage
-                                style={{ cursor: "pointer" }}
-                                onClick={() => router.push(`/${item?.slugId}`)}
-                                src={item?.thumbnail}
-                                alt={item?.coverPhotoAltTag}
-                                className={styles.imageStyle}
-                              />
-                            ) : (
-                              <div className={styles.SkeletonCard}>
-                                <div>
-                                  <Skeleton height={90} width={125} />
-                                </div>
+                            {
+                              item?.thumbnail ? <LazyImage style={{cursor:"pointer"}} onClick={()=>router.push(`/${item?.slugId}`)} src={item?.thumbnail} alt={item?.coverPhotoAltTag}  className={styles.imageStyle} /> :<div className={styles.SkeletonCard} >
+                              <div>
+                                <Skeleton height={90} width={125} />
                               </div>
-                            )}
+                            </div>
+                            }
+                            
                           </div>
                           <div className={styles.editorsCardItems}>
                             <Link href={`/${item?.slugId}`}>
                               <h3>{item?.title}</h3>
                             </Link>
                             <span>{DateConvert(item?.createdAt)}</span>
-                          </div>
+                          </div>    
                         </div>
                       );
                     })
@@ -70,10 +63,10 @@ export default function EditorsPick({ getBlogsData, getTrendingBlogData }) {
                         </div>
                       ))}
               </div>
-            </div>
+            </div> 
           </div>
           <div className={styles.gridItems}>
-            <TrendingBlog {...{ getTrendingBlogData }} />
+            <TrendingBlog {...{getTrendingBlogData}} />
           </div>
         </div>
       </div>
