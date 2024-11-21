@@ -1,4 +1,4 @@
-import { ApiGet } from "@/helpers/API/ApiData";
+import { ApiGet, ApiGetNoAuth } from "@/helpers/API/ApiData";
 import Notifications from "@/module/notifications";
 import React from "react";
 
@@ -13,7 +13,7 @@ export default function index({ isTrendingBlogsData,getBlogCategoryData }) {
 export async function getServerSideProps() {
   try {
     const blogCategoryData = await ApiGet("blog-services/blog-categories/get?isActive=true&skip=1&limit=10").then((resp) => resp?.data?.payload);
-    const isTrendingBlogsData = await ApiGet("blog-services/blogs/get?isTrending=true&skip=1&limit=3").then((resp) => resp?.data?.payload?.blogs);
+    const isTrendingBlogsData = await ApiGetNoAuth("blog-services/blogs/get?isTrending=true&skip=1&limit=3").then((resp) => resp?.data?.payload?.blogs);
 
     return {
       props: {

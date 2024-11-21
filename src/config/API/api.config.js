@@ -9,13 +9,13 @@ if (typeof window !== 'undefined') {
 }
 
 
-export const API =
-  hostname == "localhost"
-    ? API_LOCAL
-    : hostname === "writertools.ai"
-    ? API_DEV 
-    : hostname === "writertools.ai"
-    ? API_PROD
-    : hostname === "writertools.ai"
-    ? API_STAGE
-    : API_DEV;
+export const API = API_LOCAL
+  // hostname == "localhost" 
+  //   ? API_LOCAL
+  //   : hostname === "writertools.ai"
+  //   ? API_DEV 
+  //   : hostname === "writertools.ai"
+  //   ? API_PROD
+  //   : hostname === "writertools.ai"
+  //   ? API_STAGE
+  //   : API_DEV;

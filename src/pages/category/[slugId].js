@@ -1,26 +1,20 @@
 import { formatTitleCase } from "@/common";
 import NextSEO from "@/common/NextSeo";
-import { ApiGet } from "@/helpers/API/ApiData";
-import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
+import { ApiGet, ApiGetNoAuth } from "@/helpers/API/ApiData";
+import { CATEGORY_IMAGES, CATEGORY_PAGE_URL, EXTERNAL_DATA_URL } from "@/helpers/Constant";
 import Category from "@/module/category";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
-const UpdateBlog = () => {
+const UpdateBlog = ({ seoData }) => {
   const router = useRouter();
-  const { slugId } = router.query;
-
+  const { slugId } = router?.query;
   const [blogCategoryData, setBlogCategoryData] = useState([]);
   const [isTrendingBlogsData, setIsTrendingBlogsData] = useState([]);
-  const [seoData, setSeoData] = useState({
-    Title: "",
-    Description: "",
-    url: "",
-  });
 
   useEffect(() => {
-    if (!slugId) return; // Wait for slugId from the URL
+    if (!slugId) return;
 
     const fetchData = async () => {
       try {
@@ -29,22 +23,15 @@ const UpdateBlog = () => {
         setBlogCategoryData(blogCategoryDataResponse?.data?.payload?.blog_category || []);
 
         // Fetch Trending Blogs
-        const trendingBlogsResponse = await ApiGet("blog-services/blogs/get?isTrending=true&skip=1&limit=3");
+        const trendingBlogsResponse = await ApiGetNoAuth("blog-services/blogs/get?isTrending=true&skip=1&limit=3");
         setIsTrendingBlogsData(trendingBlogsResponse?.data?.payload?.blogs || []);
-
-        // Update SEO Data
-        setSeoData({
-          Title: `${formatTitleCase(slugId)} Category | WriterTools`,
-          Description: `Explore insightful blogs in the ${slugId} category on WriterTools.`,
-          url: `${EXTERNAL_DATA_URL}/category/${slugId}`,
-        });
       } catch (error) {
         toast.error("Error fetching data");
       }
     };
 
     fetchData();
-  }, [slugId]); // Re-run when slugId changes
+  }, [slugId]);
 
   return (
     <>
@@ -55,5 +42,24 @@ const UpdateBlog = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { slugId } = context.params;
+
+  const seoData = {
+    Title: `${formatTitleCase(slugId)} Category | WriterTools`,
+    Description: `Explore insightful blogs in the ${slugId} category on WriterTools.`,
+    url: `${EXTERNAL_DATA_URL}/category/${slugId}`,
+    KeyWords: `${formatTitleCase(slugId)}, category `,
+    OG_Img: CATEGORY_IMAGES[slugId] || CATEGORY_PAGE_URL,
+    OG_Img_alt_tag: formatTitleCase(slugId),
+  };
+
+  return {
+    props: {
+      seoData,
+    },
+  };
+}
 
 export default UpdateBlog;

@@ -158,7 +158,7 @@
       line-height: rem(20);
       display: block;
       padding: rem(0 0 8 0);
-      color: getColorHex('gray-900');
+      color: getColorHex('black');
 
       @media (max-width:1500px) {
         font-size: rem(14);
@@ -169,6 +169,10 @@
 
     .relative {
       position: relative;
+
+      input{
+        color: getColorHex('gray-900');
+      }
 
       .icon {
         position: absolute;

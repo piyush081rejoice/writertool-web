@@ -14,7 +14,7 @@
         line-height: rem(20);
         display: block;
         padding: rem(0 0 8 0);
-        color: getColorHex('gray-900');
+        color: getColorHex('black');
 
         @media (max-width:1500px) {
             font-size: rem(14);
@@ -75,7 +75,7 @@
         border-radius: rem(6);
         @include body-medium;
         line-height: rem(24);
-        color: getColorHex('black');
+        color: getColorHex('gray-900');
         @include transition-3s;
         border: 1px solid getColorHex('border-color-5');
 

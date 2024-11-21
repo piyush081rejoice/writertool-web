@@ -8,7 +8,7 @@ export default function BlogInsideDetails({ isTrendingBlogsData, getSingleBlogDa
   const router = useRouter();
   return (
     <>
-      <Breadcrumb dynamicList={router.query?.slugId} />
+      <Breadcrumb dynamicList={router.query?.slugId} categoryData={getSingleBlogData?.blogCategoryId?.[0]} />
       <div className={styles.blogInsideDetails}>
         <div className="container">
           <div style={{ marginTop: "40px" }} className={styles.grid}>

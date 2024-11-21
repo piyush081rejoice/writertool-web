@@ -1,6 +1,6 @@
 import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
-import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
+import { EXTERNAL_DATA_URL, TERMSANDCONDITIONS_PAGE_URL } from "@/helpers/Constant";
 import PrivacyPolicy from "@/module/privacyPolicy";
 
 export default function index({ getPrivacyAndPolicyData, seoData }) {
@@ -21,6 +21,8 @@ export async function getServerSideProps() {
       Description: termsAndConditionsData[0]?.metaDescription || "",
       KeyWords: termsAndConditionsData[0]?.metaKeyWords?.join(", ") || "",
       url: `${EXTERNAL_DATA_URL}/terms-and-conditions`,
+      OG_Img:TERMSANDCONDITIONS_PAGE_URL,
+      OG_Img_alt_tag:"terms-and-conditions"
     };
     return {
       props: {

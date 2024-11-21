@@ -43,7 +43,7 @@ export const GenerateDescription = (htmlString) => {
   return paragraphs[0];
 };
 
-export const formatTitleCase = (input) => {
+export const formatTitleCase = (input = "") => {
   let result = input
     .replace(/-/g, " ")
     .split(" ")

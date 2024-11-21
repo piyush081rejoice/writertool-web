@@ -4,12 +4,12 @@ import { DateConvert, formatTitleCase } from "@/common";
 import { ApiGet, ApiPost } from "@/helpers/API/ApiData";
 import LazyImage from "@/helpers/lazyImage";
 import { getCookie } from "@/hooks/useCookie";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import NoBlogFound from "../NoBlogFound";
 import styles from "./recommended.module.scss";
+import Link from "next/link";
 
 const ProfileImage = "/assets/images/profile.png";
 
@@ -43,7 +43,6 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
     getBlogData(5);
   }, [slugId, isSavedBlogs]);
 
-  const router = useRouter();
 
   const handleShowBlog = async (id) => {
     const userToken = getCookie("userToken");
@@ -146,7 +145,9 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
               <div className={styles.card} key={i}>
                 <div className={styles.cardImage}>
                   {data?.thumbnail ? (
-                    <LazyImage style={{ cursor: "pointer" }} onClick={() => router.push(`/${data?.slugId}`)} src={data?.thumbnail} alt={data?.coverPhotoAltTag} className={styles.cardImageStyle} />
+                    <Link prefetch={false} href={`${data?.slugId}`}>
+                      <LazyImage  src={data?.thumbnail} alt={data?.coverPhotoAltTag} className={styles.cardImageStyle} />
+                    </Link>
                   ) : (
                     <Skeleton height={216} />
                   )}
@@ -174,7 +175,7 @@ export default function Recommended({ slugId, isSavedBlogs, differentName }) {
                       <li>{DateConvert(data?.createdAt)}</li>
                     </ul>
                   </div>
-                  <h3 onClick={() => router.push(`/${data?.slugId}`)}>{data?.title}</h3>
+                  <Link href={`/${data.slugId}`} prefetch={false}><h3>{data?.title}</h3></Link>
                   <p className="texttruncatefourlines">{data?.sortDescription ? data?.sortDescription : ""}</p>
                 </div>
               </div>

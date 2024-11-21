@@ -1,6 +1,6 @@
 import NextSEO from "@/common/NextSeo";
 import { ApiGet } from "@/helpers/API/ApiData";
-import { EXTERNAL_DATA_URL } from "@/helpers/Constant";
+import { DISCLAIMER_PAGE_URL, EXTERNAL_DATA_URL } from "@/helpers/Constant";
 import PrivacyPolicy from "@/module/privacyPolicy";
 
 
@@ -22,6 +22,8 @@ export async function getServerSideProps() {
       Description: disclaimerData[0]?.metaDescription || "",
       KeyWords: disclaimerData[0]?.metaKeyWords?.join(", ") || "",
       url: `${EXTERNAL_DATA_URL}/disclaimer`,
+      OG_Img:DISCLAIMER_PAGE_URL,
+      OG_Img_alt_tag:"disclaimer"
     };
     return {
       props: {

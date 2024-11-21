@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-function NextSEO({ seo }) {
+function NextSEO({ seo, PageViewSchema }) {
   return (
     <React.Fragment>
       <Head>
@@ -39,7 +39,16 @@ function NextSEO({ seo }) {
         <meta property="og:image:secure_url" content={seo?.OG_Img || ""} />
 
         {/* Structured Data Schema */}
-        {seo?.PageViewSchema && <script id="PageViewSchema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(seo?.PageViewSchema) }} />}
+
+        {PageViewSchema && (
+          <script
+            id="PageViewSchema"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(PageViewSchema),
+            }}
+          />
+        )}
       </Head>
     </React.Fragment>
   );

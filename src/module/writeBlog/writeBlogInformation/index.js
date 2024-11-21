@@ -1,5 +1,6 @@
 import CloseIcon from "@/assets/icons/crosearrow";
 import DownArrow from "@/assets/icons/downArrow";
+import ModalCloseIcon from "@/assets/icons/closeIcon";
 import DraftIcon from "@/assets/icons/Draft";
 import GalleryIcon from "@/assets/icons/galleryIcon";
 import PreviewIcon from "@/assets/icons/Preview";
@@ -22,21 +23,36 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import "suneditor/dist/css/suneditor.min.css";
 import styles from "./writeBlogInformation.module.scss";
-import Link from "next/link";
-const SunEditor = dynamic(() => import("suneditor-react"), { ssr: false });
+const SunEditor = dynamic(() => (typeof window !== "undefined" ? import("suneditor-react").then((mod) => mod.default) : Promise.resolve(() => <div>Loading...</div>)), { ssr: false });
 const LinkIcon = "/assets/icons/link.svg";
+const Logo = "/assets/logo/logo.svg";
+const trueIcon = "/assets/images/trueIcon.svg";
 export default function WriteBlogInformation({ getBlogCategoryData, updateId, updateBlogData }) {
-  const { inputValue, handleChange, setInputValue, errors, setErrors } = useOnChange({ youtubeLink: "", twitterLink: "", linkedinLink: "", facebookLink: "", instagramLink: "", websiteLink: "" });
+  const { inputValue, handleChange, setInputValue, errors, setErrors } = useOnChange({
+    youtubeLink: "",
+    twitterLink: "",
+    linkedinLink: "",
+    facebookLink: "",
+    instagramLink: "",
+    websiteLink: "",
+    title: "",
+    slugId: "",
+    sortDescription: "",
+    coverPhotoAltTag: "",
+    metaTitle: "",
+    metaDescription: "",
+  });
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
-  const [loading, setLoading] = useState({ publish: false, draft: false });
+  const [loading, setLoading] = useState({ publish: false, draft: false, instantPublish: false });
   const [selectedBlogs, setSelectedBlogs] = useState([]);
   const [keyWords, setKeyWords] = useState([]);
   const [coverPhotoPreview, setCoverPhotoPreview] = useState(null);
   const [editorValue, setEditorValue] = useState("");
   const [allBlogs, setAllBlogs] = useState(getBlogCategoryData);
   const fileInputRef = useRef(null);
-  const sunEditorRef = useRef(null);
+  // const sunEditorRef = useRef(null);
   const router = useRouter();
   const dropDownRef = useRef(null);
   const toggleDropDown = () => setShowDropdown(false);
@@ -119,10 +135,33 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
     setPreviewModal(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const [blogPaymentModal, setBlogPaymentModal] = useState(false);
+  const handlePublishClick = () => {
+    if (validateForm()) {
+      setBlogPaymentModal(true);
+    }
+  };
 
-  const handleSubmitBlog = async (status) => {
+  const handleInstantPublish = async (id) => {
+    setLoading({ publish: false, draft: false, instantPublish: true });
+    try {
+      const res = await ApiPost("blog-services/payment/payment-link", { blogId: id });
+      if (res?.data?.success) {
+        console.log("🚀 ~ file: index.js:18 ~ handleInstantPublish ~ res:", res);
+        window.open(res?.data?.payload?.paymentLink, "_self");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading({ publish: false, draft: false, instantPublish: false });
+    }
+  };
+  const handleSubmitBlog = async (status, instantPublish) => {
     if (validateForm()) {
       setLoading(status === "Draft" ? { publish: false, draft: true } : { publish: true, draft: false });
+      if (instantPublish) {
+        setLoading({ publish: false, draft: false, instantPublish: true });
+      }
       let formData = new FormData();
       try {
         formData.append("title", inputValue?.title);
@@ -168,22 +207,30 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
         }
         const res = await ApiPost(updateId ? `blog-services/blogs/update/${updateId}` : "blog-services/blogs/create", formData, { "Content-Type": "multipart/form-data" });
         if (res?.data?.success) {
+          console.log(`res?.data`, res?.data?.payload?._id);
           if (updateId) {
             toast.success(res?.data?.payload?.message || "Your blog has been successfully updated.");
-          } else {
+          } else if (!instantPublish) {
             toast.success(res?.data?.payload?.message || "Your blog has been submitted for approval.");
+          }
+
+          if (instantPublish) {
+            handleInstantPublish(res?.data?.payload?._id);
           }
           setInputValue({});
           setKeyWords([]);
           setSelectedBlogs([]);
           setCoverPhotoPreview(null);
           setEditorValue("");
-          router.push("/your-stories");
+          if (!instantPublish) {
+            router.push("/your-stories");
+          }
         }
       } catch (error) {
         toast.error(error?.response?.data?.payload?.message ? error?.response?.data?.payload?.message : error?.response?.data?.message || "Something went wrong");
       } finally {
         setLoading({ publish: false, draft: false });
+        // setBlogPaymentModal(false)
       }
     }
   };
@@ -397,14 +444,7 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                     />
                   </div>
                   <div className={styles.spacer}>
-                    <Input
-                      label="Meta Title*"
-                      placeholder="Type your MetaTitle"
-                      onChange={handleChange}
-                      name="metaTitle"
-                      value={inputValue?.metaTitle}
-                      errorMessage={errors?.metaTitle}
-                    />
+                    <Input label="Meta Title*" placeholder="Type your MetaTitle" onChange={handleChange} name="metaTitle" value={inputValue?.metaTitle} errorMessage={errors?.metaTitle} />
                   </div>
                   <div className={styles.spacer}>
                     <Input
@@ -454,7 +494,7 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                     minHeight: "300px",
                     maxHeight: "700px",
                   }}
-                  ref={sunEditorRef}
+                  // ref={sunEditorRef}
                   onChange={handleOnChange}
                   setContents={editorValue}
                   placeholder="Write a detailed description of your tool"
@@ -464,9 +504,16 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
               </div>
             </div>
             <div className={styles.submitButtons}>
-              <button disabled={loading.publish} className={styles.PublishButtons} onClick={() => handleSubmitBlog("Pending")}>
+              <button className={styles.PublishButtons} onClick={()=>{
+                if (updateId) {
+                  handleSubmitBlog("Pending")
+                }else{
+                  handlePublishClick()
+                }
+              }
+              }>
                 <PublishIcon />
-                {updateId ? "Update" : "Publish"} {loading?.publish ? <Loader /> : null}
+                {updateId ? "Update" : "Publish"} {updateId && loading?.publish ? <Loader /> : null}
               </button>
               {updateId ? (
                 updateBlogData?.status == "Draft" ? (
@@ -485,6 +532,44 @@ export default function WriteBlogInformation({ getBlogCategoryData, updateId, up
                 <PreviewIcon />
                 Preview
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {blogPaymentModal && (
+        <div className={styles.blogConfimModal}>
+          <div className={styles.blogModalContent}>
+            <div className={styles.close} onClick={() => setBlogPaymentModal(false)}>
+              <ModalCloseIcon />
+            </div>
+            <img src={Logo} alt="Logo" />
+            <div className={styles.blogModalTitle}>
+              <h2>Publish Your Blog</h2>
+              <p>Publish Your Blog, Boost Your Reach: Generate Quality Backlinks Effortlessly!</p>
+            </div>
+            <div className={styles.blogModalCost}>
+              <div className={styles.blogModalCostBox}>
+                <h3>Free</h3>
+                <div className={styles.blogModalBoxCheck}>
+                  <img src={trueIcon} alt="Logo" />
+                  <p>Waiting for 2-4 weeks to publish</p>
+                </div>
+                <button disabled={loading.publish} onClick={() => handleSubmitBlog("Pending")} type="button">
+                  Select {loading?.publish ? <Loader /> : null}
+                </button>
+              </div>
+              <div className={styles.blogModalCostBox}>
+                <h3>
+                  $0.99 <span>Per Blog</span>
+                </h3>
+                <div className={styles.blogModalBoxCheck}>
+                  <img src={trueIcon} alt="Logo" />
+                  <p>Instant publish</p>
+                </div>
+                <button disabled={loading?.instantPublish} onClick={() => handleSubmitBlog("Pending", true)} type="button">
+                  Select {loading?.instantPublish ? <Loader /> : null}
+                </button>
+              </div>
             </div>
           </div>
         </div>

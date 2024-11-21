@@ -11,6 +11,7 @@ import styles from "./latestPosts.module.scss";
 import Newsletter from "./newsletter";
 import TagClouds from "./tagClouds";
 import Skeleton from "react-loading-skeleton";
+import Link from "next/link";
 const ProfileImage = "/assets/images/profile.png";
 
 export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabled, blogDataLoading, handleGetBlogsData, getBlogCategoryData }) {
@@ -71,7 +72,7 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
                     <div className={styles.card} key={key}>
                       <div className={styles.cardImage}>
                         {
-                          item?.thumbnail ?<LazyImage src={item?.thumbnail} className={styles.cardImageStyle} onClick={() => router.push(`/${item?.slugId}`)} alt={item?.coverPhotoAltTag} /> :<Skeleton height={216} />
+                          item?.thumbnail ?<Link prefetch={false} href={`${item?.slugId}`}> <LazyImage src={item?.thumbnail} className={styles.cardImageStyle}  alt={item?.coverPhotoAltTag} /> </Link>:<Skeleton height={216} /> 
                         }
 
                         {item?.isTrending ? (
@@ -102,9 +103,7 @@ export default function LatestPosts({ getBlogsData, onLoadMore, isLoadMoreDisabl
                             <li>{DateConvert(item?.createdAt)}</li>
                           </ul>
                         </div>
-                        <h3 style={{ cursor: "pointer" }} onClick={() => router.push(`/${item?.slugId}`)}>
-                          {item?.title}
-                        </h3>
+                        <Link href={`/${item?.slugId}`} prefetch={false}><h3>{item?.title}</h3></Link>
                         <p>{item?.sortDescription ? item?.sortDescription : ""}</p>
                       </div>
                     </div>

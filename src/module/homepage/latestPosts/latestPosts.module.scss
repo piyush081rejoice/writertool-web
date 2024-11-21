@@ -265,13 +265,14 @@
                             .cardImageStyle {
                                 cursor: pointer;
                                 width: 100%;
+                                height: rem(216);
+                                min-height: rem(216);
+                                border-radius: rem(10);
+        
                                 img {
+                                    border-radius: rem(10);
                                     display: block;
                                     height: rem(216);
-                                    width: 100%;
-                                    object-fit: cover;
-                                    min-height: rem(216);
-                                    border-radius: rem(10);
                                 }
                             }
                         }
